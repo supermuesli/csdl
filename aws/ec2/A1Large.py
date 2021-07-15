@@ -43,13 +43,13 @@ class A1Large(VMAsAService):
                 print(fields)
                 for key in fields:
                     try:
+                        print(fields[key].id)
                         if fields[key].id == "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py":
                             if req.elasticIpAmount.value == 1:
                                 return 2
                             if req.elasticIpAmount.value > 1:
                                 return req.elasticIpAmount.value * 2.5
                     except:
-                        print("no requirements fields matched with elasticIpPrice")
                         pass
                 return 0
 
