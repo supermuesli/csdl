@@ -41,12 +41,14 @@ class A1Large(VMAsAService):
                 # iterate over all fields of the given requirement and check for the elasticIpAmount ID
                 fields = vars(req)  # https://stackoverflow.com/a/55320647
                 for key in fields:
-                    if fields[key].id is not None:
+                    try:
                         if fields[key].id == self.elasticIpAmount.id:
                             if req.elasticIpAmount.value == 1:
                                 return 2
                             if req.elasticIpAmount.value > 1:
                                 return req.elasticIpAmount.value * 2.5
+                    except:
+                        print("no", self.elasticIpAmount.id, "specified in requirements")
                 return 0
 
         # price

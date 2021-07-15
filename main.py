@@ -12,7 +12,7 @@ def main():
     req.storage.storage.value = 50
 
     # custom attribute requirements
-    req.staticIpAddresses = NumericAttribute()  # duck typing
+    req.staticIpAddresses = NumericAttribute()
     req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py")
     req.staticIpAddresses.value = 5
 
