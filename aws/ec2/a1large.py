@@ -3,6 +3,7 @@ from csdl import *
 
 class EC2A1Large(VMAsAService):
     def __init__(self):
+        super().__init__()
         # inherited fields
         self.name = "Elastic Cloud Compute a1.large"
         self.provider = "Amazon Web Services"
@@ -40,6 +41,4 @@ class EC2A1Large(VMAsAService):
 
         self.price.model = Hybrid()
         self.price.model.upFrontCost = 0
-        self.price.model.billingPeriod = 1 # per hour
-
-
+        self.price.model.billingPeriod = 1  # per hour
