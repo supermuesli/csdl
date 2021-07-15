@@ -4,11 +4,9 @@ from csdl import *
 class A1Large(VMAsAService):
     def __init__(self):
         super().__init__()
-        # inherited fields
-        self.gitRepo = "https://github.com/supermuesli/csdl"
-        self.filePath = "aws/ec2/A1Large.py"
-        self.setId()
+        self.setId("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
 
+        # inherited fields
         self.name = "Elastic Cloud Compute a1.large"
         self.provider = "Amazon Web Services"
         self.tags = ["aws", "ec2", "virtual machine", "vm"]
@@ -22,7 +20,7 @@ class A1Large(VMAsAService):
 
         self.region = ChoiceAttribute()
         self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
-        self.region.value = self.region.options[1]  # you need to know beforehand which index is legal by checking out the git repository
+        self.region.value = self.region.options[1]  # you need to know beforehand which index is legal by checking out the git repository. a pyCharm plugin might help with this
         self.region.mutable = False
 
         self.storage = StorageAsAService()
