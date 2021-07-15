@@ -19,12 +19,12 @@ class A1Large(VMAsAService):
         self.ram.mutable = False
 
         self.region = ChoiceAttribute()
-        self.region.inject("https://github.com/supermuesli/csdl", "aws/region.py")
+        self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
         self.region.value = "East Virgina"
         self.region.mutable = True
 
         self.storage = StorageAsAService()
-        self.storage.inject("https://github.com/supermuesli/csdl", "aws/ebs.py")
+        self.storage.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
         self.storage.mutable = True
 
         # non-inherited fields
@@ -34,7 +34,7 @@ class A1Large(VMAsAService):
 
         # price
         self.price = Price()
-        self.price.currency.inject("https://github.com/supermuesli/csdl", "currency.py")
+        self.price.currency.inject("https://github.com/supermuesli/csdl", "Currency.py")
         self.price.currency.value = "dollar"
         self.price.currency.mutable = False
         self.price.priceFuncs = []
