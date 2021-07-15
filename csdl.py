@@ -10,11 +10,13 @@ class Attribute:
         self.name = None
         self.gitRepo = None
         self.filePath = None
+        self.id = None
         self.mutable = False
 
     def inject(self, gitRepo, filePath):
         self.gitRepo = gitRepo
         self.filePath = filePath
+        self.id = gitRepo + "/" + filePath
 
         # git clone metamodel repository
         tempDir = tempfile.TemporaryDirectory()

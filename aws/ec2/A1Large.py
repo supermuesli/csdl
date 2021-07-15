@@ -33,23 +33,28 @@ class A1Large(VMAsAService):
         self.elasticIpAmount.mutable = True
 
         # price functions
-        def elasticIpAmount(s, req: Attribute):
-            if req.elasticIpAmount is not None:
-                if req.elasticIpAmount.value == 1:
-                    return 2
-                if req.elasticIpAmount.value > 1:
-                    return req.elasticIpAmount.value * 2.5
-            return 0
+        class elasticIpPrice(PriceFunc):
+            def __init__(self):
+                super().__init__()
 
-        p1 = PriceFunc
-        p1.run = elasticIpAmount
+            def run(self, req: Attribute):
+                # iterate over all fields of the given requirement and check for the elasticIpAmount ID
+                fields = vars(req)  # https://stackoverflow.com/a/55320647
+                for key in fields:
+                    if fields[key].id is not None:
+                        if fields[key].id == self.elasticIpAmount.id:
+                            if req.elasticIpAmount.value == 1:
+                                return 2
+                            if req.elasticIpAmount.value > 1:
+                                return req.elasticIpAmount.value * 2.5
+                return 0
 
         # price
         self.price = Price()
         self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
         self.price.currency.value = self.price.currency.options[0]
         self.price.currency.mutable = False
-        self.price.priceFuncs = [p1()]
+        self.price.priceFuncs = [elasticIpPrice()]
 
         self.price.model = Hybrid()
         self.price.model.upFrontCost = 0
