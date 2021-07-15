@@ -48,7 +48,7 @@ class A1Large(VMAsAService):
                             if req.elasticIpAmount.value > 1:
                                 return req.elasticIpAmount.value * 2.5
                     except:
-                        print("no", self.elasticIpAmount.id, "specified in requirements")
+                        pass
                 return 0
 
         # price
