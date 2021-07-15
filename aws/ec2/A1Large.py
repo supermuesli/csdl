@@ -5,12 +5,14 @@ class A1Large(VMAsAService):
     def __init__(self):
         super().__init__()
         # inherited fields
+        self.gitRepo = "https://github.com/supermuesli/csdl"
+        self.filePath = "aws/ec2/A1Large.py"
+        self.setId()
+        
         self.name = "Elastic Cloud Compute a1.large"
         self.provider = "Amazon Web Services"
         self.tags = ["aws", "ec2", "virtual machine", "vm"]
         self.readme = "enjoy"
-        self.gitRepo = "https://github.com/supermuesli/csdl"
-        self.filePath = "aws/ec2/A1Large.py"
 
         self.cpuCores.value = 4
         self.cpuCores.mutable = False
