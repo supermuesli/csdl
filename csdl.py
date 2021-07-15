@@ -17,20 +17,27 @@ class Attribute:
         self.gitRepo = gitRepo
         self.filePath = filePath
 
-        # git clone csdl metamodel repository
+        # git clone metamodel repository
         tempDir = tempfile.TemporaryDirectory()
         porcelain.clone(self.gitRepo, tempDir.name)
 
-        # TODO load definitions
         modulePath = tempDir.name + "/" + filePath
-        spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        sys.modules[tempDir.name] = module
+        moduleName = filePath.split("/")[-1].split(".py")[0]
+        moduleDir = ''.join(modulePath.split(moduleName + ".py"))
+        print("modulePath: ", modulePath)
+        print("moduleName: ", moduleName)
+        print("moduleDir: ", moduleDir)
 
-        print("module: ", module)
+        # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
+        # module = importlib.util.module_from_spec(spec)
+        # spec.loader.exec_module(module)
+        # sys.modules[tempDir.name] = module
+        # print("module: ", module)
 
-        # eval("from " + modulePath + " import *")
+        sys.path.insert(1, moduleDir)
+        exec("from " + moduleName + " import *")
+        exec("global " + moduleName)
+        exec("self = " + moduleName + "()")
 
         tempDir.cleanup()
 

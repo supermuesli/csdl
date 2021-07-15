@@ -1,7 +1,7 @@
 from csdl import *
 
 
-class EC2A1Large(VMAsAService):
+class A1Large(VMAsAService):
     def __init__(self):
         super().__init__()
         # inherited fields
@@ -10,7 +10,7 @@ class EC2A1Large(VMAsAService):
         self.tags = ["aws", "ec2", "virtual machine", "vm"]
         self.readme = "enjoy"
         self.gitRepo = "https://github.com/supermuesli/csdl"
-        self.filePath = "aws/ec2/a1large.py"
+        self.filePath = "aws/ec2/A1Large.py"
 
         self.cpuCores.value = 4
         self.cpuCores.mutable = False

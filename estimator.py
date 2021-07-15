@@ -4,7 +4,7 @@ from csdl import *
 def estimate(req: Attribute):
     # mock up database of known ccs
     vm1 = VMAsAService()
-    vm1.inject("https://github.com/supermuesli/csdl", "aws/ec2/a1large.py")
+    vm1.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
     db = [vm1]
 
     # for loop and inject attributes and compute prices given the requirement
