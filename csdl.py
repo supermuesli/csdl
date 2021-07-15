@@ -47,7 +47,7 @@ class Attribute:
 
         exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
-        assert self.id == gitRepo + "/" + filePath
+        assert self.id == gitRepo + "/" + filePath, "failed to inject CCS model properly"
         tempDir.cleanup()
 
 

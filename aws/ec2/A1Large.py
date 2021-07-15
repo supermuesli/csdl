@@ -8,7 +8,7 @@ class A1Large(VMAsAService):
         self.gitRepo = "https://github.com/supermuesli/csdl"
         self.filePath = "aws/ec2/A1Large.py"
         self.setId()
-        
+
         self.name = "Elastic Cloud Compute a1.large"
         self.provider = "Amazon Web Services"
         self.tags = ["aws", "ec2", "virtual machine", "vm"]
