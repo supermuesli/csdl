@@ -34,7 +34,7 @@ class A1Large(VMAsAService):
 
         # price
         self.price = Price()
-        self.price.currency.inject("https://github.com/supermuesli/csdl", "Currency.py")
+        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
         self.price.currency.value = "dollar"
         self.price.currency.mutable = False
         self.price.priceFuncs = []

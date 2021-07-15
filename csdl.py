@@ -1,6 +1,5 @@
 import sys
 import tempfile
-import importlib.util
 from abc import ABC, abstractmethod
 from dulwich import porcelain
 
@@ -37,7 +36,7 @@ class Attribute:
         sys.path.insert(1, moduleDir)
         exec("from " + moduleName + " import *")
         exec("global " + moduleName)
-        exec("self = " + moduleName + "()")
+        exec("self = " + moduleName + "()")  # this requires a class with the same name as the moduleName
 
         tempDir.cleanup()
 
@@ -95,14 +94,13 @@ class PayPerResource(Subscription):
         pass
 
 
-class Price(ABC):
+class Price:
     def __init__(self):
         super().__init__()
         self.currency = ChoiceAttribute()
         self.priceFuncs = []
         self.model = None
 
-    @abstractmethod
     def get(self, req: Attribute):
         return sum(pf.run(req) for pf in self.priceFuncs)
 
