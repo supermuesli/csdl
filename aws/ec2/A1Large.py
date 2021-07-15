@@ -20,24 +20,36 @@ class A1Large(VMAsAService):
 
         self.region = ChoiceAttribute()
         self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
-        self.region.value = "East Virgina"
-        self.region.mutable = True
+        self.region.value = self.region.options[1]  # you need to know beforehand which index is legal by checking out the git repository
+        self.region.mutable = False
 
         self.storage = StorageAsAService()
         self.storage.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
         self.storage.mutable = True
 
         # non-inherited fields
-        self.elasticIps = NumericAttribute()
-        self.elasticIps.makeInt = True
-        self.elasticIps.mutable = True
+        self.elasticIpAmount = NumericAttribute()
+        self.elasticIpAmount.makeInt = True
+        self.elasticIpAmount.mutable = True
+
+        # price functions
+        def elasticIpAmount(s, req: Attribute):
+            if req.elasticIpAmount is not None:
+                if req.elasticIpAmount.value == 1:
+                    return 2
+                if req.elasticIpAmount.value > 1:
+                    return req.elasticIpAmount.value * 2.5
+            return 0
+
+        p1 = PriceFunc
+        p1.run = elasticIpAmount
 
         # price
         self.price = Price()
         self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
-        self.price.currency.value = "dollar"
+        self.price.currency.value = self.price.currency.options[0]
         self.price.currency.mutable = False
-        self.price.priceFuncs = []
+        self.price.priceFuncs = [p1()]
 
         self.price.model = Hybrid()
         self.price.model.upFrontCost = 0

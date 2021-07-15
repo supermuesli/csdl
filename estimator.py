@@ -1,4 +1,5 @@
 from csdl import *
+from math import inf
 
 
 def estimate(req: Attribute):
@@ -8,13 +9,15 @@ def estimate(req: Attribute):
     db = [vm1]
 
     # for loop and inject attributes and compute prices given the requirement
-    smallestPrice = -1
+    smallestPrice = inf
     for ccs in db:
         ccsPrice = ccs.price.get(req)
+        ccsCurrency = ccs.price.currency.value
+        ccsPricingModel = type(ccs.price.model).__name__
         # TODO take into account pricing model as well
         # TODO take into account currency as well
         # example:
-        print("current CCS price: ", ccsPrice, "$ per billing hour")
+        print("current CCS price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
         if ccsPrice < smallestPrice:
             smallestPrice = ccsPrice
 

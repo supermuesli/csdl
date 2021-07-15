@@ -35,8 +35,11 @@ class Attribute:
 
         sys.path.insert(1, moduleDir)
         exec("from " + moduleName + " import *")
-        exec("global " + moduleName)
-        exec("self = " + moduleName + "()")  # this requires a class with the same name as the moduleName
+        exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
+
+        exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the
+                                                                     # moduleName. also read
+                                                                     # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
 
         tempDir.cleanup()
 
@@ -101,6 +104,7 @@ class Price:
         self.priceFuncs = []
         self.model = None
 
+    """ returns the total price """
     def get(self, req: Attribute):
         return sum(pf.run(req) for pf in self.priceFuncs)
 
@@ -112,6 +116,7 @@ class PriceFunc(ABC):
         self.description = None
         self.value = 0
 
+    """ returns the value of this price function """
     @abstractmethod
     def run(self, req: Attribute):
         pass
