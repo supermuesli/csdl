@@ -13,11 +13,11 @@ def main():
 
     # custom attribute requirements
     req.staticIpAddresses = NumericAttribute()
-    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py")
+    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py", commit="dd24e3ee6dc7c449f9635ae7b18268af4bc277c5")
     req.staticIpAddresses.value = 5
 
     # price estimate of cheapest ccs that fits requirements
-    logging.info(estimate(req))
+    print(estimate(req))
 
 
 if __name__ == "__main__":

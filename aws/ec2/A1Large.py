@@ -4,7 +4,7 @@ from csdl import *
 class A1Large(VMAsAService):
     def __init__(self):
         super().__init__()
-        self.setId("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py", original=True)
+        self.setId("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
 
         # inherited fields
         self.name = "Elastic Cloud Compute a1.large"

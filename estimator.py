@@ -17,7 +17,7 @@ def estimate(req: Attribute):
         # TODO take into account pricing model as well
         # TODO take into account currency as well
         # example:
-        print("current CCS price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
+        print(ccs.name + " price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
         if ccsPrice < smallestPrice:
             smallestPrice = ccsPrice
 

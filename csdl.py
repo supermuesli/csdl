@@ -1,4 +1,3 @@
-import logging
 import sys
 import tempfile
 from abc import ABC, abstractmethod
@@ -12,20 +11,23 @@ class Attribute:
         self.gitRepo = None
         self.commit = None
         self.filePath = None
-        self.original = None
+        self.original = False
         self.id = None
         self.mutable = False
 
-    def setId(self, gitRepo, filePath, original=False, commit=None):
+    """ you call this if you create a new custom attribute """
+    def setId(self, gitRepo, filePath, original=True, commit=None):
         self.gitRepo = gitRepo
         self.commit = commit
         self.filePath = filePath
+        self.original = original
         self.id = gitRepo + "/" + filePath
         if self.commit is not None:
             self.id += "@" + self.commit
         else:
             self.id += "@latest"
 
+    """ you call this if you want to use a custom attribute """
     def inject(self, gitRepo, filePath, commit=None):
         self.setId(gitRepo, filePath, commit)
         if not self.original:
@@ -33,15 +35,16 @@ class Attribute:
             tempDir = tempfile.TemporaryDirectory()
             porcelain.clone(self.gitRepo, tempDir.name)
             if self.commit is not None:
+                print("switch to commit " + self.commit)
                 porcelain.update_head(tempDir.name, self.commit)
 
             # inject metamodel into this Attribute
             modulePath = tempDir.name + "/" + filePath
             moduleName = filePath.split("/")[-1].split(".py")[0]
             moduleDir = ''.join(modulePath.split(moduleName + ".py"))
-            logging.debug("modulePath: ", modulePath)
-            logging.debug("moduleName: ", moduleName)
-            logging.debug("moduleDir: ", moduleDir)
+            print("modulePath: ", modulePath)
+            print("moduleName: ", moduleName)
+            print("moduleDir: ", moduleDir)
 
             # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
             # module = importlib.util.module_from_spec(spec)
@@ -58,9 +61,9 @@ class Attribute:
             #exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
             if commit is not None:
-                assert self.id == gitRepo + "/" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath)
+                assert self.id == gitRepo + "/" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
             else:
-                assert self.id == gitRepo + "/" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath)
+                assert self.id == gitRepo + "/" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
             tempDir.cleanup()
 
 
