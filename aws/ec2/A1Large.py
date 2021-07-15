@@ -40,15 +40,13 @@ class A1Large(VMAsAService):
             def run(self, req: Attribute):
                 # iterate over all fields of the given requirement and check for the elasticIpAmount ID
                 fields = vars(req)  # https://stackoverflow.com/a/55320647
-                print(fields)
                 for key in fields:
                     try:
-                        print(fields[key].id)
                         if fields[key].id == "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py":
-                            if req.elasticIpAmount.value == 1:
+                            if fields[key].value == 1:
                                 return 2
-                            if req.elasticIpAmount.value > 1:
-                                return req.elasticIpAmount.value * 2.5
+                            if fields[key].value > 1:
+                                return fields[key].value * 2.5
                     except:
                         pass
                 return 0
