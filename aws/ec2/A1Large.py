@@ -40,6 +40,7 @@ class A1Large(VMAsAService):
             def run(self, req: Attribute):
                 # iterate over all fields of the given requirement and check for the elasticIpAmount ID
                 fields = vars(req)  # https://stackoverflow.com/a/55320647
+                print(fields)
                 for key in fields:
                     try:
                         print(fields[key].id)
