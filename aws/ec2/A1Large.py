@@ -48,6 +48,7 @@ class A1Large(VMAsAService):
                             if req.elasticIpAmount.value > 1:
                                 return req.elasticIpAmount.value * 2.5
                     except:
+                        print("no requirements fields matched with elasticIpPrice")
                         pass
                 return 0
 
