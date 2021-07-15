@@ -42,7 +42,7 @@ class A1Large(VMAsAService):
                 fields = vars(req)  # https://stackoverflow.com/a/55320647
                 for key in fields:
                     try:
-                        if fields[key].id == "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py":
+                        if fields[key].id == "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@dd24e3ee6dc7c449f9635ae7b18268af4bc277c5":
                             if fields[key].value == 1:
                                 return 2
                             if fields[key].value > 1:

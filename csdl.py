@@ -1,3 +1,4 @@
+import logging
 import sys
 import tempfile
 from abc import ABC, abstractmethod
@@ -21,9 +22,11 @@ class Attribute:
         self.id = gitRepo + "/" + filePath
         if self.commit is not None:
             self.id += "@" + self.commit
+        else:
+            self.id += "@latest"
 
-    def inject(self, gitRepo, filePath):
-        self.setId(gitRepo, filePath)
+    def inject(self, gitRepo, filePath, commit=None):
+        self.setId(gitRepo, filePath, commit)
 
         # git clone metamodel repository
         tempDir = tempfile.TemporaryDirectory()
@@ -31,12 +34,13 @@ class Attribute:
         if self.commit is not None:
             porcelain.update_head(tempDir.name, self.commit)
 
+        # inject metamodel into this Attribute
         modulePath = tempDir.name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
         moduleDir = ''.join(modulePath.split(moduleName + ".py"))
-        print("modulePath: ", modulePath)
-        print("moduleName: ", moduleName)
-        print("moduleDir: ", moduleDir)
+        logging.debug("modulePath: ", modulePath)
+        logging.debug("moduleName: ", moduleName)
+        logging.debug("moduleDir: ", moduleDir)
 
         # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
         # module = importlib.util.module_from_spec(spec)
