@@ -29,7 +29,7 @@ class A1Large(VMAsAService):
 
         # non-inherited fields
         self.elasticIpAmount = NumericAttribute()
-        self.elasticIpAmount.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py")
+        self.elasticIpAmount.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py", commit="dd24e3ee6dc7c449f9635ae7b18268af4bc277c5")
         self.elasticIpAmount.mutable = True
 
         # price functions

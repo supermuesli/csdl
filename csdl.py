@@ -9,14 +9,18 @@ class Attribute:
         super().__init__()
         self.name = None
         self.gitRepo = None
+        self.commit = None
         self.filePath = None
         self.id = None
         self.mutable = False
 
-    def setId(self, gitRepo, filePath):
+    def setId(self, gitRepo, filePath, commit=None):
         self.gitRepo = gitRepo
+        self.commit = commit
         self.filePath = filePath
         self.id = gitRepo + "/" + filePath
+        if self.commit is not None:
+            self.id += "@" + self.commit
 
     def inject(self, gitRepo, filePath):
         self.setId(gitRepo, filePath)
@@ -24,6 +28,8 @@ class Attribute:
         # git clone metamodel repository
         tempDir = tempfile.TemporaryDirectory()
         porcelain.clone(self.gitRepo, tempDir.name)
+        if self.commit is not None:
+            porcelain.update_head(tempDir.name, self.commit)
 
         modulePath = tempDir.name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
@@ -44,7 +50,7 @@ class Attribute:
                                                                      # moduleName. also read
                                                                      # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
 
-        exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
+        #exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
         assert self.id == gitRepo + "/" + filePath, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath)
 
