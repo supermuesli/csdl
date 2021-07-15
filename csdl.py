@@ -40,14 +40,14 @@ class Attribute:
 
         sys.path.insert(1, moduleDir)
         exec("from " + moduleName + " import *")
-        exec("print(" + moduleName + "().__dict__)")
         exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the
                                                                      # moduleName. also read
                                                                      # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
 
         exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
-        assert self.id == gitRepo + "/" + filePath, "failed to inject CCS model properly"
+        assert self.id == gitRepo + "/" + filePath, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath)
+
         tempDir.cleanup()
 
 
