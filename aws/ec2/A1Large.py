@@ -38,11 +38,12 @@ class A1Large(VMAsAService):
                 super().__init__()
 
             def run(self, req: Attribute):
-                if self.attributeMatch(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest"):
-                    if req.value == 1:
+                match = self.match(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest")
+                if match is not None:
+                    if match.value == 1:
                         return 2
-                    if req.value > 1:
-                        return req.value * 2.5
+                    if match.value > 1:
+                        return match.value * 2.5
                 return 0
 
         class defaultPrice(PriceFunc):
