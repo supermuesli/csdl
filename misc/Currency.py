@@ -6,5 +6,5 @@ class Currency(ChoiceAttribute):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "misc/Currency.py")
 
-        self.value = self.options[0]
         self.options = ["us-dollar", "euro", "yen"]
+        self.value = self.options[0]
