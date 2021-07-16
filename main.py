@@ -17,7 +17,7 @@ def main():
     req.staticIpAddresses.value = 5
 
     # price estimate of cheapest ccs that fits requirements
-    print(estimate(req))
+    estimate(req)
 
 
 if __name__ == "__main__":

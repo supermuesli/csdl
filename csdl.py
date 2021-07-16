@@ -144,6 +144,17 @@ class PriceFunc(ABC):
     def run(self, req: Attribute):
         pass
 
+    def attributeMatch(self, req, attributeId):
+        # iterate over all fields of the given requirement and check for the elasticIpAmount ID
+        fields = vars(req)  # https://stackoverflow.com/a/55320647
+        for key in fields:
+            try:
+                if fields[key].id == attributeId:
+                    return True
+            except:
+                pass
+        return False
+
 
 class CCS(Attribute):
     def __init__(self):
