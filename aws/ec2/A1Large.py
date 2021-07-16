@@ -29,7 +29,7 @@ class A1Large(VMAsAService):
 
         # non-inherited fields
         self.elasticIpAmount = NumericAttribute()
-        self.elasticIpAmount.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py", commit="79876fa")
+        self.elasticIpAmount.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py", commit=b"79876fa")
         self.elasticIpAmount.mutable = True
 
         # price functions
@@ -42,7 +42,7 @@ class A1Large(VMAsAService):
                 fields = vars(req)  # https://stackoverflow.com/a/55320647
                 for key in fields:
                     try:
-                        if fields[key].id == "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@79876fa":
+                        if fields[key].id == "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@" + b"79876fa":
                             if fields[key].value == 1:
                                 return 2
                             if fields[key].value > 1:
