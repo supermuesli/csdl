@@ -23,9 +23,15 @@ class EBS(StorageAsAService):
                 self.description = "what you pay regardless of all configurations"
 
             def run(self, req):
-                print("Type: ", type(req))
-                if type(req) is StorageAsAService:
-                    return 1.25 * req.storage.value
+                # if requirement if of StorageAsAService type
+                if matchCCS(req, StorageAsAService()):
+                    return 1.25*req.storage.value
+
+                # if requirement has a field that is of StorageAsAService type
+                match = matchField(req, "StorageAsAService")
+                if match is not None:
+                    return 1.25*match.storage.value
+
                 return 0
 
         # price

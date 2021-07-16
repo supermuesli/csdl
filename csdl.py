@@ -71,12 +71,14 @@ class Attribute:
 class BoolAttribute(Attribute):
     def __init__(self):
         super().__init__()
+        self.id = "BoolAttribute"
         self.value = None
 
 
 class ChoiceAttribute(Attribute):
     def __init__(self):
         super().__init__()
+        self.id = "ChoiceAttribute"
         self.value = None
         self.options = None
 
@@ -84,6 +86,7 @@ class ChoiceAttribute(Attribute):
 class NumericAttribute(Attribute):
     def __init__(self):
         super().__init__()
+        self.id = "NumericAttribute"
         self.value = None
         self.minVal = None
         self.maxVal = None
@@ -149,18 +152,21 @@ class PriceFunc(ABC):
 class CCS(Attribute):
     def __init__(self):
         super().__init__()
+        self.id = "CCS"
         self.price = None
 
 
 class IaaS(CCS):
     def __init__(self):
         super().__init__()
+        self.id = "IaaS"
         self.region = ChoiceAttribute()
 
 
 class StorageAsAService(IaaS):
     def __init__(self):
         super().__init__()
+        self.id = "StorageAsAService"
         self.storage = NumericAttribute()
         self.storageWriteSpeed = NumericAttribute()
         self.storageReadSpeed = NumericAttribute()
@@ -169,6 +175,7 @@ class StorageAsAService(IaaS):
 class ServerAsAService(IaaS):
     def __init__(self):
         super().__init__()
+        self.id = "ServerAsAService"
         self.os = ChoiceAttribute()
         self.cpuCores = NumericAttribute()
         self.cpuClockSpeed = NumericAttribute()
@@ -184,13 +191,14 @@ class ServerAsAService(IaaS):
 class VMAsAService(ServerAsAService):
     def __init__(self):
         super().__init__()
+        self.id = "VMAsAService"
         self.storage = StorageAsAService()
 
 
 class SaaS(CCS):
     def __init__(self):
         super().__init__()
-        pass
+        self.id = "SaaS"
 
 
 def matchField(attribute, attributeId):

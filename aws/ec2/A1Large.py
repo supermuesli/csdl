@@ -38,7 +38,7 @@ class A1Large(VMAsAService):
                 super().__init__()
                 self.description = "the amount of elastic ips specified takes a toll on the price"
 
-            def run(self, req: Attribute):
+            def run(self, req):
                 # check if the requirements contain this specific field
                 match = matchField(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest")
 
@@ -57,7 +57,7 @@ class A1Large(VMAsAService):
                 super().__init__()
                 self.description = "what you pay regardless of all configurations"
 
-            def run(self, req: Attribute):
+            def run(self, req):
                 return 1.25
 
         # price
