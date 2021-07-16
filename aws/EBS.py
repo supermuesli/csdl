@@ -6,6 +6,8 @@ class EBS(StorageAsAService):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "aws/EBS.py")
 
+        self.name = "Elastic Block Storage"
+
         self.storageReadSpeed.value = 1000
         self.storageReadSpeed.mutable = False
 
