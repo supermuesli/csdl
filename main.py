@@ -9,7 +9,7 @@ def main():
     # common attribute requirements (fields from hierarchy classes)
     req.ram.value = 16
     req.cpuCores.value = 4
-    req.storage.storage.value = 500
+    req.storage.storage.value = 50
 
     # custom attribute requirements
     req.staticIpAddresses = NumericAttribute()

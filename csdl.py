@@ -161,6 +161,7 @@ class IaaS(CCS):
         super().__init__()
         self.id = "IaaS"
         self.region = ChoiceAttribute()
+        self.region.id = "region"
 
 
 class StorageAsAService(IaaS):
@@ -168,8 +169,11 @@ class StorageAsAService(IaaS):
         super().__init__()
         self.id = "StorageAsAService"
         self.storage = NumericAttribute()
+        self.storage.id = "storage"
         self.storageWriteSpeed = NumericAttribute()
+        self.storageWriteSpeed.id = "storageWriteSpeed"
         self.storageReadSpeed = NumericAttribute()
+        self.storageReadSpeed.id = "storageReadSpeed"
 
 
 class ServerAsAService(IaaS):
@@ -177,16 +181,25 @@ class ServerAsAService(IaaS):
         super().__init__()
         self.id = "ServerAsAService"
         self.os = ChoiceAttribute()
+        self.os.id = "os"
         self.cpuCores = NumericAttribute()
+        self.cpuCores.id = "cpuCores"
         self.cpuClockSpeed = NumericAttribute()
+        self.cpuClockSpeed.id = "cpuClockSpeed"
         self.ram = NumericAttribute()
+        self.ram.id = "ram"
         self.ramClockSpeed = NumericAttribute()
+        self.ramClockSpeed.id = "ramClockSpeed"
         self.ramWriteSpeed = NumericAttribute()
+        self.ramWriteSpeed.id = "ramWriteSpeed"
         self.ramReadSpeed = NumericAttribute()
+        self.ramReadSpeed.id = "ramReadSpeed"
         self.networkCapacity = NumericAttribute()
+        self.networkCapacity.id = "networkCapacity"
         self.networkUploadSpeed = NumericAttribute()
+        self.networkUploadSpeed.id = "networkUploadSpeed"
         self.networkDownloadSpeed = NumericAttribute()
-
+        self.networkDownloadSpeed.id = "networkDownloadSpeed"
 
 class VMAsAService(ServerAsAService):
     def __init__(self):
@@ -201,8 +214,22 @@ class SaaS(CCS):
         self.id = "SaaS"
 
 
+def extractAttributes(attribute):
+    """ get all fields that are CSDL attributes """
+    res = []
+    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+    for key in fields:
+        try:
+            if Attribute in fields[key].mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
+                res += [fields[key]]
+        except:
+            pass
+    return res
+
+
 def matchField(attribute, attributeId):
-    """ get the field belonging to attribute with the given attributeId """
+    """ get the field belonging to attribute with the given attributeId.
+        for all attributes all attribute fields must be unique """
     fields = vars(attribute)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
@@ -214,10 +241,20 @@ def matchField(attribute, attributeId):
 
 
 def matchCCS(req, ccs):
-    """ check if the requirements match with the given CCS """
-    if type(req) is type(ccs):
-        if type(ccs) is SaaS:
-            # TODO addiontally match using the tags and fulltext or something. return True for now
-            return True
-        return True
-    return False
+    """ check if requirements match with a given CCS """
+    reqAttributes = extractAttributes(req)
+    ccsAttributes = extractAttributes(ccs)
+
+    for ra in reqAttributes:
+        for ca in ccsAttributes:
+            if ra.id == ca.id:
+                if type(ra) is NumericAttribute:
+                    if ra.value < ca.value:
+                        return False
+                elif type(ra) is ChoiceAttribute or type(ra) is BoolAttribute:
+                    if ra.value != ca.value:
+                        return False
+                elif CCS in ra.__class__.mro():
+                    return matchCCS(req, ra)
+
+    return True
