@@ -16,3 +16,22 @@ class EBS(StorageAsAService):
         self.storage.minVal = 100
         self.storage.maxVal = 10000
         self.storage.mutable = True
+
+        class defaultPrice(PriceFunc):
+            def __init__(self):
+                super().__init__()
+                self.description = "what you pay regardless of all configurations"
+
+            def run(self, req: Attribute):
+                return 1.25
+
+        # price
+        self.price = Price()
+        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
+        self.price.currency.value = self.price.currency.options[0]
+        self.price.currency.mutable = False
+        self.price.priceFuncs = [defaultPrice()]
+
+        self.price.model = Hybrid()
+        self.price.model.upFrontCost = 0
+        self.price.model.billingPeriod = 1  # per hour

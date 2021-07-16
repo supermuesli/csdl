@@ -36,19 +36,26 @@ class A1Large(VMAsAService):
         class elasticIpPrice(PriceFunc):
             def __init__(self):
                 super().__init__()
+                self.description = "the amount of elastic ips specified takes a toll on the price"
 
             def run(self, req: Attribute):
-                match = self.match(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest")
+                # check if the requirements contain this specific field
+                match = matchField(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest")
+
+                # if there was a match, then we can compute the price
                 if match is not None:
                     if match.value == 1:
                         return 2
                     if match.value > 1:
                         return match.value * 2.5
+
+                # otherwise we assume a default value and the corresponding price
                 return 0
 
         class defaultPrice(PriceFunc):
             def __init__(self):
                 super().__init__()
+                self.description = "what you pay regardless of all configurations"
 
             def run(self, req: Attribute):
                 return 1.25

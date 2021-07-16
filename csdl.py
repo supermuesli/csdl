@@ -31,6 +31,7 @@ class Attribute:
     """ you call this if you want to use a custom attribute """
     def inject(self, gitRepo, filePath, commit=None):
         self.setId(gitRepo, filePath, commit=commit, original=False)
+        
         # git clone metamodel repository
         tempDir = tempfile.TemporaryDirectory()
         porcelain.clone(self.gitRepo, tempDir.name)
@@ -90,6 +91,26 @@ class NumericAttribute(Attribute):
         self.makeInt = False
 
 
+""" get field of attribute that matches attributeId's attribute """
+def matchField(attribute, attributeId):
+    # iterate over all fields of the given attribute and check if any match with attributeId's attribute
+    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+    for key in fields:
+        try:
+            if fields[key].id == attributeId:
+                return fields[key]
+        except:
+            pass
+    return None
+
+
+""" check if the requirements match with the given CCS """
+def matchCCS(req, ccs):
+    if type(req) is type(ccs):
+        return True
+    return False
+
+
 class PricingModel:
     def __init__(self):
         super().__init__()
@@ -143,17 +164,6 @@ class PriceFunc(ABC):
     @abstractmethod
     def run(self, req: Attribute):
         pass
-
-    def match(self, req, attributeId):
-        # iterate over all fields of the given requirement and check for the elasticIpAmount ID
-        fields = vars(req)  # https://stackoverflow.com/a/55320647
-        for key in fields:
-            try:
-                if fields[key].id == attributeId:
-                    return fields[key]
-            except:
-                pass
-        return None
 
 
 class CCS(Attribute):
