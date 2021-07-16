@@ -23,48 +23,48 @@ class Attribute:
         self.original = original
         self.id = gitRepo + "/" + filePath
         if self.commit is not None:
+            self.commit = "refs/" + self.commit
             self.id += "@" + self.commit
         else:
             self.id += "@latest"
 
     """ you call this if you want to use a custom attribute """
     def inject(self, gitRepo, filePath, commit=None):
-        self.setId(gitRepo, filePath, commit)
-        if not self.original:
-            # git clone metamodel repository
-            tempDir = tempfile.TemporaryDirectory()
-            porcelain.clone(self.gitRepo, tempDir.name)
-            if self.commit is not None:
-                print("switch to commit " + self.commit)
-                porcelain.update_head(tempDir.name, self.commit)
+        self.setId(gitRepo, filePath, commit=commit, original=False)
+        # git clone metamodel repository
+        tempDir = tempfile.TemporaryDirectory()
+        porcelain.clone(self.gitRepo, tempDir.name)
+        if self.commit is not None:
+            print("checkout commit " + self.commit)
+            porcelain.update_head(tempDir.name, self.commit)
 
-            # inject metamodel into this Attribute
-            modulePath = tempDir.name + "/" + filePath
-            moduleName = filePath.split("/")[-1].split(".py")[0]
-            moduleDir = ''.join(modulePath.split(moduleName + ".py"))
-            print("modulePath: ", modulePath)
-            print("moduleName: ", moduleName)
-            print("moduleDir: ", moduleDir)
+        # inject metamodel into this Attribute
+        modulePath = tempDir.name + "/" + filePath
+        moduleName = filePath.split("/")[-1].split(".py")[0]
+        moduleDir = ''.join(modulePath.split(moduleName + ".py"))
+        print("modulePath: ", modulePath)
+        print("moduleName: ", moduleName)
+        print("moduleDir: ", moduleDir)
 
-            # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
-            # module = importlib.util.module_from_spec(spec)
-            # spec.loader.exec_module(module)
-            # sys.modules[tempDir.name] = module
-            # print("module: ", module)
+        # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
+        # module = importlib.util.module_from_spec(spec)
+        # spec.loader.exec_module(module)
+        # sys.modules[tempDir.name] = module
+        # print("module: ", module)
 
-            sys.path.insert(1, moduleDir)
-            exec("from " + moduleName + " import *")
-            exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the
-                                                                         # moduleName. also read
-                                                                         # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+        sys.path.insert(1, moduleDir)
+        exec("from " + moduleName + " import *")
+        exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the
+                                                                     # moduleName. also read
+                                                                     # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
 
-            #exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
+        #exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
-            if commit is not None:
-                assert self.id == gitRepo + "/" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
-            else:
-                assert self.id == gitRepo + "/" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
-            tempDir.cleanup()
+        if commit is not None:
+            assert self.id == gitRepo + "/" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
+        else:
+            assert self.id == gitRepo + "/" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
+        tempDir.cleanup()
 
 
 class BoolAttribute(Attribute):
