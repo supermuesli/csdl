@@ -7,7 +7,7 @@ def main():
     req = VMAsAService()
 
     # common attribute requirements (fields from hierarchy classes)
-    req.ram.value = 16
+    req.ram.value = 4
     req.cpuCores.value = 4
     req.storage.storage.value = 50
 

@@ -92,6 +92,7 @@ class NumericAttribute(Attribute):
         self.maxVal = None
         self.stepSize = None
         self.makeInt = False
+        self.moreIsBetter = True
 
 
 class PricingModel:
@@ -220,7 +221,7 @@ def extractAttributes(attribute):
     fields = vars(attribute)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if Attribute in fields[key].mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
+            if Attribute in fields[key].__class__.mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
                 res += [fields[key]]
         except:
             pass
@@ -248,13 +249,30 @@ def matchCCS(req, ccs):
     for ra in reqAttributes:
         for ca in ccsAttributes:
             if ra.id == ca.id:
-                if type(ra) is NumericAttribute:
-                    if ra.value < ca.value:
-                        return False
-                elif type(ra) is ChoiceAttribute or type(ra) is BoolAttribute:
-                    if ra.value != ca.value:
-                        return False
-                elif CCS in ra.__class__.mro():  # CCS is a super class of ra
+                if ra.value is not None and ca.value is None:
+                    print(1)
+                    return False
+                if ra.value is not None and ca.value is not None:
+                    if type(ra) is NumericAttribute:
+                        if ca.moreIsBetter:
+                            if not ca.mutable and ca.maxVal < ra.value:
+                                if ra.value < ca.value:
+                                    print(2)
+                                    return False
+                        else:
+                            if not ca.mutable and ca.maxVal > ra.value:
+                                if ra.value > ca.value:
+                                    print(2)
+                                    return False
+                    elif type(ra) is ChoiceAttribute or type(ra) is BoolAttribute:
+                        if not ca.mutable:
+                            if ra.value != ca.value:
+                                print(3)
+                                return False
+                if CCS in ra.__class__.mro():  # CCS is a super class of ra
                     return matchCCS(req, ra)
-
+                else:
+                    # some requirement was given that can not be fulfilled by this CCS
+                    print(4)
+                    return False
     return True
