@@ -23,7 +23,7 @@ class EBS(StorageAsAService):
                 self.description = "what you pay regardless of all configurations"
 
             def run(self, req):
-                if matchCCS(req, StorageAsAService):
+                if matchCCS(req, StorageAsAService()):
                     return 1.25*req.storage.value
                 return 0
 
