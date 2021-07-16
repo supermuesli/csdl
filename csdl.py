@@ -249,30 +249,47 @@ def matchCCS(req, ccs):
     for ra in reqAttributes:
         for ca in ccsAttributes:
             if ra.id == ca.id:
-                if ra.value is not None and ca.value is None:
-                    print(1)
-                    return False
-                if ra.value is not None and ca.value is not None:
-                    if type(ra) is NumericAttribute:
+                if type(ra) is NumericAttribute:
+                    if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
+                        print(1)
+                        return False
+                    if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
                         if ca.moreIsBetter:
-                            if not ca.mutable and ca.maxVal < ra.value:
-                                if ra.value < ca.value:
+                            if not ca.mutable:
+                                if ra.value < ca.value:  # value is too small and not mutable
                                     print(2)
+                                    return False
+                            if ca.maxVal is not None:
+                                if ca.maxVal < ra.value:  # value cannot be made large enough
+                                    print(3)
                                     return False
                         else:
-                            if not ca.mutable and ca.maxVal > ra.value:
-                                if ra.value > ca.value:
-                                    print(2)
+                            if not ca.mutable:
+                                if ra.value > ca.value:  # value is too large and not mutable
+                                    print(4)
                                     return False
-                    elif type(ra) is ChoiceAttribute or type(ra) is BoolAttribute:
-                        if not ca.mutable:
-                            if ra.value != ca.value:
-                                print(3)
-                                return False
-                if CCS in ra.__class__.mro():  # CCS is a super class of ra
-                    return matchCCS(req, ra)
-                else:
-                    # some requirement was given that can not be fulfilled by this CCS
-                    print(4)
-                    return False
+                            if ca.minVal is not None:
+                                if ca.minVal > ra.value:  # value cannot be made small enough
+                                    print(5)
+                                    return False
+                    reqAttributes.remove(ra)  # requirement is fulfilled
+                elif type(ra) is BoolAttribute:
+                    if not ca.mutable:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(6)
+                            return False
+                    reqAttributes.remove(ra)  # requirement is fulfilled
+                elif type(ra) is ChoiceAttribute:
+                    if ca.mutable:
+                        if ra.value not in ca.options:  # value mutable but not available
+                            print(7)
+                            return False
+                    else:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(8)
+                            return False
+                    reqAttributes.remove(ra)  # requirement is fulfilled
+
+            if CCS in ra.__class__.mro():  # CCS is a super class of ra
+                return matchCCS(req, ra)
     return True
