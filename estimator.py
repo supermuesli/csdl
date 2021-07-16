@@ -12,10 +12,11 @@ def estimate(req: Attribute):
 
     db = [vm1, ebs1]
 
-    # for loop and inject attributes and compute prices given the requirement
+    # scan through entire CCS database and find matches
     smallestPrice = inf
     cheapestCCS = None
     for ccs in db:
+        # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
             # get price this CCS using the given requirements as configurations
             ccsPrice = ccs.price.get(req)
@@ -24,7 +25,9 @@ def estimate(req: Attribute):
             # TODO take into account pricing model as well
 
             # print results
-            print(ccs.name + " price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
+            print("found match:", ccs.name)
+            print("price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
+            print("configuration: ", vars(ccs))
 
             # evaluate
             if ccsPrice < smallestPrice:

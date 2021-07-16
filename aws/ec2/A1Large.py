@@ -63,9 +63,8 @@ class A1Large(VMAsAService):
         # price
         self.price = Price()
         self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
-        self.price.currency.value = self.price.currency.options[0]
-        self.price.currency.mutable = False
-        self.price.priceFuncs = [defaultPrice(), elasticIpPrice()]
+        self.price.currency.value = self.price.currency.options[0]  # index needs to be known by the user. a pycharm plugin might help
+        self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.storage.price.priceFuncs
 
         self.price.model = Hybrid()
         self.price.model.upFrontCost = 0

@@ -15,8 +15,8 @@ class Attribute:
         self.id = None
         self.mutable = False
 
-    """ you call this if you create a new custom attribute """
     def setId(self, gitRepo, filePath, original=True, commit=None):
+        """ you call this if you create a new custom attribute """
         self.gitRepo = gitRepo
         self.commit = commit
         self.filePath = filePath
@@ -28,10 +28,10 @@ class Attribute:
         else:
             self.id += "@latest"
 
-    """ you call this if you want to use a custom attribute """
     def inject(self, gitRepo, filePath, commit=None):
+        """ you call this if you want to use a custom attribute """
         self.setId(gitRepo, filePath, commit=commit, original=False)
-        
+
         # git clone metamodel repository
         tempDir = tempfile.TemporaryDirectory()
         porcelain.clone(self.gitRepo, tempDir.name)
@@ -56,8 +56,8 @@ class Attribute:
         sys.path.insert(1, moduleDir)
         exec("from " + moduleName + " import *")
         exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the
-                                                                     # moduleName. also read
-                                                                     # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+        # moduleName. also read
+        # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
 
         #exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
@@ -89,26 +89,6 @@ class NumericAttribute(Attribute):
         self.maxVal = None
         self.stepSize = None
         self.makeInt = False
-
-
-""" get field of attribute that matches attributeId's attribute """
-def matchField(attribute, attributeId):
-    # iterate over all fields of the given attribute and check if any match with attributeId's attribute
-    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
-    for key in fields:
-        try:
-            if fields[key].id == attributeId:
-                return fields[key]
-        except:
-            pass
-    return None
-
-
-""" check if the requirements match with the given CCS """
-def matchCCS(req, ccs):
-    if type(req) is type(ccs):
-        return True
-    return False
 
 
 class PricingModel:
@@ -148,8 +128,8 @@ class Price:
         self.priceFuncs = []
         self.model = None
 
-    """ returns the total price """
-    def get(self, req: Attribute):
+    def get(self, req):
+        """ returns the total price """
         return sum(pf.run(req) for pf in self.priceFuncs)
 
 
@@ -160,9 +140,9 @@ class PriceFunc(ABC):
         self.description = None
         self.value = 0
 
-    """ returns the value of this price function """
     @abstractmethod
-    def run(self, req: Attribute):
+    def run(self, req):
+        """ returns the value of this price function """
         pass
 
 
@@ -212,3 +192,24 @@ class SaaS(CCS):
         super().__init__()
         pass
 
+
+def matchField(attribute, attributeId):
+    """ get the field belonging to attribute with the given attributeId """
+    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+    for key in fields:
+        try:
+            if fields[key].id == attributeId:
+                return fields[key]
+        except:
+            pass
+    return None
+
+
+def matchCCS(req, ccs):
+    """ check if the requirements match with the given CCS """
+    if type(req) is type(ccs):
+        if type(ccs) is SaaS:
+            # TODO addiontally match using the tags and fulltext or something. return True for now
+            return True
+        return True
+    return False

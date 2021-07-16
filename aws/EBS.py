@@ -13,7 +13,7 @@ class EBS(StorageAsAService):
         self.storageWriteSpeed.mutable = False
 
         self.storage.makeInt = True
-        self.storage.minVal = 100
+        self.storage.minVal = 5
         self.storage.maxVal = 10000
         self.storage.mutable = True
 
@@ -23,7 +23,7 @@ class EBS(StorageAsAService):
                 self.description = "what you pay regardless of all configurations"
 
             def run(self, req: Attribute):
-                return 1.25
+                return 5.25
 
         # price
         self.price = Price()
@@ -33,5 +33,5 @@ class EBS(StorageAsAService):
         self.price.priceFuncs = [defaultPrice()]
 
         self.price.model = Hybrid()
-        self.price.model.upFrontCost = 0
+        self.price.model.upFrontCost = 50
         self.price.model.billingPeriod = 1  # per hour
