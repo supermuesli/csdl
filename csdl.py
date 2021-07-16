@@ -22,8 +22,9 @@ class Attribute:
         self.filePath = filePath
         self.original = original
         self.id = gitRepo + "/" + filePath
-        if self.commit is not None:
+        if self.commit is not None and not self.original:
             self.id += "@" + self.commit
+            self.commit = b"refs/heads/master/" + self.commit
         else:
             self.id += "@latest"
 

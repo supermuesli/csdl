@@ -13,7 +13,7 @@ def main():
 
     # custom attribute requirements
     req.staticIpAddresses = NumericAttribute()
-    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py", commit=b"79876fa")
+    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py")
     req.staticIpAddresses.value = 5
 
     # price estimate of cheapest ccs that fits requirements
