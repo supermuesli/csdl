@@ -24,7 +24,7 @@ class EBS(StorageAsAService):
 
             def run(self, req):
                 # if requirement if of StorageAsAService type
-                if matchCCS(req, StorageAsAService()):
+                if type(req) is StorageAsAService:
                     return 1.25*req.storage.value
 
                 # if requirement has a field that is of StorageAsAService type

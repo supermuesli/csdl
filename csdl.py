@@ -254,7 +254,7 @@ def matchCCS(req, ccs):
                 elif type(ra) is ChoiceAttribute or type(ra) is BoolAttribute:
                     if ra.value != ca.value:
                         return False
-                elif CCS in ra.__class__.mro():
+                elif CCS in ra.__class__.mro():  # CCS is a super class of ra
                     return matchCCS(req, ra)
 
     return True
