@@ -25,6 +25,9 @@ def main():
     # price estimate of cheapest ccs that fits requirements
     estimate(req, usageHours)
 
+    # delete temporary git repositories
+    cleanGitCache()
+
 
 if __name__ == "__main__":
     main()

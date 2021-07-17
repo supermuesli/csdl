@@ -1,10 +1,11 @@
 from csdl import *
 
 
-class A1Large(VMAsAService):
+class A1Large(CCS):
     def __init__(self):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
+        self.extendsId("VMAsAService")
 
         # inherited fields
         self.name = "Elastic Cloud Compute a1.large"

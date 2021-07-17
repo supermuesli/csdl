@@ -1,7 +1,25 @@
+import ast
+import logging
 import sys
 import tempfile
 from abc import ABC, abstractmethod
+
 from dulwich import porcelain
+
+""" caches all cloned git repositories """
+ccsGitCache = {}
+
+
+def cleanGitCache():
+    """ delete all temporary directories that were created to clone git repositories into """
+    for gitRepo in ccsGitCache:
+        ccsGitCache[gitRepo].cleanup()
+        del ccsGitCache[gitRepo]
+
+
+def nodeDepth(node):
+    """ get the height of an abstract syntax tree node """
+    return 1 + max(map(nodeDepth, ast.iter_child_nodes(node)), default=0)
 
 
 class Attribute:
@@ -11,62 +29,99 @@ class Attribute:
         self.gitRepo = None
         self.commit = None
         self.filePath = None
-        self.original = False
         self.id = None
         self.extendsId = None
         self.mutable = False
 
-    def setId(self, gitRepo, filePath, original=True, commit=None):
+    def setId(self, gitRepo, filePath, commit=None):
         """ you call this if you create a new custom attribute """
         self.gitRepo = gitRepo
         self.commit = commit
         self.filePath = filePath
-        self.original = original
         self.id = gitRepo + "/" + filePath
-        if self.commit is not None and not self.original:
+        if self.commit is not None:
             self.id += "@" + self.commit
-            self.commit = b"refs/heads/master/" + self.commit
+            self.commit = "refs/heads/master/" + self.commit
         else:
             self.id += "@latest"
 
     def inject(self, gitRepo, filePath, commit=None):
         """ you call this if you want to use a custom attribute """
-        self.setId(gitRepo, filePath, commit=commit, original=False)
+        self.setId(gitRepo, filePath, commit=commit)
 
         # git clone metamodel repository
-        tempDir = tempfile.TemporaryDirectory()
-        porcelain.clone(self.gitRepo, tempDir.name)
+        if gitRepo not in ccsGitCache:
+            tempDir = tempfile.TemporaryDirectory()
+            porcelain.clone(self.gitRepo, tempDir.name)
+            ccsGitCache[gitRepo] = tempDir
+
         if self.commit is not None:
             print("checkout commit " + self.commit)
-            porcelain.update_head(tempDir.name, self.commit)
+            porcelain.update_head(ccsGitCache[gitRepo].name, self.commit)
+        # TODO else checkout latest commit ...
 
         # inject metamodel into this Attribute
-        modulePath = tempDir.name + "/" + filePath
+        modulePath = ccsGitCache[gitRepo].name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
         moduleDir = ''.join(modulePath.split(moduleName + ".py"))
         # print("modulePath: ", modulePath)
         print("moduleName: ", moduleName)
         # print("moduleDir: ", moduleDir)
 
-        # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
-        # module = importlib.util.module_from_spec(spec)
-        # spec.loader.exec_module(module)
-        # sys.modules[tempDir.name] = module
-        # print("module: ", module)
+        # parse module and recursively inject all dependencies
+        extendsId = None
+        source = open(modulePath, "r").read()
+        root = ast.parse(source)
+
+        closestClass = None
+        try:
+            classes = [node for node in ast.walk(root) if isinstance(node, ast.ClassDef) and node.name == moduleName]
+            closestClass = classes[0]
+            for c in classes:
+                if nodeDepth(c) < nodeDepth(closestClass):
+                    closestClass = c
+        except:
+            logging.error("can not inject %s because it does not define a class with the same name as its filename" % modulePath)
+
+        closestFunction = None
+        try:
+            functions = [node for node in ast.walk(closestClass) if isinstance(node, ast.FunctionDef) and node.name == "__init__"]
+            closestFunction = functions[0]
+            for f in functions:
+                if nodeDepth(f) < nodeDepth(closestFunction):
+                    closestFunction = f
+
+        except:
+            logging.error("can not inject %s because it does not define a __init__ function in its main class" % modulePath)
+
+        closestAssign = None
+        try:
+            assigns = [node for node in ast.walk(closestFunction) if isinstance(node, ast.Assign)]
+            closestAssign = assigns[0]
+            for a in assigns:
+                if nodeDepth(a) < nodeDepth(closestAssign):
+                    closestAssign = a
+
+            extendsId = closestAssign[0].value.value
+        except:
+            logging.error("can not inject %s because it does set the field extendsId" % modulePath)
+
+
+        print("extendsId: ", extendsId)
+
+        sys.exit()
 
         sys.path.insert(1, moduleDir)
         exec("from " + moduleName + " import *")
-        exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the
-        # moduleName. also read
-        # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+        exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
+                                                                     # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+        #exec("global " + moduleName)                                # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
-        #exec("global " + moduleName)                                 # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
-
+        # some asserts for early failure
         if commit is not None:
             assert self.id == gitRepo + "/" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
         else:
             assert self.id == gitRepo + "/" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
-        tempDir.cleanup()
 
 
 class BoolAttribute(Attribute):

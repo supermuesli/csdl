@@ -23,7 +23,7 @@ def estimate(req: Attribute, usageHours):
             # get price this CCS using the given requirements as configurations
             ccsPrice = ccs.price.get(req)
             ccsCurrency = ccs.price.currency.value
-            ccsPricingModel = type(ccs.price.model).__name__
+            ccsPricingModel = ccs.price.model.__class__
 
             # print results
             print("found match:", ccs.name)

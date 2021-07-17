@@ -22,9 +22,10 @@ class EBS(CCS):
         self.storage.mutable = True
 
         class defaultPrice(PriceFunc):
-            def __init__(self):
+            def __init__(self, topClass):
                 super().__init__()
                 self.description = "what you pay regardless of all configurations"
+                self.topClass = topClass
 
             def run(self, req):
                 # get attribute with the id StorageAsAService
@@ -32,14 +33,14 @@ class EBS(CCS):
                 if match is not None:
                     return 1.25*match.storage.value
 
-                return self.storage.minVal * 1.25
+                return self.topClass.minVal * 1.25
 
         # price
         self.price = Price()
         self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
         self.price.currency.value = self.price.currency.options[0]
         self.price.currency.mutable = False
-        self.price.priceFuncs = [defaultPrice()]
+        self.price.priceFuncs = [defaultPrice(self)]
 
         self.price.model = Subscription()
         self.price.model.billingPeriod = 1  # per hour
