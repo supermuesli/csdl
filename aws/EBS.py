@@ -1,12 +1,14 @@
 from csdl import *
 
 
-class EBS(StorageAsAService):
+class EBS(CCS):
     def __init__(self):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "aws/EBS.py")
+        self.extendsId = "StorageAsAService"
 
         self.name = "Elastic Block Storage"
+        self.readme = "my email is: blabla@exmaple.com . i will answer any questions that you have :)"
 
         self.storageReadSpeed.value = 1000
         self.storageReadSpeed.mutable = False
@@ -25,16 +27,12 @@ class EBS(StorageAsAService):
                 self.description = "what you pay regardless of all configurations"
 
             def run(self, req):
-                # if requirement if of StorageAsAService type
-                if type(req) is StorageAsAService:
-                    return 1.25*req.storage.value
-
-                # if requirement has a field that is of StorageAsAService type
+                # get attribute with the id StorageAsAService
                 match = matchField(req, "StorageAsAService")
                 if match is not None:
                     return 1.25*match.storage.value
 
-                return 0
+                return self.storage.minVal * 1.25
 
         # price
         self.price = Price()

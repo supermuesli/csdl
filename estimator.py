@@ -2,7 +2,9 @@ from csdl import *
 from math import inf
 
 
-def estimate(req: Attribute):
+def estimate(req: Attribute, usageHours):
+    """ given some requirements"""
+
     # mock up database of all known CCS (in reality this should be fetched from csdlhub.com or something like that)
     vm1 = VMAsAService()
     vm1.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
@@ -22,7 +24,6 @@ def estimate(req: Attribute):
             ccsPrice = ccs.price.get(req)
             ccsCurrency = ccs.price.currency.value
             ccsPricingModel = type(ccs.price.model).__name__
-            # TODO take into account pricing model as well
 
             # print results
             print("found match:", ccs.name)

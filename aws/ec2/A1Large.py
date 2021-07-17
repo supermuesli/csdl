@@ -39,7 +39,7 @@ class A1Large(VMAsAService):
                 self.description = "the amount of elastic ips specified takes a toll on the price"
 
             def run(self, req):
-                # check if the requirements contain this specific field
+                # check if the requirement contains an elasticIpAmount field
                 match = matchField(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest")
 
                 # if there was a match, then we can compute the price
@@ -49,7 +49,7 @@ class A1Large(VMAsAService):
                     if match.value > 1:
                         return match.value * 2.5
 
-                # otherwise we assume a default value and the corresponding price
+                # otherwise we assume a default value and the corresponding price (0 IPs cost 0 us-dollar)
                 return 0
 
         class defaultPrice(PriceFunc):

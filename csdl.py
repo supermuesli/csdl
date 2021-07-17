@@ -13,6 +13,7 @@ class Attribute:
         self.filePath = None
         self.original = False
         self.id = None
+        self.extendsId = None
         self.mutable = False
 
     def setId(self, gitRepo, filePath, original=True, commit=None):
@@ -43,9 +44,9 @@ class Attribute:
         modulePath = tempDir.name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
         moduleDir = ''.join(modulePath.split(moduleName + ".py"))
-        print("modulePath: ", modulePath)
+        # print("modulePath: ", modulePath)
         print("moduleName: ", moduleName)
-        print("moduleDir: ", moduleDir)
+        # print("moduleDir: ", moduleDir)
 
         # spec = importlib.util.spec_from_file_location(tempDir.name, modulePath)
         # module = importlib.util.module_from_spec(spec)
@@ -101,39 +102,90 @@ class PricingModel:
         self.description = None
 
 
-class Subscription(PricingModel):
+class Static(PricingModel):
+    """ static pricing models only depend on the configuration of the CCS """
     def __init__(self):
         super().__init__()
-        self.billingPeriod = None
 
 
-class PayAndGo(PricingModel):
-    def __init__(self):
-        super().__init__()
-        self.upFrontCost = None
-
-
-class Hybrid(PricingModel):
+class PayAndGo(Static):
+    """ you (pay) an upFrontCost once (and go) on to use the service """
     def __init__(self):
         super().__init__()
         self.upFrontCost = None
-        self.billingPeriod = None
 
 
-class PayPerResource(Subscription):
+class Subscription(Static):
+    """ you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour """
     def __init__(self):
-        pass
+        super().__init__()
+        self.billingPeriodCost = None
+        self.billingPeriod = None  # per hour
+
+
+class PayPerResource(Static):
+    """ you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour """
+    def __init__(self):
+        super().__init__()
+
+
+class Dynamic(PricingModel):
+    """ dynamic pricing models depend on the configuration of the CCS and also on """
+    def __init__(self):
+        super().__init__()
+        self.interpreter = None
+
+
+class DataDriven(Dynamic):
+    """ if python was not the metamodel language, then this datadriven dynamic pricing would not be possible. how else would
+        you describe arbitrary callbacks using a selfmade DSL? it would be possible, but complicated to design a DSL that
+        is in itself turing complete. it makes more sense to just use python directly
+    """
+    def __init__(self):
+        super().__init__()
+        self.dataset = None
+
+    def getEstimatedPrice(self):
+        """ estimate the price based on the given dataset. the interpreter has to be a function that interprets
+            the dataset and returns the current price based on it. note that you have to implement the interpreter
+            first. """
+        return self.interpreter()
+
+
+class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
+    """ any combination of all pricing models. """
+    def __init__(self):
+        super().__init__()
 
 
 class Price:
+    """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
         self.currency = ChoiceAttribute()
         self.priceFuncs = []
         self.model = None
 
-    def get(self, req):
+    def get(self, req, usageHours=0):
         """ returns the total price """
+        if self.model.__class__ is PayAndGo:
+            self.model.upFrontCost = sum(pf.run(req) for pf in self.priceFuncs)
+            return self.model.upFrontCost
+
+        if self.model.__class__ is Subscription:
+            self.model.billingPeriodCost = sum(pf.run(req) for pf in self.priceFuncs)
+            return usageHours/self.model.billingPeriod * self.model.billingPeriodCost
+
+        if self.model.__class__ is PayPerResource:
+            return sum(pf.run(req) for pf in self.priceFuncs)
+
+        if self.model.__class__ is Hybrid:
+            return self.model.interpreter()
+
+        if self.model.__class__ is DataDriven:
+            return self.model.getEstimatedPrice()
+
+        # pricing model defaults to PayPerResource
         return sum(pf.run(req) for pf in self.priceFuncs)
 
 
@@ -202,6 +254,7 @@ class ServerAsAService(IaaS):
         self.networkDownloadSpeed = NumericAttribute()
         self.networkDownloadSpeed.id = "networkDownloadSpeed"
 
+
 class VMAsAService(ServerAsAService):
     def __init__(self):
         super().__init__()
@@ -216,11 +269,12 @@ class SaaS(CCS):
 
 
 def extractAttributes(attribute):
-    """ get all fields that are CSDL attributes """
+    """ get all fields that are CCS attributes """
     res = []
     fields = vars(attribute)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
+            # this is also why CCS have to extend the Attribute class. matchCCS need CCS fields this to match requirements
             if Attribute in fields[key].__class__.mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
                 res += [fields[key]]
         except:
@@ -228,10 +282,15 @@ def extractAttributes(attribute):
     return res
 
 
-def matchField(attribute, attributeId):
-    """ get the field belonging to attribute with the given attributeId.
-        for all attributes all attribute fields must be unique """
-    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+def matchField(ccs, attributeId):
+    """ get the field belonging to attribute with the given attributeId. if the given attribute already has the same
+        attributeId, then the attribute will be returned. note that for all attributes all attribute fields must be
+        unique
+    """
+    if ccs.id == attributeId:
+        return ccs
+
+    fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
             if fields[key].id == attributeId:
@@ -249,7 +308,7 @@ def matchCCS(req, ccs):
     for ra in reqAttributes:
         for ca in ccsAttributes:
             if ra.id == ca.id:
-                if type(ra) is NumericAttribute:
+                if ra.__class__ is NumericAttribute:
                     if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
                         print(1)
                         return False
@@ -272,14 +331,14 @@ def matchCCS(req, ccs):
                                 if ca.minVal > ra.value:  # value cannot be made small enough
                                     print(5)
                                     return False
-                    reqAttributes.remove(ra)  # requirement is fulfilled
-                elif type(ra) is BoolAttribute:
+                    # requirement is fulfilled
+                elif ra.__class__ is BoolAttribute:
                     if not ca.mutable:
                         if ra.value != ca.value:  # value does not match and is not mutable
                             print(6)
                             return False
-                    reqAttributes.remove(ra)  # requirement is fulfilled
-                elif type(ra) is ChoiceAttribute:
+                    # requirement is fulfilled
+                elif ra.__class__ is ChoiceAttribute:
                     if ca.mutable:
                         if ra.value not in ca.options:  # value mutable but not available
                             print(7)
@@ -288,8 +347,8 @@ def matchCCS(req, ccs):
                         if ra.value != ca.value:  # value does not match and is not mutable
                             print(8)
                             return False
-                    reqAttributes.remove(ra)  # requirement is fulfilled
+                    # requirement is fulfilled
 
-            if CCS in ra.__class__.mro():  # CCS is a super class of ra
-                return matchCCS(req, ra)
+                elif CCS in ca.__class__.mro():
+                    return matchCCS(req, ca)
     return True
