@@ -66,6 +66,5 @@ class A1Large(VMAsAService):
         self.price.currency.value = self.price.currency.options[0]  # index needs to be known by the user. a pycharm plugin might help
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.storage.price.priceFuncs
 
-        self.price.model = Hybrid()
-        self.price.model.upFrontCost = 0
+        self.price.model = Subscription()
         self.price.model.billingPeriod = 1  # per hour

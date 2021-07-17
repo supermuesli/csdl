@@ -41,6 +41,5 @@ class EBS(CCS):
         self.price.currency.mutable = False
         self.price.priceFuncs = [defaultPrice()]
 
-        self.price.model = Hybrid()
-        self.price.model.upFrontCost = 50
+        self.price.model = Subscription()
         self.price.model.billingPeriod = 1  # per hour
