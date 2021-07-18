@@ -366,6 +366,8 @@ def matchCCS(req, ccs, reqCache=None):
     for ra in reqAttributes:
         for ca in ccsAttributes:
             if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
+                # TODO if attributes dont match by id directly, check if subclasses match by id if they exist
+
                 if ra.__class__ is NumericAttribute:
                     if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
                         print(1)

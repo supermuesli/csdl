@@ -3,8 +3,9 @@ from csdl import *
 
 
 def main():
-    # requirements
     usageHours = 24
+
+    # user requirements
     req = VMAsAService()
     req.inject("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
 
