@@ -6,7 +6,7 @@ def main():
     # requirements
     usageHours = 24
     req = VMAsAService()
-    req.inject("https://github.com/supermuesli", "examples/Requirement1.py")
+    req.inject("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
     # TODO time interval for estimate function
