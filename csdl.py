@@ -1,6 +1,5 @@
 import ast
 import logging
-import sys
 import tempfile
 from abc import ABC, abstractmethod
 
@@ -9,11 +8,18 @@ from dulwich import porcelain
 """ caches all cloned git repositories """
 ccsGitCache = {}
 
+""" attributes that have already been injected """
+injectedIds = {"VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
+               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute"}
+
 
 def cleanGitCache():
     """ delete all temporary directories that were created to clone git repositories into """
+    gitRepos = []
     for gitRepo in ccsGitCache:
         ccsGitCache[gitRepo].cleanup()
+        gitRepos += [gitRepo]
+    for gitRepo in gitRepos:
         del ccsGitCache[gitRepo]
 
 
@@ -33,7 +39,7 @@ class Attribute:
         self.gitRepo = gitRepo
         self.commit = commit
         self.filePath = filePath
-        self.id = gitRepo + "/" + filePath
+        self.id = gitRepo + "@" + filePath
         if self.commit is not None:
             self.id += "@" + self.commit
             self.commit = "refs/heads/master/" + self.commit
@@ -87,7 +93,6 @@ class Attribute:
         try:
             assigns = [node for node in ast.walk(closestFunction) if isinstance(node, ast.Assign)]
             assigns = [node for node in assigns if isinstance(node.targets[0], ast.Attribute)]
-            print([node.targets[0].attr for node in assigns])
             assigns = [node for node in assigns if node.targets[0].attr == "extendsId"]
             closestAssign = assigns[0]
         except Exception as e:
@@ -95,6 +100,17 @@ class Attribute:
             logging.error("can not inject %s because it does set the field extendsId" % modulePath)
 
         extendsId = closestAssign.value.value
+
+        if extendsId not in injectedIds:
+            dummy = CCS()
+            dummyGitRepo = extendsId.split("@")[0]
+            dummyFilePath = extendsId.split("@")[1]
+            dummy.inject(dummyGitRepo, dummyFilePath)
+
+        if extendsId not in ["VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
+               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute"]:
+            extendsId = extendsId.split("@")[1].split("/")[-1].split(".py")[0]  # extendsId as link/to/repo@file/path.py@commitSHA
+
         print("extendsId: ", extendsId)
 
         # refactor source main class extension
@@ -102,17 +118,18 @@ class Attribute:
         extensionDigitEnd = source.find(")", extensionDigitStart)
         source = source[:extensionDigitStart] + extendsId + source[extensionDigitEnd:]
 
-        # import module directly from source
+        # import module directly from refactored source (inject)
         exec(source)
         exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
                                                                      # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+        injectedIds.add(extendsId)
         #exec("global " + moduleName)                                # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
 
         # some asserts for early failure
         if commit is not None:
-            assert self.id == gitRepo + "/" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
+            assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
         else:
-            assert self.id == gitRepo + "/" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
+            assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
 
 
 class BoolAttribute(Attribute):
