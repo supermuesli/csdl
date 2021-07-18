@@ -17,11 +17,6 @@ def cleanGitCache():
         del ccsGitCache[gitRepo]
 
 
-def nodeDepth(node):
-    """ get the height of an abstract syntax tree node """
-    return 1 + max(map(nodeDepth, ast.iter_child_nodes(node)), default=0)
-
-
 class Attribute:
     def __init__(self):
         super().__init__()
@@ -68,8 +63,7 @@ class Attribute:
         print("moduleName: ", moduleName)
         # print("moduleDir: ", moduleDir)
 
-        # parse module and recursively inject all dependencies
-        extendsId = None
+        # parse module for extendsId field
         source = open(modulePath, "r").read()
         root = ast.parse(source)
 
@@ -77,42 +71,39 @@ class Attribute:
         try:
             classes = [node for node in ast.walk(root) if isinstance(node, ast.ClassDef) and node.name == moduleName]
             closestClass = classes[0]
-            for c in classes:
-                if nodeDepth(c) < nodeDepth(closestClass):
-                    closestClass = c
-        except:
+        except Exception as e:
+            print(e)
             logging.error("can not inject %s because it does not define a class with the same name as its filename" % modulePath)
 
         closestFunction = None
         try:
             functions = [node for node in ast.walk(closestClass) if isinstance(node, ast.FunctionDef) and node.name == "__init__"]
             closestFunction = functions[0]
-            for f in functions:
-                if nodeDepth(f) < nodeDepth(closestFunction):
-                    closestFunction = f
-
-        except:
+        except Exception as e:
+            print(e)
             logging.error("can not inject %s because it does not define a __init__ function in its main class" % modulePath)
 
         closestAssign = None
         try:
             assigns = [node for node in ast.walk(closestFunction) if isinstance(node, ast.Assign)]
+            assigns = [node for node in assigns if isinstance(node.targets[0], ast.Attribute)]
+            print([node.targets[0].attr for node in assigns])
+            assigns = [node for node in assigns if node.targets[0].attr == "extendsId"]
             closestAssign = assigns[0]
-            for a in assigns:
-                if nodeDepth(a) < nodeDepth(closestAssign):
-                    closestAssign = a
-
-            extendsId = closestAssign[0].value.value
-        except:
+        except Exception as e:
+            print(e)
             logging.error("can not inject %s because it does set the field extendsId" % modulePath)
 
-
+        extendsId = closestAssign.value.value
         print("extendsId: ", extendsId)
 
-        sys.exit()
+        # refactor source main class extension
+        extensionDigitStart = source.find("class " + moduleName + "(") + len("class " + moduleName + "(")
+        extensionDigitEnd = source.find(")", extensionDigitStart)
+        source = source[:extensionDigitStart] + extendsId + source[extensionDigitEnd:]
 
-        sys.path.insert(1, moduleDir)
-        exec("from " + moduleName + " import *")
+        # import module directly from source
+        exec(source)
         exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
                                                                      # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
         #exec("global " + moduleName)                                # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
