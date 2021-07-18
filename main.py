@@ -6,18 +6,9 @@ def main():
     # requirements
     usageHours = 24
     req = VMAsAService()
+    req.inject("https://github.com/supermuesli", "examples/Requirement1.py")
 
-    # common attribute requirements (fields from hierarchy classes)
-    req.ram.value = 16
-    req.cpuCores.value = 4
-    #req.storage.storage.value = 50
-
-    # custom attribute requirements
-    req.staticIpAddresses = NumericAttribute()
-    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
-    req.staticIpAddresses.value = 2
-
-    # TODO at least 2 more requirement examples with mroe complexity 2 for azure 2 for gcp
+    # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
     # TODO time interval for estimate function
     # TODO regions
     # TODO staticIps

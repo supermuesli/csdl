@@ -8,3 +8,4 @@ class Region(Attribute):
         self.extendsId = "ChoiceAttribute"
 
         self.options = ["East Virginia", "New York", "California"]
+        self.value = self.options[0]

@@ -2,7 +2,6 @@ import ast
 import logging
 import tempfile
 from abc import ABC, abstractmethod
-from commons import *
 from dulwich import porcelain
 
 """ caches all cloned git repositories """
@@ -221,11 +220,14 @@ class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
         super().__init__()
 
 
+import commons
+
+
 class Price:
     """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
-        self.currency = Currency()
+        self.currency = commons.Currency()
         self.priceFuncs = []
         self.model = None
 
@@ -276,7 +278,7 @@ class IaaS(CCS):
         super().__init__()
         self.id = "IaaS"
 
-        self.region = Region()
+        self.region = commons.Region()
 
 
 class StorageAsAService(IaaS):
@@ -284,9 +286,9 @@ class StorageAsAService(IaaS):
         super().__init__()
         self.id = "StorageAsAService"
 
-        self.storage = Storage()
-        self.storageWriteSpeed = StorageWriteSpeed()
-        self.storageReadSpeed = StorageReadSpeed()
+        self.storage = commons.Storage()
+        self.storageWriteSpeed = commons.StorageWriteSpeed()
+        self.storageReadSpeed = commons.StorageReadSpeed()
 
 
 class ServerAsAService(IaaS):
@@ -294,16 +296,16 @@ class ServerAsAService(IaaS):
         super().__init__()
         self.id = "ServerAsAService"
 
-        self.os = OperatingSystem()
-        self.cpuCores = CpuCores()
-        self.cpuClockSpeed = CpuClockSpeed()
-        self.ram = Ram()
-        self.ramClockSpeed = RamClockSpeed()
-        self.ramWriteSpeed = RamWriteSpeed()
-        self.ramReadSpeed = RamReadSpeed()
-        self.networkCapacity = NetworkCapacity()
-        self.networkUploadSpeed = NetworkUploadSpeed()
-        self.networkDownloadSpeed = NetworkDownloadSpeed()
+        self.os = commons.OperatingSystem()
+        self.cpuCores = commons.CpuCores()
+        self.cpuClockSpeed = commons.CpuClockSpeed()
+        self.ram = commons.Ram()
+        self.ramClockSpeed = commons.RamClockSpeed()
+        self.ramWriteSpeed = commons.RamWriteSpeed()
+        self.ramReadSpeed = commons.RamReadSpeed()
+        self.networkCapacity = commons.NetworkCapacity()
+        self.networkUploadSpeed = commons.NetworkUploadSpeed()
+        self.networkDownloadSpeed = commons.NetworkDownloadSpeed()
 
 
 class VMAsAService(ServerAsAService):
@@ -334,9 +336,9 @@ def extractAttributes(attribute):
 
 
 def matchField(ccs, attributeId):
-    """ get the field belonging to attribute with the given attributeId. if the given attribute already has the same
-        attributeId, then the attribute will be returned. note that for all attributes all attribute fields must be
-        unique
+    """ get the first field belonging to attribute with the given attributeId. if the given attribute already has the
+        same attributeId, then the attribute will be returned. note that attribute values can be none if they are not
+        initialised before matching.
     """
     if ccs.id == attributeId:
         return ccs
@@ -346,19 +348,24 @@ def matchField(ccs, attributeId):
         try:
             if fields[key].id == attributeId:
                 return fields[key]
-        except:
-            pass
+        except Exception as e:
+            logging.debug(e)
     return None
 
 
-def matchCCS(req, ccs):
-    """ check if requirements match with a given CCS """
-    reqAttributes = extractAttributes(req)
+def matchCCS(req, ccs, reqCache=None):
+    """ recursively check if requirements match with a given CCS """
+    reqAttributes = None
+    if reqCache:
+        reqAttributes = reqCache
+    else:
+        reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
 
+    # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
         for ca in ccsAttributes:
-            if ra.id == ca.id:
+            if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
                 if ra.__class__ is NumericAttribute:
                     if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
                         print(1)
@@ -401,5 +408,5 @@ def matchCCS(req, ccs):
                     # requirement is fulfilled
 
                 elif CCS in ca.__class__.mro():
-                    return matchCCS(req, ca)
+                    return matchCCS(None, ca, reqCache=req)
     return True

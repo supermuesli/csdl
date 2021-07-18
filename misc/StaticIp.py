@@ -11,3 +11,4 @@ class StaticIp(Attribute):
         self.makeInt = True
         self.minVal = 0
         self.stepSize = 1
+        self.moreIsBetter = True

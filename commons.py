@@ -1,4 +1,4 @@
-from csdl import *
+from csdl import Attribute
 from math import inf
 
 
