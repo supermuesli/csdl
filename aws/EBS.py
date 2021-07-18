@@ -37,8 +37,7 @@ class EBS(CCS):
 
         # price
         self.price = Price()
-        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
-        self.price.currency.value = self.price.currency.options[0]
+        self.price.currency.value = self.price.currency.options[0]  # US-Dollar
         self.price.currency.mutable = False
         self.price.priceFuncs = [defaultPrice(self)]
 

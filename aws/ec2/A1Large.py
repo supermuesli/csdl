@@ -41,7 +41,7 @@ class A1Large(CCS):
 
             def run(self, req):
                 # check if the requirement contains an elasticIpAmount field
-                match = matchField(req, "https://github.com/supermuesli/csdl/aws/ec2/ElasticIpAmount.py@latest")
+                match = matchField(req, "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
 
                 # if there was a match, then we can compute the price
                 if match is not None:
@@ -63,8 +63,7 @@ class A1Large(CCS):
 
         # price
         self.price = Price()
-        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/Currency.py")
-        self.price.currency.value = self.price.currency.options[0]  # index needs to be known by the user. a pycharm plugin might help
+        self.price.currency.value = self.price.currency.options[0]  # US-Dollar
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.storage.price.priceFuncs
 
         self.price.model = Subscription()

@@ -2,7 +2,7 @@ import ast
 import logging
 import tempfile
 from abc import ABC, abstractmethod
-
+from commons import *
 from dulwich import porcelain
 
 """ caches all cloned git repositories """
@@ -225,22 +225,22 @@ class Price:
     """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
-        self.currency = ChoiceAttribute()
+        self.currency = Currency()
         self.priceFuncs = []
         self.model = None
 
     def get(self, req, usageHours=0):
         """ returns the total price """
         if self.model.__class__ is PayAndGo:
-            self.model.upFrontCost = sum(pf.run(req) for pf in self.priceFuncs)
+            self.model.upFrontCost = sum([pf.run(req) for pf in self.priceFuncs])
             return self.model.upFrontCost
 
         if self.model.__class__ is Subscription:
-            self.model.billingPeriodCost = sum(pf.run(req) for pf in self.priceFuncs)
+            self.model.billingPeriodCost = sum([pf.run(req) for pf in self.priceFuncs])
             return usageHours/self.model.billingPeriod * self.model.billingPeriodCost
 
         if self.model.__class__ is PayPerResource:
-            return sum(pf.run(req) for pf in self.priceFuncs)
+            return sum([pf.run(req) for pf in self.priceFuncs])
 
         if self.model.__class__ is Hybrid:
             return self.model.interpreter()
@@ -249,7 +249,7 @@ class Price:
             return self.model.getEstimatedPrice()
 
         # pricing model defaults to PayPerResource
-        return sum(pf.run(req) for pf in self.priceFuncs)
+        return sum([pf.run(req) for pf in self.priceFuncs])
 
 
 # an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python
@@ -257,7 +257,6 @@ class PriceFunc(ABC):
     def __init__(self):
         super().__init__()
         self.description = None
-        self.value = 0
 
     @abstractmethod
     def run(self, req):
@@ -276,46 +275,35 @@ class IaaS(CCS):
     def __init__(self):
         super().__init__()
         self.id = "IaaS"
-        self.region = ChoiceAttribute()
-        self.region.id = "region"
+
+        self.region = Region()
 
 
 class StorageAsAService(IaaS):
     def __init__(self):
         super().__init__()
         self.id = "StorageAsAService"
-        self.storage = NumericAttribute()
-        self.storage.id = "storage"
-        self.storageWriteSpeed = NumericAttribute()
-        self.storageWriteSpeed.id = "storageWriteSpeed"
-        self.storageReadSpeed = NumericAttribute()
-        self.storageReadSpeed.id = "storageReadSpeed"
+
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()
 
 
 class ServerAsAService(IaaS):
     def __init__(self):
         super().__init__()
         self.id = "ServerAsAService"
-        self.os = ChoiceAttribute()
-        self.os.id = "os"
-        self.cpuCores = NumericAttribute()
-        self.cpuCores.id = "cpuCores"
-        self.cpuClockSpeed = NumericAttribute()
-        self.cpuClockSpeed.id = "cpuClockSpeed"
-        self.ram = NumericAttribute()
-        self.ram.id = "ram"
-        self.ramClockSpeed = NumericAttribute()
-        self.ramClockSpeed.id = "ramClockSpeed"
-        self.ramWriteSpeed = NumericAttribute()
-        self.ramWriteSpeed.id = "ramWriteSpeed"
-        self.ramReadSpeed = NumericAttribute()
-        self.ramReadSpeed.id = "ramReadSpeed"
-        self.networkCapacity = NumericAttribute()
-        self.networkCapacity.id = "networkCapacity"
-        self.networkUploadSpeed = NumericAttribute()
-        self.networkUploadSpeed.id = "networkUploadSpeed"
-        self.networkDownloadSpeed = NumericAttribute()
-        self.networkDownloadSpeed.id = "networkDownloadSpeed"
+
+        self.os = OperatingSystem()
+        self.cpuCores = CpuCores()
+        self.cpuClockSpeed = CpuClockSpeed()
+        self.ram = Ram()
+        self.ramClockSpeed = RamClockSpeed()
+        self.ramWriteSpeed = RamWriteSpeed()
+        self.ramReadSpeed = RamReadSpeed()
+        self.networkCapacity = NetworkCapacity()
+        self.networkUploadSpeed = NetworkUploadSpeed()
+        self.networkDownloadSpeed = NetworkDownloadSpeed()
 
 
 class VMAsAService(ServerAsAService):
