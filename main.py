@@ -14,8 +14,8 @@ def main():
 
     # custom attribute requirements
     req.staticIpAddresses = NumericAttribute()
-    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py")
-    req.staticIpAddresses.value = 5
+    req.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
+    req.staticIpAddresses.value = 500
 
     # TODO at least 2 more requirement examples with mroe complexity 2 for azure 2 for gcp
     # TODO time interval for estimate function

@@ -66,7 +66,7 @@ class Attribute:
         moduleName = filePath.split("/")[-1].split(".py")[0]
         moduleDir = ''.join(modulePath.split(moduleName + ".py"))
         # print("modulePath: ", modulePath)
-        print("moduleName: ", moduleName)
+        # print("moduleName: ", moduleName)
         # print("moduleDir: ", moduleDir)
 
         # parse module for extendsId field
@@ -111,7 +111,7 @@ class Attribute:
                "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute"]:
             extendsId = extendsId.split("@")[1].split("/")[-1].split(".py")[0]  # extendsId as link/to/repo@file/path.py@commitSHA
 
-        print("extendsId: ", extendsId)
+        # print("extendsId: ", extendsId)
 
         # refactor source main class extension
         extensionDigitStart = source.find("class " + moduleName + "(") + len("class " + moduleName + "(")
@@ -119,11 +119,11 @@ class Attribute:
         source = source[:extensionDigitStart] + extendsId + source[extensionDigitEnd:]
 
         # import module directly from refactored source (inject)
-        exec(source)
+        exec(source, globals())
         exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
                                                                      # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
         injectedIds.add(extendsId)
-        #exec("global " + moduleName)                                # read here https://stackoverflow.com/questions/11990556/how-to-make-global-imports-from-a-function
+        print("injected", moduleName)
 
         # some asserts for early failure
         if commit is not None:
