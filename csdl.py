@@ -9,7 +9,9 @@ ccsGitCache = {}
 
 """ attributes that have already been injected """
 injectedIds = {"VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
-               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute"}
+               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
+                             , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
+                             "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"}
 
 
 def cleanGitCache():
@@ -32,6 +34,7 @@ class Attribute:
         self.id = None
         self.extendsId = None
         self.mutable = False
+        self.matched = False
 
     def setId(self, gitRepo, filePath, commit=None):
         """ you call this if you create a new custom attribute """
@@ -107,28 +110,30 @@ class Attribute:
             dummy.inject(dummyGitRepo, dummyFilePath)
 
         if extendsId not in ["VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
-               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute"]:
+               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
+                             , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
+                             "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"]:
             extendsId = extendsId.split("@")[1].split("/")[-1].split(".py")[0]  # extendsId as link/to/repo@file/path.py@commitSHA
 
-        # print("extendsId: ", extendsId)
+            # print("extendsId: ", extendsId)
 
-        # refactor source main class extension
-        extensionDigitStart = source.find("class " + moduleName + "(") + len("class " + moduleName + "(")
-        extensionDigitEnd = source.find(")", extensionDigitStart)
-        source = source[:extensionDigitStart] + extendsId + source[extensionDigitEnd:]
+            # refactor source main class extension
+            extensionDigitStart = source.find("class " + moduleName + "(") + len("class " + moduleName + "(")
+            extensionDigitEnd = source.find(")", extensionDigitStart)
+            source = source[:extensionDigitStart] + extendsId + source[extensionDigitEnd:]
 
-        # import module directly from refactored source (inject)
-        exec(source, globals())
-        exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
-                                                                     # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
-        injectedIds.add(extendsId)
-        print("injected", moduleName)
+            # import module directly from refactored source (inject)
+            exec(source, globals())
+            exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
+                                                                         # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            injectedIds.add(extendsId)
+            print("injected", moduleName)
 
-        # some asserts for early failure
-        if commit is not None:
-            assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
-        else:
-            assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
+            # some asserts for early failure
+            if commit is not None:
+                assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
+            else:
+                assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
 
 
 class BoolAttribute(Attribute):
@@ -327,11 +332,11 @@ def extractAttributes(attribute):
     fields = vars(attribute)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            # this is also why CCS have to extend the Attribute class. matchCCS need CCS fields this to match requirements
+            # this is also why CCS should extend the Attribute class. matchCCS need CCS fields this to match requirements
             if Attribute in fields[key].__class__.mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
                 res += [fields[key]]
-        except:
-            pass
+        except Exception as e:
+            logging.debug(e)
     return res
 
 
@@ -353,62 +358,63 @@ def matchField(ccs, attributeId):
     return None
 
 
-def matchCCS(req, ccs, reqCache=None):
+def matchCCS(req, ccs):
     """ recursively check if requirements match with a given CCS """
-    reqAttributes = None
-    if reqCache:
-        reqAttributes = reqCache
-    else:
-        reqAttributes = extractAttributes(req)
+    reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
 
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
-        for ca in ccsAttributes:
-            if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
-                # TODO if attributes dont match by id directly, check if subclasses match by id if they exist
+        if not ra.matched:
+            for ca in ccsAttributes:
+                if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
+                    # TODO if attributes dont match by id directly, check if subclasses match by id if they exist
 
-                if ra.__class__ is NumericAttribute:
-                    if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
-                        print(1)
-                        return False
-                    if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
-                        if ca.moreIsBetter:
-                            if not ca.mutable:
-                                if ra.value < ca.value:  # value is too small and not mutable
-                                    print(2)
-                                    return False
-                            if ca.maxVal is not None:
-                                if ca.maxVal < ra.value:  # value cannot be made large enough
-                                    print(3)
-                                    return False
+                    if ra.__class__ is NumericAttribute:
+                        if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
+                            print(1)
+                            return False
+                        if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
+                            if ca.moreIsBetter:
+                                if not ca.mutable:
+                                    if ra.value < ca.value:  # value is too small and not mutable
+                                        print(2)
+                                        return False
+                                if ca.maxVal is not None:
+                                    if ca.maxVal < ra.value:  # value cannot be made large enough
+                                        print(3)
+                                        return False
+                            else:
+                                if not ca.mutable:
+                                    if ra.value > ca.value:  # value is too large and not mutable
+                                        print(4)
+                                        return False
+                                if ca.minVal is not None:
+                                    if ca.minVal > ra.value:  # value cannot be made small enough
+                                        print(5)
+                                        return False
+                        # requirement is fulfilled
+                        # TODO mark requirement as matched
+
+                    elif ra.__class__ is BoolAttribute:
+                        if not ca.mutable:
+                            if ra.value != ca.value:  # value does not match and is not mutable
+                                print(6)
+                                return False
+                        # requirement is fulfilled
+                        # TODO mark requirement as matched
+                    elif ra.__class__ is ChoiceAttribute:
+                        if ca.mutable:
+                            if ra.value not in ca.options:  # value mutable but not available
+                                print(7)
+                                return False
                         else:
-                            if not ca.mutable:
-                                if ra.value > ca.value:  # value is too large and not mutable
-                                    print(4)
-                                    return False
-                            if ca.minVal is not None:
-                                if ca.minVal > ra.value:  # value cannot be made small enough
-                                    print(5)
-                                    return False
-                    # requirement is fulfilled
-                elif ra.__class__ is BoolAttribute:
-                    if not ca.mutable:
-                        if ra.value != ca.value:  # value does not match and is not mutable
-                            print(6)
-                            return False
-                    # requirement is fulfilled
-                elif ra.__class__ is ChoiceAttribute:
-                    if ca.mutable:
-                        if ra.value not in ca.options:  # value mutable but not available
-                            print(7)
-                            return False
-                    else:
-                        if ra.value != ca.value:  # value does not match and is not mutable
-                            print(8)
-                            return False
-                    # requirement is fulfilled
+                            if ra.value != ca.value:  # value does not match and is not mutable
+                                print(8)
+                                return False
+                        # requirement is fulfilled
+                        # TODO mark requirement as matched
 
-                elif CCS in ca.__class__.mro():
-                    return matchCCS(None, ca, reqCache=req)
+                    elif CCS in ca.__class__.mro():
+                        return matchCCS(req, ca)
     return True
