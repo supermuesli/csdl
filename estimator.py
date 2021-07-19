@@ -11,6 +11,7 @@ def estimate(req: Attribute, usageHours):
 
     ebs1 = StorageAsAService()
     ebs1.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
+    print("hello",vars(ebs1))
 
     db = [vm1, ebs1]
 

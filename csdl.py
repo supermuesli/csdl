@@ -12,7 +12,7 @@ from dulwich import porcelain
 ccsGitCache = {}
 
 """ attribute class names that have already been injected mapped to their attribute ids """
-injectedClasses = {
+importedClasses = {
     "VMAsAService": "VMAsAService",
     "ServerAsAService": "ServerAsAService",
     "SaaS": "SaaS",
@@ -80,8 +80,9 @@ class Attribute:
         else:
             self.id += "@latest"
 
-    def inject(self, gitRepo, filePath, commit=None):
+    def inject(self, gitRepo, filePath, commit=None, onlyFetchDependency=False):
         """ you call this if you want to use a custom attribute """
+
         self.setId(gitRepo, filePath, commit=commit)
 
         # git clone metamodel repository
@@ -135,11 +136,11 @@ class Attribute:
             logging.error("can not inject %s because it does set the field extendsId" % modulePath)
 
         extendsId = closestAssign.value.value
-        print(modulePath, "extendsId: ", extendsId)
+        #print(modulePath, "extendsId: ", extendsId)
 
-        # inject any existing dependencies
-        if extendsId not in injectedClasses:
-            print("dummy injecting", extendsId)
+        # import extendsId module if it was not imported yet
+        if extendsId not in importedClasses:
+            print("fetch dependency first:", extendsId)
             dummy = CCS()
             try:
                 dummyGitRepo = extendsId.split("@")[0]
@@ -150,7 +151,7 @@ class Attribute:
 to be of the form link/to/repo@file/path.py@(commitID|latest), however this was the given extendsId: '%s'" % (
                 modulePath, extendsId))
                 return
-            dummy.inject(dummyGitRepo, dummyFilePath)
+            dummy.inject(dummyGitRepo, dummyFilePath, onlyFetchDependency=True)
 
         # extract class name from extendsId
         # common attributes ids are already identical to their class names, so they don't need this step
@@ -158,13 +159,13 @@ to be of the form link/to/repo@file/path.py@(commitID|latest), however this was 
                          "ChoiceAttribute", "BoolAttribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
             , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
                          "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"]:
-            extendsId = injectedClasses[extendsId]
+            extendsId = importedClasses[extendsId]
 
         # NOTE that extendsId has been assigned its class name from here on out
 
         # refactor source main class name to a non-colliding class name
         # , as well as the extension class to the class name derived from its extendsId field
-        if moduleId not in injectedClasses:
+        if moduleId not in importedClasses:
             nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of injected
                                                 # custom attributes happen to be identical
             try:
@@ -180,17 +181,21 @@ injected ccs/attribute models moduleName was %s, however no main class name that
             # debugging
             # print(source)
             
-            # import module directly from refactored source (inject)
+            # import module directly from refactored source
             exec(source, globals())
-            exec("self.__dict__.update(" + nonCollidingClassName + "().__dict__)")  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
-            injectedClasses[moduleId] = nonCollidingClassName
-            print("injected", moduleName, "with id", moduleId, "as", nonCollidingClassName)
+            importedClasses[moduleId] = nonCollidingClassName
+            print("imported", moduleName, "with id", moduleId, "as", nonCollidingClassName)
 
-            # some asserts for early failure
-            if commit is not None:
-                assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "@" + filePath + "@" + commit)
-            else:
-                assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "@" + filePath + "@latest")
+        if not onlyFetchDependency:
+            # inject custom class fields (overwrites/overrides existing fields and functions)
+            exec("self.__dict__.update(" + importedClasses[moduleId] + "().__dict__)")  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            print("injected", moduleName, "into", self.extendsId)
+
+        # some asserts for early failure
+        if commit is not None:
+            assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "@" + filePath + "@" + commit)
+        else:
+            assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "@" + filePath + "@latest")
 
 
 class BoolAttribute(Attribute):
