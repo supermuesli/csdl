@@ -9,6 +9,8 @@ class EBS(CCS):
 
         self.name = "Elastic Block Storage"
         self.readme = "my email is: blabla@exmaple.com . i will answer any questions that you have :)"
+        self.provider = "Amazon Web Services"
+        self.tags = ["aws", "ec2", "virtual machine", "vm"]
 
         self.storageReadSpeed.value = 1000
         self.storageReadSpeed.mutable = False

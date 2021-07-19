@@ -1,17 +1,44 @@
 import ast
 import logging
 import tempfile
+import random
+import string
 from abc import ABC, abstractmethod
+from math import inf
+
 from dulwich import porcelain
 
 """ caches all cloned git repositories """
 ccsGitCache = {}
 
-""" attributes that have already been injected """
-injectedIds = {"VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
-               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
-                             , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
-                             "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"}
+""" attribute class names that have already been injected mapped to their attribute ids """
+injectedClasses = {
+    "VMAsAService": "VMAsAService",
+    "ServerAsAService": "ServerAsAService",
+    "SaaS": "SaaS",
+    "IaaS": "IaaS",
+    "StorageAsAService": "StorageAsAService",
+    "NumericAttribute": "NumericAttribute",
+    "ChoiceAttribute": "ChoiceAttribute",
+    "BoolAttribute": "BoolAttribute",
+    "CCS": "CCS",
+    "Attribute": "Attribute",
+    "Region": "Region",
+    "Currency": "Currency",
+    "Storage": "Storage",
+    "StorageWriteSpeed": "StorageWriteSpeed",
+    "StorageReadSpeed": "StorageReadSpeed",
+    "OperatingSystem": "OperatingSystem",
+    "CpuCores": "CpuCores",
+    "CpuClockSpeed": "CpuClockSpeed",
+    "Ram": "Ram",
+    "RamClockSpeed": "RamClockSpeed",
+    "RamWriteSpeed": "RamWriteSpeed",
+    "RamReadSpeed": "RamReadSpeed",
+    "NetworkCapacity": "NetworkCapacity",
+    "NetworkUploadSpeed": "NetworkUploadSpeed",
+    "NetworkDownloadSpeed": "NetworkDownloadSpeed"
+}
 
 
 def cleanGitCache():
@@ -22,6 +49,11 @@ def cleanGitCache():
         gitRepos += [gitRepo]
     for gitRepo in gitRepos:
         del ccsGitCache[gitRepo]
+
+
+def randName():
+    """ returns a cryptographically secure 16 digit random string starting with the letter C"""
+    return "C" + "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(15))
 
 
 class Attribute:
@@ -64,6 +96,7 @@ class Attribute:
         # TODO else checkout latest commit ...
 
         # inject metamodel into this Attribute
+        moduleId = gitRepo + "@" + filePath + "@" + "latest"  # TODO make this work with given commit id too ...
         modulePath = ccsGitCache[gitRepo].name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
         moduleDir = ''.join(modulePath.split(moduleName + ".py"))
@@ -102,38 +135,62 @@ class Attribute:
             logging.error("can not inject %s because it does set the field extendsId" % modulePath)
 
         extendsId = closestAssign.value.value
+        print(modulePath, "extendsId: ", extendsId)
 
-        if extendsId not in injectedIds:
+        # inject any existing dependencies
+        if extendsId not in injectedClasses:
+            print("dummy injecting", extendsId)
             dummy = CCS()
-            dummyGitRepo = extendsId.split("@")[0]
-            dummyFilePath = extendsId.split("@")[1]
+            try:
+                dummyGitRepo = extendsId.split("@")[0]
+                dummyFilePath = extendsId.split("@")[1]
+            except Exception as e:
+                print(e)
+                logging.error("%s sets an extendsId field that is not formatted correctly. non-common attributes/CCS have \
+to be of the form link/to/repo@file/path.py@(commitID|latest), however this was the given extendsId: '%s'" % (
+                modulePath, extendsId))
+                return
             dummy.inject(dummyGitRepo, dummyFilePath)
 
-        if extendsId not in ["VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
-               "ChoiceAttribute", "BoolAttribute", "CCS", "Attribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
-                             , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
-                             "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"]:
-            extendsId = extendsId.split("@")[1].split("/")[-1].split(".py")[0]  # extendsId as link/to/repo@file/path.py@commitSHA
+        # extract class name from extendsId
+        # common attributes ids are already identical to their class names, so they don't need this step
+        if extendsId not in ["CCS", "Attribute", "VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
+                         "ChoiceAttribute", "BoolAttribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
+            , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
+                         "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"]:
+            extendsId = injectedClasses[extendsId]
 
-            # print("extendsId: ", extendsId)
+        # NOTE that extendsId has been assigned its class name from here on out
 
-            # refactor source main class extension
-            extensionDigitStart = source.find("class " + moduleName + "(") + len("class " + moduleName + "(")
-            extensionDigitEnd = source.find(")", extensionDigitStart)
-            source = source[:extensionDigitStart] + extendsId + source[extensionDigitEnd:]
+        # refactor source main class name to a non-colliding class name
+        # , as well as the extension class to the class name derived from its extendsId field
+        if moduleId not in injectedClasses:
+            nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of injected
+                                                # custom attributes happen to be identical
+            try:
+                extensionDigitStart = source.find("class " + moduleName + "(") + len("class ")  # NOTE this means that moduleName and the model main class name HAVE to be identical
+                extensionDigitEnd = source.find(")", extensionDigitStart)
+                source = source[:extensionDigitStart] + nonCollidingClassName + "(" + extendsId + source[extensionDigitEnd:]
+            except Exception as e:
+                print(e)
+                logging.error("the injected module has to define a main class with the same name as its file name. the\
+injected ccs/attribute models moduleName was %s, however no main class name that was identical to it was found in %s" % (moduleName, modulePath))
+                return
 
+            # debugging
+            # print(source)
+            
             # import module directly from refactored source (inject)
             exec(source, globals())
-            exec("self.__dict__.update(" + moduleName + "().__dict__)")  # this requires a class with the same name as the moduleName. also read
-                                                                         # https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
-            injectedIds.add(extendsId)
-            print("injected", moduleName)
+            exec("self.__dict__.update(" + nonCollidingClassName + "().__dict__)")  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            injectedClasses[moduleId] = nonCollidingClassName
+            print("injected", moduleName, "with id", moduleId, "as", nonCollidingClassName)
 
             # some asserts for early failure
             if commit is not None:
-                assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@" + commit)
+                assert self.id == gitRepo + "@" + filePath + "@" + commit, "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "@" + filePath + "@" + commit)
             else:
-                assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "/" + filePath + "@latest")
+                assert self.id == gitRepo + "@" + filePath + "@latest", "failed to inject CCS model properly. got %s but wanted %s" % (self.id, gitRepo + "@" + filePath + "@latest")
 
 
 class BoolAttribute(Attribute):
@@ -225,14 +282,11 @@ class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
         super().__init__()
 
 
-import commons
-
-
 class Price:
     """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
-        self.currency = commons.Currency()
+        self.currency = Currency()
         self.priceFuncs = []
         self.model = None
 
@@ -283,7 +337,7 @@ class IaaS(CCS):
         super().__init__()
         self.id = "IaaS"
 
-        self.region = commons.Region()
+        self.region = Region()
 
 
 class StorageAsAService(IaaS):
@@ -291,9 +345,9 @@ class StorageAsAService(IaaS):
         super().__init__()
         self.id = "StorageAsAService"
 
-        self.storage = commons.Storage()
-        self.storageWriteSpeed = commons.StorageWriteSpeed()
-        self.storageReadSpeed = commons.StorageReadSpeed()
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()
 
 
 class ServerAsAService(IaaS):
@@ -301,22 +355,23 @@ class ServerAsAService(IaaS):
         super().__init__()
         self.id = "ServerAsAService"
 
-        self.os = commons.OperatingSystem()
-        self.cpuCores = commons.CpuCores()
-        self.cpuClockSpeed = commons.CpuClockSpeed()
-        self.ram = commons.Ram()
-        self.ramClockSpeed = commons.RamClockSpeed()
-        self.ramWriteSpeed = commons.RamWriteSpeed()
-        self.ramReadSpeed = commons.RamReadSpeed()
-        self.networkCapacity = commons.NetworkCapacity()
-        self.networkUploadSpeed = commons.NetworkUploadSpeed()
-        self.networkDownloadSpeed = commons.NetworkDownloadSpeed()
+        self.operatingSystem = OperatingSystem()
+        self.cpuCores = CpuCores()
+        self.cpuClockSpeed = CpuClockSpeed()
+        self.ram = Ram()
+        self.ramClockSpeed = RamClockSpeed()
+        self.ramWriteSpeed = RamWriteSpeed()
+        self.ramReadSpeed = RamReadSpeed()
+        self.networkCapacity = NetworkCapacity()
+        self.networkUploadSpeed = NetworkUploadSpeed()
+        self.networkDownloadSpeed = NetworkDownloadSpeed()
 
 
 class VMAsAService(ServerAsAService):
     def __init__(self):
         super().__init__()
         self.id = "VMAsAService"
+
         self.storage = StorageAsAService()
 
 
@@ -418,3 +473,203 @@ def matchCCS(req, ccs):
                     elif CCS in ca.__class__.mro():
                         return matchCCS(req, ca)
     return True
+
+class Region(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Region"
+        self.extendsId = "ChoiceAttribute"
+        self.description = "The continent in which the CCS resides"
+
+        self.options = ["Europe", "North America", "South America", "East Asia", "Antarctica", "Africa", "Australia"]
+        self.value = self.options[0]
+
+
+class Currency(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Currency"
+        self.extendsId = "ChoiceAttribute"
+        self.description = "The currency in which the price is charged"
+
+        self.options = ["US-Dollar", "Euro", "Yen"]
+        self.value = self.options[0]
+
+
+class Storage(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Storage"
+        self.extendsId = "NumericAttribute"
+        self.description = "Storage amount in GB"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class StorageWriteSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "StorageWriteSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "Storage write speed in GB/s"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class StorageReadSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "StorageWriteSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "Storage read speed in GB/s"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class OperatingSystem(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "OperatingSystem"
+        self.extendsId = "ChoiceAttribute"
+        self.description = "The operating system a CCS runs on"
+
+        self.options = ["Linux", "Windows", "Mac"]
+        self.value = self.options[0]
+
+
+class CpuCores(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "CpuCores"
+        self.extendsId = "NumericAttribute"
+        self.description = "The amount of CPU cores"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class CpuClockSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "CpuClockSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "CPU clock speed in GHz"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class Ram(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Ram"
+        self.extendsId = "NumericAttribute"
+        self.description = "The amount of Ram in GB"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class RamClockSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "RamClockSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "RAM clock speed in GHz"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class RamWriteSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "RamWriteSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "RAM write speed in GB/s"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class RamReadSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "RamReadSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "RAM read speed in GB/s"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class NetworkCapacity(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "NetworkCapacity"
+        self.extendsId = "NumericAttribute"
+        self.description = "Network capacity in GB"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class NetworkUploadSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "NetworkUploadSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "Network upload speed in GB/s"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class NetworkDownloadSpeed(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "NetworkDownloadSpeed"
+        self.extendsId = "NumericAttribute"
+        self.description = "Network download speed in GB/s"
+
+        self.value = 0
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True

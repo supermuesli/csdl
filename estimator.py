@@ -21,6 +21,7 @@ def estimate(req: Attribute, usageHours):
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
             # get price this CCS using the given requirements as configurations
+            print("current ccs:", vars(ccs))
             ccsPrice = ccs.price.get(req, usageHours=usageHours)
             ccsCurrency = ccs.price.currency.value
             ccsPricingModel = ccs.price.model.__class__
