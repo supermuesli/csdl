@@ -11,18 +11,17 @@ def estimate(req: Attribute, usageHours):
 
     ebs1 = StorageAsAService()
     ebs1.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
-    print("hello",vars(ebs1))
 
     db = [vm1, ebs1]
 
     # scan through entire CCS database and find matches
     smallestPrice = inf
     cheapestCCS = None
+    print("____________________________________________________________________________________")
     for ccs in db:
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
             # get price this CCS using the given requirements as configurations
-            print("current ccs:", vars(ccs))
             ccsPrice = ccs.price.get(req, usageHours=usageHours)
             ccsCurrency = ccs.price.currency.value
             ccsPricingModel = ccs.price.model.__class__
@@ -31,6 +30,7 @@ def estimate(req: Attribute, usageHours):
             print("found match:", ccs.name)
             print("price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
             print("configuration: ", vars(ccs))
+            print("____________________________________________________________________________________")
 
             # evaluate
             if ccsPrice < smallestPrice:

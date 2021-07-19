@@ -428,7 +428,7 @@ def matchCCS(req, ccs):
         if not ra.matched:
             for ca in ccsAttributes:
                 if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
-                    # TODO if attributes dont match by id directly, check if subclasses match by id if they exist
+                    # TODO if attributes don't match by id directly, check if subclasses match by id if they exist
 
                     if ra.__class__ is NumericAttribute:
                         if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
@@ -478,6 +478,7 @@ def matchCCS(req, ccs):
                     elif CCS in ca.__class__.mro():
                         return matchCCS(req, ca)
     return True
+
 
 class Region(Attribute):
     def __init__(self):
