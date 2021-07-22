@@ -30,10 +30,10 @@ class EBS(CCS):
                 self.topClass = topClass
 
             def run(self, req):
-                # get attribute with the id StorageAsAService
-                match = matchField(req, "StorageAsAService")
+                # get attribute with the id Storage
+                match = matchField(req, "Storage")
                 if match is not None:
-                    return 1.25*match.storage.value
+                    return 1.25*match.value
 
                 return self.topClass.minVal * 1.25
 

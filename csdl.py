@@ -143,6 +143,7 @@ class Attribute:
         self.extendsId = None
         self.mutable = False
         self.matched = False
+        self.searchKeyWords = None
 
     def setId(self, gitRepo, filePath, commit=None):
         """ you call this if you create a new custom attribute """
@@ -554,7 +555,7 @@ def matchCCS(req, ccs):
     for ra in reqAttributes:
         if not ra.matched:
             for ca in ccsAttributes:
-                if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
+                if ra.id == ca.id or ra.__class__ in ca.__class__.mro():  # attributes match by id or super class, now check if their values are satisfiable
                     if ra.__class__ is NumericAttribute:
                         if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
                             print(1)
@@ -580,6 +581,7 @@ def matchCCS(req, ccs):
                                         return False
                         # requirement is fulfilled
                         ra.matched = True
+                        break
 
                     elif ra.__class__ is BoolAttribute:
                         if not ca.mutable:
@@ -588,6 +590,8 @@ def matchCCS(req, ccs):
                                 return False
                         # requirement is fulfilled
                         ra.matched = True
+                        break
+
                     elif ra.__class__ is ChoiceAttribute:
                         if ca.mutable:
                             if ra.value not in ca.options:  # value mutable but not available
@@ -599,14 +603,7 @@ def matchCCS(req, ccs):
                                 return False
                         # requirement is fulfilled
                         ra.matched = True
-
-                    elif CCS in ca.__class__.mro():
-                        return matchCCS(req, ca)
-                else:
-                    # check if one of the fiel
-                    match = matchField(ca, getExtendsId(ca.id))
-                    if match is not None:
-                        return matchCCS(req, match)
+                        break
     return True
 
 
