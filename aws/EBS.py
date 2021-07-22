@@ -35,7 +35,7 @@ class EBS(CCS):
                 if match is not None:
                     return 1.25*match.value
 
-                return self.topClass.minVal * 1.25
+                return self.topClass.storage.minVal * 1.25
 
         # price
         self.price = Price()
