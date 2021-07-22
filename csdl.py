@@ -540,9 +540,22 @@ def renderHierarchy():
     # render the entire attribute/ccs class hierarchy
     dot.render("docs/renders/hierarchy", view=False)
 
+def isRelated(rid, cid):
+    if rid == cid:
+        # print(rid, "and", cid, "match!")
+        return True
+    extendsId = getExtendsId(cid)
+    while extendsId is not None:
+        if rid == extendsId:
+            # print(rid, "and", cid, "match!")
+            return True
+        extendsId = getExtendsId(extendsId)
+    return False
+
 
 def matchCCS(req, ccs):
     """ recursively check if requirements match with a given CCS """
+    print("checking", ccs.name, "for potential match")
 
     # if the parent of req is not an ancestor of ccs it does not matter whether the class fields (attributes) match or not
     if req.__class__ not in ccs.__class__.mro():
@@ -555,8 +568,9 @@ def matchCCS(req, ccs):
     for ra in reqAttributes:
         if not ra.matched:
             for ca in ccsAttributes:
-                if ra.id == ca.id or ra.__class__ in ca.__class__.mro():  # attributes match by id or super class, now check if their values are satisfiable
-                    if ra.__class__ is NumericAttribute:
+                if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
+                    print(ra.__class__)
+                    if NumericAttribute in ra.__class__.mro():
                         if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
                             print(1)
                             return False
@@ -581,18 +595,18 @@ def matchCCS(req, ccs):
                                         return False
                         # requirement is fulfilled
                         ra.matched = True
-                        break
+                        continue
 
-                    elif ra.__class__ is BoolAttribute:
+                    elif BoolAttribute in ra.__class__.mro():
                         if not ca.mutable:
                             if ra.value != ca.value:  # value does not match and is not mutable
                                 print(6)
                                 return False
                         # requirement is fulfilled
                         ra.matched = True
-                        break
+                        continue
 
-                    elif ra.__class__ is ChoiceAttribute:
+                    elif ChoiceAttribute in ra.__class__.mro():
                         if ca.mutable:
                             if ra.value not in ca.options:  # value mutable but not available
                                 print(7)
@@ -603,7 +617,7 @@ def matchCCS(req, ccs):
                                 return False
                         # requirement is fulfilled
                         ra.matched = True
-                        break
+                        continue
     return True
 
 
