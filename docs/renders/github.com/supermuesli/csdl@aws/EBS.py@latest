@@ -1,0 +1,8 @@
+// github.com/supermuesli/csdl@aws/EBS.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> Region [color=red]
+	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> Storage [color=red]
+	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageWriteSpeed [color=red]
+	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageReadSpeed [color=red]
+}

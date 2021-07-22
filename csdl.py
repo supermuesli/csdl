@@ -6,38 +6,114 @@ import string
 from abc import ABC, abstractmethod
 from math import inf
 
+import graphviz
 from dulwich import porcelain
 
 """ caches all cloned git repositories """
 ccsGitCache = {}
 
-""" attribute class names that have already been injected mapped to their attribute ids """
+""" attributeIds that have already been imported mapped to their class names and extendsIds """
 importedClasses = {
-    "VMAsAService": "VMAsAService",
-    "ServerAsAService": "ServerAsAService",
-    "SaaS": "SaaS",
-    "IaaS": "IaaS",
-    "StorageAsAService": "StorageAsAService",
-    "NumericAttribute": "NumericAttribute",
-    "ChoiceAttribute": "ChoiceAttribute",
-    "BoolAttribute": "BoolAttribute",
-    "CCS": "CCS",
-    "Attribute": "Attribute",
-    "Region": "Region",
-    "Currency": "Currency",
-    "Storage": "Storage",
-    "StorageWriteSpeed": "StorageWriteSpeed",
-    "StorageReadSpeed": "StorageReadSpeed",
-    "OperatingSystem": "OperatingSystem",
-    "CpuCores": "CpuCores",
-    "CpuClockSpeed": "CpuClockSpeed",
-    "Ram": "Ram",
-    "RamClockSpeed": "RamClockSpeed",
-    "RamWriteSpeed": "RamWriteSpeed",
-    "RamReadSpeed": "RamReadSpeed",
-    "NetworkCapacity": "NetworkCapacity",
-    "NetworkUploadSpeed": "NetworkUploadSpeed",
-    "NetworkDownloadSpeed": "NetworkDownloadSpeed"
+    "VMAsAService": {
+        "className": "VMAsAService",
+        "extendsId": "ServerAsAService"
+    },
+    "ServerAsAService": {
+        "className": "ServerAsAService",
+        "extendsId": "IaaS"
+    },
+    "SaaS": {
+        "className": "SaaS",
+        "extendsId": "CCS"
+    },
+    "IaaS": {
+        "className": "IaaS",
+        "extendsId": "CCS"
+    },
+    "StorageAsAService": {
+        "className": "StorageAsAService",
+        "extendsId": "IaaS"
+    },
+    "NumericAttribute": {
+        "className": "NumericAttribute",
+        "extendsId": "Attribute"
+    },
+    "ChoiceAttribute": {
+        "className": "ChoiceAttribute",
+        "extendsId": "Attribute"
+    },
+    "BoolAttribute": {
+        "className": "BoolAttribute",
+        "extendsId": "Attribute"
+    },
+    "CCS": {
+        "className": "CCS",
+        "extendsId": "Attribute"
+    },
+    "Attribute": {
+        "className": "Attribute",
+        "extendsId": "Object"
+    },
+    "Region": {
+        "className": "Region",
+        "extendsId": "ChoiceAttribute"
+    },
+    "Currency": {
+        "className": "Currency",
+        "extendsId": "ChoiceAttribute"
+    },
+    "Storage": {
+        "className": "Storage",
+        "extendsId": "NumericAttribute"
+    },
+    "StorageWriteSpeed": {
+        "className": "StorageWriteSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "StorageReadSpeed": {
+        "className": "StorageReadSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "OperatingSystem": {
+        "className": "OperatingSystem",
+        "extendsId": "ChoiceAttribute"
+    },
+    "CpuCores": {
+        "className": "CpuCores",
+        "extendsId": "NumericAttribute"
+    },
+    "CpuClockSpeed": {
+        "className": "CpuClockSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "Ram": {
+        "className": "Ram",
+        "extendsId": "NumericAttribute"
+    },
+    "RamClockSpeed": {
+        "className": "RamClockSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "RamWriteSpeed": {
+        "className": "RamWriteSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "RamReadSpeed": {
+        "className": "RamReadSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "NetworkCapacity": {
+        "className": "NetworkCapacity",
+        "extendsId": "NumericAttribute"
+    },
+    "NetworkUploadSpeed": {
+        "className": "NetworkUploadSpeed",
+        "extendsId": "NumericAttribute"
+    },
+    "NetworkDownloadSpeed": {
+        "className": "NetworkDownloadSpeed",
+        "extendsId": "NumericAttribute"
+    }
 }
 
 
@@ -100,7 +176,7 @@ class Attribute:
         moduleId = gitRepo + "@" + filePath + "@" + "latest"  # TODO make this work with given commit id too ...
         modulePath = ccsGitCache[gitRepo].name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
-        moduleDir = ''.join(modulePath.split(moduleName + ".py"))
+        # moduleDir = ''.join(modulePath.split(moduleName + ".py"))
         # print("modulePath: ", modulePath)
         # print("moduleName: ", moduleName)
         # print("moduleDir: ", moduleDir)
@@ -136,7 +212,7 @@ class Attribute:
             logging.error("can not inject %s because it does set the field extendsId" % modulePath)
 
         extendsId = closestAssign.value.value
-        #print(modulePath, "extendsId: ", extendsId)
+        # print(modulePath, "extendsId: ", extendsId)
 
         # import extendsId module if it was not imported yet
         if extendsId not in importedClasses:
@@ -149,47 +225,42 @@ class Attribute:
                 print(e)
                 logging.error("%s sets an extendsId field that is not formatted correctly. non-common attributes/CCS have \
 to be of the form link/to/repo@file/path.py@(commitID|latest), however this was the given extendsId: '%s'" % (
-                modulePath, extendsId))
+                    modulePath, extendsId))
                 return
             dummy.inject(dummyGitRepo, dummyFilePath, onlyFetchDependency=True)
 
         # extract class name from extendsId
-        # common attributes ids are already identical to their class names, so they don't need this step
-        if extendsId not in ["CCS", "Attribute", "VMAsAService", "ServerAsAService", "SaaS", "IaaS", "StorageAsAService", "NumericAttribute",
-                         "ChoiceAttribute", "BoolAttribute", "Region", "Currency", "Storage", "StorageWriteSpeed"
-            , "StorageReadSpeed", "OperatingSystem", "CpuCores", "CpuClockSpeed", "Ram", "RamClockSpeed",
-                         "RamWriteSpeed", "RamReadSpeed", "NetworkCapacity", "NetworkUploadSpeed", "NetworkDownloadSpeed"]:
-            extendsId = importedClasses[extendsId]
-
-        # NOTE that extendsId has been assigned its class name from here on out
+        extendsClassName = importedClasses[extendsId]["className"]
 
         # refactor source main class name to a non-colliding class name
         # , as well as the extension class to the class name derived from its extendsId field
         if moduleId not in importedClasses:
-            nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of injected
-                                                # custom attributes happen to be identical
+            nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of
+                                                # injected custom attributes happen to be identical
             try:
                 extensionDigitStart = source.find("class " + moduleName + "(") + len("class ")  # NOTE this means that moduleName and the model main class name HAVE to be identical
                 extensionDigitEnd = source.find(")", extensionDigitStart)
-                source = source[:extensionDigitStart] + nonCollidingClassName + "(" + extendsId + source[extensionDigitEnd:]
+                source = source[:extensionDigitStart] + nonCollidingClassName + "(" + extendsClassName + source[extensionDigitEnd:]
             except Exception as e:
                 print(e)
-                logging.error("the injected module has to define a main class with the same name as its file name. the\
+                logging.error("the injected module has to define a main class with the same name as its file name. the \
 injected ccs/attribute models moduleName was %s, however no main class name that was identical to it was found in %s" % (moduleName, modulePath))
                 return
 
             # debugging
             # print(source)
-            
+
             # import module directly from refactored source
             exec(source, globals())
-            importedClasses[moduleId] = nonCollidingClassName
+            importedClasses[moduleId] = {}
+            importedClasses[moduleId]["className"] = nonCollidingClassName
+            importedClasses[moduleId]["extendsId"] = extendsId
             print("imported", moduleName, "with id", moduleId, "as", nonCollidingClassName)
 
         if not onlyFetchDependency:
             # inject custom class fields (overwrites/overrides existing fields and functions)
-            exec("self.__dict__.update(" + importedClasses[moduleId] + "().__dict__)")  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
-            print("injected", moduleName, "into", self.extendsId)
+            exec("self.__dict__.update(" + importedClasses[moduleId]["className"] + "().__dict__)")  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            # print("injected", moduleName, "into", self.extendsId)
 
         # some asserts for early failure
         if commit is not None:
@@ -418,8 +489,64 @@ def matchField(ccs, attributeId):
     return None
 
 
+def getExtendsId(attributeId):
+    """ get extendsId of the class of attributeId (aka attributeIds parent) """
+    if attributeId in importedClasses:
+        return importedClasses[attributeId]["extendsId"]
+    return None
+
+
+def renderHierarchy():
+    """ render the class hierarchy of all imported attributes """
+    dot = graphviz.Digraph(comment="Attribute hierarchy", format="svg")
+    dot.graph_attr.update({
+        "rankdir": "LR"
+    })
+
+    def renderFields(d2, attrId):
+        glob = globals()
+        global importedClasses
+        for className in glob:
+            # get globally imported classes
+            if className == importedClasses[attrId]["className"]:
+                vs = vars(glob[className]())
+                # get fields of new class instance
+                for field in vs:
+                    # check if field is an Attribute
+                    try:
+                        if Attribute in vs[field].__class__.mro():
+                            # field edge
+                            d2.edge(attrId.replace("https://", "").replace("http://", ""), vs[field].id.replace("https://", "").replace("http://", ""), color="red")
+                            renderFields(d2, vs[field].id)
+                    except Exception as a:
+                        pass
+
+    for attributeId in importedClasses:
+        dot2 = graphviz.Digraph(comment=attributeId.replace("https://", "").replace("http://", "") + " fields", format="svg")
+        dot2.graph_attr.update({
+            "rankdir": "LR"
+        })
+
+        # recursively create field edges
+        renderFields(dot2, attributeId)
+
+        # render individual attributes/ccs and their class fields and their fields' fields
+        dot2.render("docs/renders/" + attributeId.replace("https://", "").replace("http://", ""), view=False)
+
+        # hierarchy edge
+        dot.edge(attributeId.replace("https://", "").replace("http://", ""), importedClasses[attributeId]["extendsId"].replace("https://", "").replace("http://", ""), color="black")
+
+    # render the entire attribute/ccs class hierarchy
+    dot.render("docs/renders/hierarchy", view=False)
+
+
 def matchCCS(req, ccs):
     """ recursively check if requirements match with a given CCS """
+
+    # if the parent of req is not an ancestor of ccs it does not matter whether the class fields (attributes) match or not
+    if req.__class__ not in ccs.__class__.mro():
+        return False
+
     reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
 
@@ -428,8 +555,6 @@ def matchCCS(req, ccs):
         if not ra.matched:
             for ca in ccsAttributes:
                 if ra.id == ca.id:  # attributes match by id, now check if their values are satisfiable
-                    # TODO if attributes don't match by id directly, check if subclasses match by id if they exist
-
                     if ra.__class__ is NumericAttribute:
                         if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
                             print(1)
@@ -454,7 +579,7 @@ def matchCCS(req, ccs):
                                         print(5)
                                         return False
                         # requirement is fulfilled
-                        # TODO mark requirement as matched
+                        ra.matched = True
 
                     elif ra.__class__ is BoolAttribute:
                         if not ca.mutable:
@@ -462,7 +587,7 @@ def matchCCS(req, ccs):
                                 print(6)
                                 return False
                         # requirement is fulfilled
-                        # TODO mark requirement as matched
+                        ra.matched = True
                     elif ra.__class__ is ChoiceAttribute:
                         if ca.mutable:
                             if ra.value not in ca.options:  # value mutable but not available
@@ -473,10 +598,15 @@ def matchCCS(req, ccs):
                                 print(8)
                                 return False
                         # requirement is fulfilled
-                        # TODO mark requirement as matched
+                        ra.matched = True
 
                     elif CCS in ca.__class__.mro():
                         return matchCCS(req, ca)
+                else:
+                    # check if one of the fiel
+                    match = matchField(ca, getExtendsId(ca.id))
+                    if match is not None:
+                        return matchCCS(req, match)
     return True
 
 
@@ -533,7 +663,7 @@ class StorageWriteSpeed(Attribute):
 class StorageReadSpeed(Attribute):
     def __init__(self):
         super().__init__()
-        self.id = "StorageWriteSpeed"
+        self.id = "StorageReadSpeed"
         self.extendsId = "NumericAttribute"
         self.description = "Storage read speed in GB/s"
 

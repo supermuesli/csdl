@@ -1,0 +1,21 @@
+// github.com/supermuesli/csdl@examples/Requirement1.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> Region [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> OperatingSystem [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> CpuCores [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> CpuClockSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> Ram [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> RamClockSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> RamWriteSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> RamReadSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> NetworkCapacity [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> NetworkUploadSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> NetworkDownloadSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> StorageAsAService [color=red]
+	StorageAsAService -> Region [color=red]
+	StorageAsAService -> Storage [color=red]
+	StorageAsAService -> StorageWriteSpeed [color=red]
+	StorageAsAService -> StorageReadSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=red]
+}

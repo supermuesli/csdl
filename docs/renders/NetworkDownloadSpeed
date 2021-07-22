@@ -1,0 +1,4 @@
+// NetworkDownloadSpeed fields
+digraph {
+	graph [rankdir=LR]
+}

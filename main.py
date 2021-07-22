@@ -1,3 +1,5 @@
+import sys
+
 from estimator import *
 from csdl import *
 
@@ -16,6 +18,9 @@ def main():
 
     # price estimate of cheapest ccs that fits requirements
     estimate(req, usageHours)
+
+    # render acquired attribute hierarchy
+    renderHierarchy()
 
     # delete temporary git repositories
     cleanGitCache()

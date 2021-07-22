@@ -1,0 +1,4 @@
+// Storage fields
+digraph {
+	graph [rankdir=LR]
+}

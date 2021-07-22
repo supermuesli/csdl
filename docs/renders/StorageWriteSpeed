@@ -1,0 +1,4 @@
+// StorageWriteSpeed fields
+digraph {
+	graph [rankdir=LR]
+}

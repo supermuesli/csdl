@@ -1,0 +1,4 @@
+// CpuCores fields
+digraph {
+	graph [rankdir=LR]
+}

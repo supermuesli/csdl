@@ -1,0 +1,5 @@
+// IaaS fields
+digraph {
+	graph [rankdir=LR]
+	IaaS -> Region [color=red]
+}

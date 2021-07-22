@@ -1,0 +1,4 @@
+// NetworkCapacity fields
+digraph {
+	graph [rankdir=LR]
+}

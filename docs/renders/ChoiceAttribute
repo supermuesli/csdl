@@ -1,0 +1,4 @@
+// ChoiceAttribute fields
+digraph {
+	graph [rankdir=LR]
+}

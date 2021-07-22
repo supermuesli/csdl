@@ -1,0 +1,4 @@
+// Currency fields
+digraph {
+	graph [rankdir=LR]
+}

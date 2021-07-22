@@ -1,0 +1,4 @@
+// Ram fields
+digraph {
+	graph [rankdir=LR]
+}

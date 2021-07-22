@@ -1,0 +1,15 @@
+// ServerAsAService fields
+digraph {
+	graph [rankdir=LR]
+	ServerAsAService -> Region [color=red]
+	ServerAsAService -> OperatingSystem [color=red]
+	ServerAsAService -> CpuCores [color=red]
+	ServerAsAService -> CpuClockSpeed [color=red]
+	ServerAsAService -> Ram [color=red]
+	ServerAsAService -> RamClockSpeed [color=red]
+	ServerAsAService -> RamWriteSpeed [color=red]
+	ServerAsAService -> RamReadSpeed [color=red]
+	ServerAsAService -> NetworkCapacity [color=red]
+	ServerAsAService -> NetworkUploadSpeed [color=red]
+	ServerAsAService -> NetworkDownloadSpeed [color=red]
+}

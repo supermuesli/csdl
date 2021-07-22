@@ -1,0 +1,4 @@
+// RamWriteSpeed fields
+digraph {
+	graph [rankdir=LR]
+}

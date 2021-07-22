@@ -1,0 +1,4 @@
+// NumericAttribute fields
+digraph {
+	graph [rankdir=LR]
+}

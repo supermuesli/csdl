@@ -1,0 +1,4 @@
+// BoolAttribute fields
+digraph {
+	graph [rankdir=LR]
+}

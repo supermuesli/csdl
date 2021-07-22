@@ -1,0 +1,20 @@
+// VMAsAService fields
+digraph {
+	graph [rankdir=LR]
+	VMAsAService -> Region [color=red]
+	VMAsAService -> OperatingSystem [color=red]
+	VMAsAService -> CpuCores [color=red]
+	VMAsAService -> CpuClockSpeed [color=red]
+	VMAsAService -> Ram [color=red]
+	VMAsAService -> RamClockSpeed [color=red]
+	VMAsAService -> RamWriteSpeed [color=red]
+	VMAsAService -> RamReadSpeed [color=red]
+	VMAsAService -> NetworkCapacity [color=red]
+	VMAsAService -> NetworkUploadSpeed [color=red]
+	VMAsAService -> NetworkDownloadSpeed [color=red]
+	VMAsAService -> StorageAsAService [color=red]
+	StorageAsAService -> Region [color=red]
+	StorageAsAService -> Storage [color=red]
+	StorageAsAService -> StorageWriteSpeed [color=red]
+	StorageAsAService -> StorageReadSpeed [color=red]
+}

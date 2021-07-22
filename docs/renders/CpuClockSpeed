@@ -1,0 +1,4 @@
+// CpuClockSpeed fields
+digraph {
+	graph [rankdir=LR]
+}

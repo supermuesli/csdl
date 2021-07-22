@@ -1,0 +1,8 @@
+// StorageAsAService fields
+digraph {
+	graph [rankdir=LR]
+	StorageAsAService -> Region [color=red]
+	StorageAsAService -> Storage [color=red]
+	StorageAsAService -> StorageWriteSpeed [color=red]
+	StorageAsAService -> StorageReadSpeed [color=red]
+}
