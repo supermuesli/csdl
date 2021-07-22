@@ -13,4 +13,4 @@ class Requirement1(CCS):
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
-        self.staticIpAddresses.value = 2
+        self.staticIpAddresses.value = 5
