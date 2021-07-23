@@ -566,7 +566,7 @@ def matchField(ccs, attributeId):
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if fields[key].id == attributeId:
+            if isRelated(fields[key].id, attributeId):
                 return fields[key]
         except Exception as e:
             logging.debug(e)
