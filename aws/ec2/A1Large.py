@@ -23,8 +23,9 @@ class A1Large(CCS):
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
-        self.storage.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
-        self.storage.mutable = True
+        self.ebs = StorageAsAService()
+        self.ebs.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
+        self.ebs.mutable = True
 
         # non-inherited fields
         self.elasticIpAmount = NumericAttribute()

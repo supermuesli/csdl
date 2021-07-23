@@ -537,7 +537,9 @@ class ServerAsAService(IaaS):
         self.ramClockSpeed = RamClockSpeed()
         self.ramWriteSpeed = RamWriteSpeed()
         self.ramReadSpeed = RamReadSpeed()
-        self.storage = StorageAsAService()
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()
         self.networkCapacity = NetworkCapacity()
         self.networkUploadSpeed = NetworkUploadSpeed()
         self.networkDownloadSpeed = NetworkDownloadSpeed()
@@ -626,11 +628,14 @@ def matchField(ccs, *attributeIds):
             >>> matchField(VMAsAService(), "VMAsAService")
     """
     if len(attributeIds) < 1:
+        # done
         return None
 
     if isRelated(attributeIds[0], ccs.id):
         if len(attributeIds) == 1:
+            # done
             return ccs
+        # continue search for next attributeId
         return matchField(ccs, attributeIds[1:])
 
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
@@ -638,8 +643,11 @@ def matchField(ccs, *attributeIds):
         try:
             if isRelated(attributeIds[0], fields[key].id):
                 if len(attributeIds) == 1:
+                    # done
                     return fields[key]
+                # continue search for next attributeId
                 return matchField(fields[key], attributeIds[1:])
+            # check if subfield
             match = matchField(fields[key], attributeIds[0])
             if match is not None:
                 return match
