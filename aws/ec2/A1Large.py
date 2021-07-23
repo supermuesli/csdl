@@ -23,8 +23,7 @@ class A1Large(CCS):
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
-        self.storage.value = 0
-        self.storage.mutable = False
+        self.storage = None  # deactivate/delete this Attribute, otherwise it can be matched
 
         self.ebs = StorageAsAService()
         self.ebs.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")

@@ -9,7 +9,7 @@ class Requirement1(CCS):
 
         self.ram.value = 16
         self.cpuCores.value = 129
-        self.storage.value = 500
+        self.storage.value = 50
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
