@@ -1,4 +1,5 @@
 // Currency fields
 digraph {
 	graph [rankdir=LR]
+	Currency -> Euro [color=red]
 }

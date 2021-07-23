@@ -428,9 +428,9 @@ class Price(Attribute):
             print(e)
 
         try:
-            currencyConversion = ratesRelativeToUSD[req.currency.choice.value]  # how many of reqs currency is 1 USD
+            currencyConversion = ratesRelativeToUSD[req.price.currency.choice.value]  # how many of reqs currency is 1 USD
         except Exception as e:
-            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.currency.choice.value)
+            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.price.currency.choice.value)
             print(e)
 
         currencyConversion = 1  # TODO fix currencyConversion lol

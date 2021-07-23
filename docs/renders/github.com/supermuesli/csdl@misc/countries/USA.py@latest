@@ -1,0 +1,4 @@
+// github.com/supermuesli/csdl@misc/countries/USA.py@latest fields
+digraph {
+	graph [rankdir=LR]
+}

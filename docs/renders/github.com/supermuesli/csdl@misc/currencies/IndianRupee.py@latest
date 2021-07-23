@@ -1,0 +1,4 @@
+// github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest fields
+digraph {
+	graph [rankdir=LR]
+}

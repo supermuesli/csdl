@@ -37,6 +37,13 @@ digraph {
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> VMAsAService [color=black]
 	"github.com/supermuesli/csdl@misc/StaticIp.py@latest" -> NumericAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> VMAsAService [color=black]
+	"github.com/supermuesli/csdl@aws/regions/Region.py@latest" -> Region [color=black]
+	"github.com/supermuesli/csdl@misc/countries/USA.py@latest" -> NorthAmerica [color=black]
+	"github.com/supermuesli/csdl@aws/regions/California.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
+	"github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
+	"github.com/supermuesli/csdl@aws/regions/NewYork.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageAsAService [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=black]
+	"github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest" -> Currency [color=black]
+	"github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest" -> NameAttribute [color=black]
 }
