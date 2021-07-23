@@ -8,13 +8,13 @@ class Requirement1(CCS):
         self.extendsId = "VMAsAService"
 
         self.ram.value = 16
-        self.cpuCores.value = 129
+        self.cpuCores.value = 4
         self.storage.value = 50
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
         self.staticIpAddresses.value = 2
 
-        self.region.choice = self.region.options[0]  # Europe
+        self.region.choice = self.region.options[1]  # Europe
 
         self.price.currency.choice = self.price.currency.options[0]  # USD
