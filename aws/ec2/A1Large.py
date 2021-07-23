@@ -20,7 +20,7 @@ class A1Large(CCS):
         self.ram.maxVal = 128
         self.ram.mutable = False
 
-        self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
+        self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
         self.storage.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
