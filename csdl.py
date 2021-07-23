@@ -623,6 +623,7 @@ def matchField(ccs, *attributeIds):
         try:
             if all([isRelated(fields[key].id, attrId) for attrId in attributeIds]):
                 return fields[key]
+            return matchField(fields[key], attributeIds)
         except Exception as e:
             logging.debug(e)
     return None
