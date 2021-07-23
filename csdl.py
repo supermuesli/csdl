@@ -256,7 +256,7 @@ class Attribute:
 
         # import extendsId module if it was not imported yet
         if extendsId not in importedClasses:
-            print("fetch dependency first:", extendsId)
+            #print("fetch dependency first:", extendsId)
             dummy = CCS()
             try:
                 dummyGitRepo = extendsId.split("@")[0]
@@ -539,7 +539,7 @@ def extractAttributes(ccs):
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if Attribute in fields[key].__class__.mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
+            if Attribute in fields[key].__class__.mro():  # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
                 res += [fields[key]]
         except Exception as e:
             pass
@@ -635,7 +635,7 @@ def matchCCS(req, ccs):
 
     #print("checking", ccs.name, "for potential match")
 
-    # if the parent of req is not an related to ccs, then it does not matter whether their attributes match or not
+    # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
     if not isRelated(req.extendsId, ccs.id):
         return False
 
