@@ -472,7 +472,7 @@ class CCS(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "CCS"
-        self.price = None
+        self.price = Price()
 
 
 class IaaS(CCS):
