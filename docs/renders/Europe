@@ -1,0 +1,4 @@
+// Europe fields
+digraph {
+	graph [rankdir=LR]
+}

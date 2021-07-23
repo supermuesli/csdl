@@ -1,0 +1,4 @@
+// Australia fields
+digraph {
+	graph [rankdir=LR]
+}

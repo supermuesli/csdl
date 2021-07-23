@@ -46,17 +46,45 @@ importedClasses = {
         "className": "BoolAttribute",
         "extendsId": "Attribute"
     },
+    "NameAttribute": {
+        "className": "NameAttribute",
+        "extendsId": "Attribute"
+    },
     "CCS": {
         "className": "CCS",
         "extendsId": "Attribute"
     },
     "Attribute": {
         "className": "Attribute",
-        "extendsId": "Object"
+        "extendsId": "object"
     },
     "Region": {
         "className": "Region",
         "extendsId": "ChoiceAttribute"
+    },
+    "NorthAmerica": {
+        "className": "NorthAmerica",
+        "extendsId": "NameAttribute"
+    },
+    "Australia": {
+        "className": "Australia",
+        "extendsId": "NameAttribute"
+    },
+    "EastAsia": {
+        "className": "EastAsia",
+        "extendsId": "NameAttribute"
+    },
+    "SouthAmerica": {
+        "className": "SouthAmerica",
+        "extendsId": "NameAttribute"
+    },
+    "Europe": {
+        "className": "Europe",
+        "extendsId": "NameAttribute"
+    },
+    "Antarctica": {
+        "className": "Antarctica",
+        "extendsId": "NameAttribute"
     },
     "Currency": {
         "className": "Currency",
@@ -133,6 +161,7 @@ def randName():
 
 
 class Attribute:
+    # TODO add docstring
     def __init__(self):
         super().__init__()
         self.name = None
@@ -144,9 +173,12 @@ class Attribute:
         self.mutable = False
         self.matched = False
         self.searchKeyWords = None
+        self.description = None
 
     def setId(self, gitRepo, filePath, commit=None):
         """ you call this if you create a new custom attribute """
+        # TODO add docstring
+
         self.gitRepo = gitRepo
         self.commit = commit
         self.filePath = filePath
@@ -159,6 +191,7 @@ class Attribute:
 
     def inject(self, gitRepo, filePath, commit=None, onlyFetchDependency=False):
         """ you call this if you want to use a custom attribute """
+        # TODO add docstring
 
         self.setId(gitRepo, filePath, commit=commit)
 
@@ -281,8 +314,15 @@ class ChoiceAttribute(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
+        self.options = None  # list of IDs of NameAttributes
+        self.value = None  # ID of the chosen NameAttribute from the list
+
+
+class NameAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "NameAttribute"
         self.value = None
-        self.options = None
 
 
 class NumericAttribute(Attribute):
@@ -439,6 +479,7 @@ class ServerAsAService(IaaS):
         self.ramClockSpeed = RamClockSpeed()
         self.ramWriteSpeed = RamWriteSpeed()
         self.ramReadSpeed = RamReadSpeed()
+        self.storage = StorageAsAService()
         self.networkCapacity = NetworkCapacity()
         self.networkUploadSpeed = NetworkUploadSpeed()
         self.networkDownloadSpeed = NetworkDownloadSpeed()
@@ -449,8 +490,6 @@ class VMAsAService(ServerAsAService):
         super().__init__()
         self.id = "VMAsAService"
 
-        self.storage = StorageAsAService()
-
 
 class SaaS(CCS):
     def __init__(self):
@@ -458,24 +497,42 @@ class SaaS(CCS):
         self.id = "SaaS"
 
 
-def extractAttributes(attribute):
-    """ get all fields that are CCS attributes """
+def extractAttributes(ccs):
+    """ get all fields of a `CCS` instance that are of type `Attribute`
+
+        Args:
+            ccs (CCS): The CCS of which all fields of type Attribute are to be extracted
+
+        Returns:
+            list(Attribute): A list of Attribute instances
+
+        Note:
+            CCS also inherits from Attribute
+    """
     res = []
-    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+    fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            # this is also why CCS should extend the Attribute class. matchCCS need CCS fields this to match requirements
             if Attribute in fields[key].__class__.mro(): # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
                 res += [fields[key]]
         except Exception as e:
-            logging.debug(e)
+            pass
     return res
 
 
 def matchField(ccs, attributeId):
-    """ get the first field belonging to attribute with the given attributeId. if the given attribute already has the
-        same attributeId, then the attribute will be returned. note that attribute values can be none if they are not
-        initialised before matching.
+    """ get the first field of type `Attribute` of the given `CCS` that matches with the given `attributeId`. if the
+        given `CCS` already matches with the `attributeId`, then that CCS will be returned instead.
+
+        Args:
+            ccs (CCS): The CCS whose fields will be searched
+            attributeId (str): The id that a field of type Attribute should match with
+
+        Returns:
+            Attribute: The field that matched with attributeId
+
+        Note:
+            CCS also inherits from Attribute
     """
     if ccs.id == attributeId:
         return ccs
@@ -491,7 +548,18 @@ def matchField(ccs, attributeId):
 
 
 def getExtendsId(attributeId):
-    """ get extendsId of the class of attributeId (aka attributeIds parent) """
+    """ get the `extendsId` field of a class instance that matches with the given `attributeId`
+
+        Args:
+            attributeId (str): id of the Attribute whose extendsId field is sought
+
+        Returns:
+            str: extendsId field of the Attribute that matches with the given attributeId
+
+        Note:
+            - This function can only be called on Attributes that have already been imported.
+            - CCS also inherits from Attribute
+    """
     if attributeId in importedClasses:
         return importedClasses[attributeId]["extendsId"]
     return None
@@ -499,6 +567,7 @@ def getExtendsId(attributeId):
 
 def renderHierarchy():
     """ render the class hierarchy of all imported attributes """
+
     dot = graphviz.Digraph(comment="Attribute hierarchy", format="svg")
     dot.graph_attr.update({
         "rankdir": "LR"
@@ -540,7 +609,21 @@ def renderHierarchy():
     # render the entire attribute/ccs class hierarchy
     dot.render("docs/renders/hierarchy", view=False)
 
+
 def isRelated(rid, cid):
+    """ checks if an Attribute is related to another Attribute
+
+        Args:
+             rid (str): id of the first Attribute
+             cid (str): id for the second Attribute
+
+        Returns:
+            bool: True if the Attributes are related, else False
+
+        Note:
+            - two Attributes are related if either their ids match, or if some ancestors id of the second Attribute matches with the first Attribute
+            - CCS also inherits from Attribute
+    """
     if rid == cid:
         # print(rid, "and", cid, "match!")
         return True
@@ -554,11 +637,25 @@ def isRelated(rid, cid):
 
 
 def matchCCS(req, ccs):
-    """ recursively check if requirements match with a given CCS """
-    print("checking", ccs.name, "for potential match")
+    """ check if a requirement matches with a CCS
 
-    # if the parent of req is not an ancestor of ccs it does not matter whether the class fields (attributes) match or not
-    if req.__class__ not in ccs.__class__.mro():
+        Args:
+            req (CCS): The requirements
+            ccs (CCS): The CCS to check for a match
+
+        Returns:
+            bool: True if they match, else False
+
+        Note:
+            - A requirement matches with a CCS if and only if every single Attribute field of the requirement is satisfied through a related Attribute field in the CCS
+            - Attribute fields must be unique. Each instance of CCS may not have multiple Attribute fields with the same id
+            - If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.
+    """
+
+    #print("checking", ccs.name, "for potential match")
+
+    # if the parent of req is not an related to ccs, then it does not matter whether their attributes match or not
+    if not isRelated(req.extendsId, ccs.id):
         return False
 
     reqAttributes = extractAttributes(req)
@@ -566,84 +663,138 @@ def matchCCS(req, ccs):
 
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
-        if not ra.matched:
-            for ca in ccsAttributes:
-                if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
-                    print(ra.__class__)
-                    if NumericAttribute in ra.__class__.mro():
-                        if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
-                            print(1)
-                            return False
-                        if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
-                            if ca.moreIsBetter:
-                                if not ca.mutable:
-                                    if ra.value < ca.value:  # value is too small and not mutable
-                                        print(2)
-                                        return False
-                                if ca.maxVal is not None:
-                                    if ca.maxVal < ra.value:  # value cannot be made large enough
-                                        print(3)
-                                        return False
-                            else:
-                                if not ca.mutable:
-                                    if ra.value > ca.value:  # value is too large and not mutable
-                                        print(4)
-                                        return False
-                                if ca.minVal is not None:
-                                    if ca.minVal > ra.value:  # value cannot be made small enough
-                                        print(5)
-                                        return False
-                        # requirement is fulfilled
-                        ra.matched = True
-                        continue
-
-                    elif BoolAttribute in ra.__class__.mro():
-                        if not ca.mutable:
-                            if ra.value != ca.value:  # value does not match and is not mutable
-                                print(6)
-                                return False
-                        # requirement is fulfilled
-                        ra.matched = True
-                        continue
-
-                    elif ChoiceAttribute in ra.__class__.mro():
-                        if ca.mutable:
-                            if ra.value not in ca.options:  # value mutable but not available
-                                print(7)
-                                return False
+        for ca in ccsAttributes:
+            if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
+                if isRelated("NumericAttribute", ra.id):
+                    if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
+                        print(ra.name, "is set as a requirement, but", ccs.name, "does not set it")
+                        return False
+                    if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
+                        if ca.moreIsBetter:
+                            if not ca.mutable:
+                                if ra.value < ca.value:  # value is too small and not mutable
+                                    print(ra.name, "is too small and cannot be made large enough:", ca.maxVal, "<", ra.value)
+                                    return False
+                            if ca.maxVal is not None:
+                                if ca.maxVal < ra.value:  # value cannot be made large enough
+                                    print(ra.name, "is too small and cannot be made large enough:", ca.maxVal, "<", ra.value)
+                                    return False
                         else:
-                            if ra.value != ca.value:  # value does not match and is not mutable
-                                print(8)
-                                return False
-                        # requirement is fulfilled
-                        ra.matched = True
-                        continue
+                            if not ca.mutable:
+                                if ra.value > ca.value:  # value is too large and not mutable
+                                    print(ra.name, "is too large and cannot be made small enough:", ca.minVal, ">", ra.value)
+                                    return False
+                            if ca.minVal is not None:
+                                if ca.minVal > ra.value:  # value cannot be made small enough
+                                    print(ra.name, "is too large and cannot be made small enough:", ca.minVal, ">", ra.value)
+                                    return False
+                    # requirement is fulfilled
+                    ra.matched = True
+                    break
+
+                elif isRelated("BoolAttribute", ra.id):
+                    if not ca.mutable:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(ra.name, "does not match and is not mutable:", ra.value, "!=", ca.value)
+                            return False
+                    # requirement is fulfilled
+                    ra.matched = True
+                    break
+
+                elif isRelated("ChoiceAttribute", ra.id):
+                    if ca.mutable:
+                        if ra.value not in ca.options:  # value mutable but not available
+                            print(ra.name, "option not available:", ra.value, "not in", ca.options)
+                            return False
+                    else:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(ra.name, "does not match:", ra.value, "!=", ca.value)
+                            return False
+                    # requirement is fulfilled
+                    ra.matched = True
+                    break
     return True
 
 
-class Region(Attribute):
+class Region(ChoiceAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Region"
         self.extendsId = "ChoiceAttribute"
         self.description = "The continent in which the CCS resides"
 
-        self.options = ["Europe", "North America", "South America", "East Asia", "Antarctica", "Africa", "Australia"]
-        self.value = self.options[0]
+        self.options = ["Europe", "NorthAmerica", "SouthAmerica", "EastAsia", "Antarctica", "Africa", "Australia"]
+        self.value = None
 
 
-class Currency(Attribute):
+class Europe(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Europe"
+        self.extendsId = "NameAttribute"
+        self.value = "Europe"
+
+
+class NorthAmerica(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "NorthAmerica"
+        self.extendsId = "NameAttribute"
+        self.value = "North America"
+
+
+class SouthAmerica(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "SouthAmerica"
+        self.extendsId = "NameAttribute"
+        self.value = "South America"
+
+
+class EastAsia(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "EastAsia"
+        self.extendsId = "NameAttribute"
+        self.value = "East Asia"
+
+
+class Antarctica(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Antarctica"
+        self.extendsId = "NameAttribute"
+        self.value = "Antarctica"
+
+
+class Africa(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Africa"
+        self.extendsId = "NameAttribute"
+        self.value = "Africa"
+
+
+class Australia(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Australia"
+        self.extendsId = "NameAttribute"
+        self.value = "Australia"
+
+
+class Currency(ChoiceAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Currency"
         self.extendsId = "ChoiceAttribute"
         self.description = "The currency in which the price is charged"
 
-        self.options = ["US-Dollar", "Euro", "Yen"]
-        self.value = self.options[0]
+        self.options = ["UsDollar", "Euro", "JapaneseYen"]
+        self.value = None
 
 
-class Storage(Attribute):
+class Storage(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Storage"
@@ -657,7 +808,7 @@ class Storage(Attribute):
         self.moreIsBetter = True
 
 
-class StorageWriteSpeed(Attribute):
+class StorageWriteSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "StorageWriteSpeed"
@@ -671,7 +822,7 @@ class StorageWriteSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class StorageReadSpeed(Attribute):
+class StorageReadSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "StorageReadSpeed"
@@ -685,7 +836,7 @@ class StorageReadSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class OperatingSystem(Attribute):
+class OperatingSystem(ChoiceAttribute):
     def __init__(self):
         super().__init__()
         self.id = "OperatingSystem"
@@ -696,7 +847,7 @@ class OperatingSystem(Attribute):
         self.value = self.options[0]
 
 
-class CpuCores(Attribute):
+class CpuCores(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "CpuCores"
@@ -710,7 +861,7 @@ class CpuCores(Attribute):
         self.moreIsBetter = True
 
 
-class CpuClockSpeed(Attribute):
+class CpuClockSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "CpuClockSpeed"
@@ -724,7 +875,7 @@ class CpuClockSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class Ram(Attribute):
+class Ram(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Ram"
@@ -738,7 +889,7 @@ class Ram(Attribute):
         self.moreIsBetter = True
 
 
-class RamClockSpeed(Attribute):
+class RamClockSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "RamClockSpeed"
@@ -752,7 +903,7 @@ class RamClockSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class RamWriteSpeed(Attribute):
+class RamWriteSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "RamWriteSpeed"
@@ -766,7 +917,7 @@ class RamWriteSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class RamReadSpeed(Attribute):
+class RamReadSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "RamReadSpeed"
@@ -780,7 +931,7 @@ class RamReadSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class NetworkCapacity(Attribute):
+class NetworkCapacity(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "NetworkCapacity"
@@ -794,7 +945,7 @@ class NetworkCapacity(Attribute):
         self.moreIsBetter = True
 
 
-class NetworkUploadSpeed(Attribute):
+class NetworkUploadSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "NetworkUploadSpeed"
@@ -808,7 +959,7 @@ class NetworkUploadSpeed(Attribute):
         self.moreIsBetter = True
 
 
-class NetworkDownloadSpeed(Attribute):
+class NetworkDownloadSpeed(NumericAttribute):
     def __init__(self):
         super().__init__()
         self.id = "NetworkDownloadSpeed"

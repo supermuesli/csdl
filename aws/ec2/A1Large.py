@@ -20,12 +20,9 @@ class A1Large(CCS):
         self.ram.maxVal = 128
         self.ram.mutable = False
 
-        self.region = ChoiceAttribute()
-        self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
-        self.region.value = self.region.options[1]  # you need to know beforehand which index is legal by checking out the git repository. a pyCharm plugin might help with this
-        self.region.mutable = False
+        self.region.value = "https://github.com/supermuesli/csdl@aws/Region.py@latest"  # you need to know beforehand which index is legal by checking out the git repository. a pyCharm plugin might help with this
+        self.region.mutable = True
 
-        self.storage = StorageAsAService()
         self.storage.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
         self.storage.mutable = True
 

@@ -1,0 +1,4 @@
+// Antarctica fields
+digraph {
+	graph [rankdir=LR]
+}

@@ -2,7 +2,7 @@ from csdl import *
 from math import inf
 
 
-def estimate(req: Attribute, usageHours):
+def estimate(req, usageHours):
     """ given some requirements"""
 
     # mock up database of all known CCS (in reality this should be fetched from csdlhub.com or something like that)
@@ -17,7 +17,7 @@ def estimate(req: Attribute, usageHours):
     # scan through entire CCS database and find matches
     smallestPrice = inf
     cheapestCCS = None
-    print("____________________________________________________________________________________")
+    print("_"*32)
     for ccs in db:
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
@@ -30,7 +30,7 @@ def estimate(req: Attribute, usageHours):
             print("found match:", ccs.name)
             print("price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
             print("configuration: ", vars(ccs))
-            print("____________________________________________________________________________________")
+            print("_"*32)
 
             # evaluate
             if ccsPrice < smallestPrice:

@@ -1,0 +1,4 @@
+// SouthAmerica fields
+digraph {
+	graph [rankdir=LR]
+}

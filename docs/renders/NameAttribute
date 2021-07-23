@@ -1,0 +1,4 @@
+// NameAttribute fields
+digraph {
+	graph [rankdir=LR]
+}

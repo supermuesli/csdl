@@ -1,0 +1,4 @@
+// EastAsia fields
+digraph {
+	graph [rankdir=LR]
+}
