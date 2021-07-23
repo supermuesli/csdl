@@ -1,0 +1,4 @@
+// UsDollar fields
+digraph {
+	graph [rankdir=LR]
+}

@@ -1,0 +1,4 @@
+// SQLDatabaseAsAService fields
+digraph {
+	graph [rankdir=LR]
+}

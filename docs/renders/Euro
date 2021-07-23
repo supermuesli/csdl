@@ -1,0 +1,4 @@
+// Euro fields
+digraph {
+	graph [rankdir=LR]
+}

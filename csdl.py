@@ -147,6 +147,34 @@ importedClasses = {
     "NetworkDownloadSpeed": {
         "className": "NetworkDownloadSpeed",
         "extendsId": "NumericAttribute"
+    },
+    "Price": {
+        "className": "Price",
+        "extendsId": "Attribute"
+    },
+    "Euro": {
+        "className": "Euro",
+        "extendsId": "NameAttribute"
+    },
+    "UsDollar": {
+        "className": "UsDollar",
+        "extendsId": "NameAttribute"
+    },
+    "JapaneseYen": {
+        "className": "JapaneseYen",
+        "extendsId": "NameAttribute"
+    },
+    "DatabaseAsAService": {
+        "className": "DatabaseAsAService",
+        "extendsId": "SaaS"
+    },
+    "SQLDatabaseAsAService": {
+        "className": "SQLDatabaseAsAService",
+        "extendsId": "DatabaseAsAService"
+    },
+    "NoSQLDatabaseAsAService": {
+        "className": "NoSQLDatabaseAsAService",
+        "extendsId": "DatabaseAsAService"
     }
 }
 
@@ -472,6 +500,8 @@ class CCS(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "CCS"
+        self.extendsId = "Attribute"
+
         self.price = Price()
 
 
@@ -479,6 +509,7 @@ class IaaS(CCS):
     def __init__(self):
         super().__init__()
         self.id = "IaaS"
+        self.extendsId = "CCS"
 
         self.region = Region()
 
@@ -487,6 +518,7 @@ class StorageAsAService(IaaS):
     def __init__(self):
         super().__init__()
         self.id = "StorageAsAService"
+        self.extendsId = "IaaS"
 
         self.storage = Storage()
         self.storageWriteSpeed = StorageWriteSpeed()
@@ -497,6 +529,7 @@ class ServerAsAService(IaaS):
     def __init__(self):
         super().__init__()
         self.id = "ServerAsAService"
+        self.extendsId = "IaaS"
 
         self.operatingSystem = OperatingSystem()
         self.cpuCores = CpuCores()
@@ -515,12 +548,35 @@ class VMAsAService(ServerAsAService):
     def __init__(self):
         super().__init__()
         self.id = "VMAsAService"
+        self.extendsId = "ServerAsAService"
 
 
 class SaaS(CCS):
     def __init__(self):
         super().__init__()
         self.id = "SaaS"
+        self.extendsId = "CCS"
+
+
+class DatabaseAsAService(SaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = "DatabaseAsAService"
+        self.extendsId = "SaaS"
+
+
+class SQLDatabaseAsAService(DatabaseAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = "SQLDatabaseAsAService"
+        self.extendsId = "DatabaseAsAService"
+
+
+class NoSQLDatabaseAsAService(DatabaseAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = "NoSQLDatabaseAsAService"
+        self.extendsId = "DatabaseAsAService"
 
 
 def extractAttributes(ccs):

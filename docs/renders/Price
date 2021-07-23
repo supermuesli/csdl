@@ -1,0 +1,6 @@
+// Price fields
+digraph {
+	graph [rankdir=LR]
+	Price -> Currency [color=red]
+	Currency -> Euro [color=red]
+}

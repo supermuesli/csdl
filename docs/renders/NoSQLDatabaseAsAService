@@ -1,0 +1,4 @@
+// NoSQLDatabaseAsAService fields
+digraph {
+	graph [rankdir=LR]
+}
