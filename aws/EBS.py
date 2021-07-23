@@ -10,7 +10,7 @@ class EBS(CCS):
         self.name = "Elastic Block Storage"
         self.readme = "my email is: blabla@exmaple.com . i will answer any questions that you have :)"
         self.provider = "Amazon Web Services"
-        self.tags = ["aws", "ec2", "virtual machine", "vm"]
+        self.searchKeyWords = ["aws", "ec2", "virtual machine", "vm"]
 
         self.storageReadSpeed.value = 1000
         self.storageReadSpeed.mutable = False
@@ -22,6 +22,9 @@ class EBS(CCS):
         self.storage.minVal = 5
         self.storage.maxVal = 10000
         self.storage.mutable = True
+
+        self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
+        self.region.mutable = True
 
         class defaultPrice(PriceFunc):
             def __init__(self, topClass):

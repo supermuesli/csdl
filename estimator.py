@@ -17,11 +17,11 @@ def estimate(req, usageHours):
     # scan through entire CCS database and find matches
     smallestPrice = inf
     cheapestCCS = None
-    print("_"*32)
+    print("_"*128)
     for ccs in db:
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
-            # get price this CCS using the given requirements as configurations
+            # get price using the given requirements as configurations
             ccsPrice = ccs.price.get(req, usageHours=usageHours)
             ccsCurrency = ccs.price.currency.value
             ccsPricingModel = ccs.price.model.__class__
@@ -30,7 +30,7 @@ def estimate(req, usageHours):
             print("found match:", ccs.name)
             print("price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
             print("configuration: ", vars(ccs))
-            print("_"*32)
+            print("_"*128)
 
             # evaluate
             if ccsPrice < smallestPrice:

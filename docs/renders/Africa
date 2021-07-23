@@ -1,0 +1,4 @@
+// Africa fields
+digraph {
+	graph [rankdir=LR]
+}

@@ -1,4 +1,5 @@
 import ast
+import json
 import logging
 import tempfile
 import random
@@ -7,6 +8,7 @@ from abc import ABC, abstractmethod
 from math import inf
 
 import graphviz
+import requests
 from dulwich import porcelain
 
 """ caches all cloned git repositories """
@@ -68,6 +70,10 @@ importedClasses = {
     },
     "Australia": {
         "className": "Australia",
+        "extendsId": "NameAttribute"
+    },
+    "Africa": {
+        "className": "Africa",
         "extendsId": "NameAttribute"
     },
     "EastAsia": {
@@ -314,8 +320,8 @@ class ChoiceAttribute(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
-        self.options = None  # list of IDs of NameAttributes
-        self.value = None  # ID of the chosen NameAttribute from the list
+        self.options = None  # list of NameAttribute instances
+        self.choice = None  # chosen NameAttribute instance
 
 
 class NameAttribute(Attribute):
@@ -399,7 +405,7 @@ class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
         super().__init__()
 
 
-class Price:
+class Price(Attribute):
     """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
@@ -409,25 +415,45 @@ class Price:
 
     def get(self, req, usageHours=0):
         """ returns the total price """
+
+        # convert prices to the same currency
+        # TODO inject API key using command line flag or environment variable or config file
+        apiKey = "080197719e5c4ef0b73f339e208f1f67"
+        ratesRelativeToUSD = json.loads(requests.get("https://openexchangerates.org/api/latest.json?app_id=" + apiKey + "&base=USD").content)["rates"]
+        currencyConversion = 1
+        try:
+            currencyConversion = ratesRelativeToUSD[self.currency.choice.value]  # how many of CCSs currency is 1 USD
+        except Exception as e:
+            logging.error(self.name, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency.choice.value)
+            print(e)
+
+        try:
+            currencyConversion = ratesRelativeToUSD[req.currency.choice.value]  # how many of reqs currency is 1 USD
+        except Exception as e:
+            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.currency.choice.value)
+            print(e)
+
+        currencyConversion = 1  # TODO fix currencyConversion lol
+
         if self.model.__class__ is PayAndGo:
             self.model.upFrontCost = sum([pf.run(req) for pf in self.priceFuncs])
-            return self.model.upFrontCost
+            return self.model.upFrontCost * currencyConversion
 
         if self.model.__class__ is Subscription:
             self.model.billingPeriodCost = sum([pf.run(req) for pf in self.priceFuncs])
-            return usageHours/self.model.billingPeriod * self.model.billingPeriodCost
+            return usageHours/self.model.billingPeriod * self.model.billingPeriodCost * currencyConversion
 
         if self.model.__class__ is PayPerResource:
-            return sum([pf.run(req) for pf in self.priceFuncs])
+            return sum([pf.run(req) for pf in self.priceFuncs]) * currencyConversion
 
         if self.model.__class__ is Hybrid:
-            return self.model.interpreter()
+            return self.model.interpreter() * currencyConversion
 
         if self.model.__class__ is DataDriven:
-            return self.model.getEstimatedPrice()
+            return self.model.getEstimatedPrice() * currencyConversion
 
         # pricing model defaults to PayPerResource
-        return sum([pf.run(req) for pf in self.priceFuncs])
+        return sum([pf.run(req) for pf in self.priceFuncs]) * currencyConversion
 
 
 # an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python
@@ -565,51 +591,6 @@ def getExtendsId(attributeId):
     return None
 
 
-def renderHierarchy():
-    """ render the class hierarchy of all imported attributes """
-
-    dot = graphviz.Digraph(comment="Attribute hierarchy", format="svg")
-    dot.graph_attr.update({
-        "rankdir": "LR"
-    })
-
-    def renderFields(d2, attrId):
-        glob = globals()
-        global importedClasses
-        for className in glob:
-            # get globally imported classes
-            if className == importedClasses[attrId]["className"]:
-                vs = vars(glob[className]())
-                # get fields of new class instance
-                for field in vs:
-                    # check if field is an Attribute
-                    try:
-                        if Attribute in vs[field].__class__.mro():
-                            # field edge
-                            d2.edge(attrId.replace("https://", "").replace("http://", ""), vs[field].id.replace("https://", "").replace("http://", ""), color="red")
-                            renderFields(d2, vs[field].id)
-                    except Exception as a:
-                        pass
-
-    for attributeId in importedClasses:
-        dot2 = graphviz.Digraph(comment=attributeId.replace("https://", "").replace("http://", "") + " fields", format="svg")
-        dot2.graph_attr.update({
-            "rankdir": "LR"
-        })
-
-        # recursively create field edges
-        renderFields(dot2, attributeId)
-
-        # render individual attributes/ccs and their class fields and their fields' fields
-        dot2.render("docs/renders/" + attributeId.replace("https://", "").replace("http://", ""), view=False)
-
-        # hierarchy edge
-        dot.edge(attributeId.replace("https://", "").replace("http://", ""), importedClasses[attributeId]["extendsId"].replace("https://", "").replace("http://", ""), color="black")
-
-    # render the entire attribute/ccs class hierarchy
-    dot.render("docs/renders/hierarchy", view=False)
-
-
 def isRelated(rid, cid):
     """ checks if an Attribute is related to another Attribute
 
@@ -702,18 +683,64 @@ def matchCCS(req, ccs):
                     break
 
                 elif isRelated("ChoiceAttribute", ra.id):
-                    if ca.mutable:
-                        if ra.value not in ca.options:  # value mutable but not available
-                            print(ra.name, "option not available:", ra.value, "not in", ca.options)
-                            return False
-                    else:
-                        if ra.value != ca.value:  # value does not match and is not mutable
-                            print(ra.name, "does not match:", ra.value, "!=", ca.value)
-                            return False
-                    # requirement is fulfilled
-                    ra.matched = True
-                    break
+                    if ra.choice is not None:
+                        if ca.mutable:
+                            if not sum([isRelated(ra.choice.id, c.id) for c in ca.options]):  # value mutable but not available
+                                print(ra.name, "option not available:", ra.choice, "not related to any of", ca.options)
+                                return False
+                        else:
+                            if not isRelated(ra.choice.id, ca.choice.id):  # value does not match and is not mutable
+                                print(ra.name, "does not match:", ra.choice, "not related to", ca.choice)
+                                return False
+                        # requirement is fulfilled
+                        ra.matched = True
+                        break
     return True
+
+
+def renderHierarchy():
+    """ render the class hierarchy of all imported attributes """
+
+    dot = graphviz.Digraph(comment="Attribute hierarchy", format="svg")
+    dot.graph_attr.update({
+        "rankdir": "LR"
+    })
+
+    def renderFields(d2, attrId):
+        glob = globals()
+        global importedClasses
+        for className in glob:
+            # get globally imported classes
+            if className == importedClasses[attrId]["className"]:
+                vs = vars(glob[className]())
+                # get fields of new class instance
+                for field in vs:
+                    # check if field is an Attribute
+                    try:
+                        if Attribute in vs[field].__class__.mro():
+                            # field edge
+                            d2.edge(attrId.replace("https://", "").replace("http://", ""), vs[field].id.replace("https://", "").replace("http://", ""), color="red")
+                            renderFields(d2, vs[field].id)
+                    except Exception as a:
+                        pass
+
+    for attributeId in importedClasses:
+        dot2 = graphviz.Digraph(comment=attributeId.replace("https://", "").replace("http://", "") + " fields", format="svg")
+        dot2.graph_attr.update({
+            "rankdir": "LR"
+        })
+
+        # recursively create field edges
+        renderFields(dot2, attributeId)
+
+        # render individual attributes/ccs and their class fields and their fields' fields
+        dot2.render("docs/renders/" + attributeId.replace("https://", "").replace("http://", ""), view=False)
+
+        # hierarchy edge
+        dot.edge(attributeId.replace("https://", "").replace("http://", ""), importedClasses[attributeId]["extendsId"].replace("https://", "").replace("http://", ""), color="black")
+
+    # render the entire attribute/ccs class hierarchy
+    dot.render("docs/renders/hierarchy", view=False)
 
 
 class Region(ChoiceAttribute):
@@ -723,8 +750,8 @@ class Region(ChoiceAttribute):
         self.extendsId = "ChoiceAttribute"
         self.description = "The continent in which the CCS resides"
 
-        self.options = ["Europe", "NorthAmerica", "SouthAmerica", "EastAsia", "Antarctica", "Africa", "Australia"]
-        self.value = None
+        self.options = [Europe(), NorthAmerica(), SouthAmerica(), EastAsia(), Antarctica(), Africa(), Australia()]
+        self.choice = None
 
 
 class Europe(NameAttribute):
@@ -790,8 +817,32 @@ class Currency(ChoiceAttribute):
         self.extendsId = "ChoiceAttribute"
         self.description = "The currency in which the price is charged"
 
-        self.options = ["UsDollar", "Euro", "JapaneseYen"]
-        self.value = None
+        self.options = [Euro(), UsDollar(), JapaneseYen()]
+        self.choice = self.options[0]
+
+
+class Euro(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Euro"
+        self.extendsId = "NameAttribute"
+        self.value = "EUR"  # https://en.wikipedia.org/wiki/ISO_4217
+
+
+class UsDollar(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "UsDollar"
+        self.extendsId = "NameAttribute"
+        self.value = "USD"  # https://en.wikipedia.org/wiki/ISO_4217
+
+
+class JapaneseYen(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "JapaneseYen"
+        self.extendsId = "NameAttribute"
+        self.value = "JPY"  # https://en.wikipedia.org/wiki/ISO_4217
 
 
 class Storage(NumericAttribute):

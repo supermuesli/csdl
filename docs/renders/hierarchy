@@ -15,6 +15,7 @@ digraph {
 	Region -> ChoiceAttribute [color=black]
 	NorthAmerica -> NameAttribute [color=black]
 	Australia -> NameAttribute [color=black]
+	Africa -> NameAttribute [color=black]
 	EastAsia -> NameAttribute [color=black]
 	SouthAmerica -> NameAttribute [color=black]
 	Europe -> NameAttribute [color=black]
@@ -36,7 +37,6 @@ digraph {
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> VMAsAService [color=black]
 	"github.com/supermuesli/csdl@misc/StaticIp.py@latest" -> NumericAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> VMAsAService [color=black]
-	"github.com/supermuesli/csdl@aws/Region.py@latest" -> Region [color=black]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageAsAService [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=black]
 }

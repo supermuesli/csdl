@@ -14,3 +14,5 @@ class Requirement1(CCS):
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
         self.staticIpAddresses.value = 5
+
+        self.price.currency.value = self.price.currency.options[0]  # USD

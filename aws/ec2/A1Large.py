@@ -10,7 +10,7 @@ class A1Large(CCS):
         # inherited fields
         self.name = "Elastic Cloud Compute a1.large"
         self.provider = "Amazon Web Services"
-        self.tags = ["aws", "ec2", "virtual machine", "vm"]
+        self.searchKeyWords = ["aws", "ec2", "virtual machine", "vm", "a1 large"]  # help users find this model
         self.readme = "enjoy"
 
         self.cpuCores.value = 4
@@ -20,7 +20,7 @@ class A1Large(CCS):
         self.ram.maxVal = 128
         self.ram.mutable = False
 
-        self.region.value = "https://github.com/supermuesli/csdl@aws/Region.py@latest"  # you need to know beforehand which index is legal by checking out the git repository. a pyCharm plugin might help with this
+        self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
         self.region.mutable = True
 
         self.storage.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
@@ -61,6 +61,7 @@ class A1Large(CCS):
 
         # price
         self.price = Price()
+        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/currencies/FeritsCurrencies.py")
         self.price.currency.value = self.price.currency.options[0]  # US-Dollar
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.storage.price.priceFuncs
 
