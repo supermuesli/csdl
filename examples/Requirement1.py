@@ -13,7 +13,7 @@ class Requirement1(CCS):
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
-        self.staticIpAddresses.value = 5
+        self.staticIpAddresses.value = 15
 
         self.region.choice = self.region.options[0]  # Europe
 
