@@ -601,13 +601,13 @@ def extractAttributes(ccs):
     return res
 
 
-def matchField(ccs, attributeId):
+def matchField(ccs, *attributeIds):
     """ get the first field of type `Attribute` of - either the given `CCS` or one of its fields that are of type
        `Attribute` -  that matches with the given `attributeId`. if the given `CCS` already matches with the `attributeId`, then that CCS will be returned instead.
 
         Args:
             ccs (CCS): The CCS whose fields will be searched
-            attributeId (str): The id that a field of type Attribute should match with
+            attributeIds (list(str)): The id that a field of type Attribute should match with
 
         Returns:
             Attribute: The field that matched with attributeId
@@ -615,13 +615,13 @@ def matchField(ccs, attributeId):
         Note:
             CCS also inherits from Attribute
     """
-    if isRelated(ccs.id, attributeId):
+    if all([isRelated(ccs.id, attrId) for attrId in attributeIds]):
         return ccs
 
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if isRelated(fields[key].id, attributeId):
+            if all([isRelated(fields[key].id, attrId) for attrId in attributeIds]):
                 return fields[key]
         except Exception as e:
             logging.debug(e)
