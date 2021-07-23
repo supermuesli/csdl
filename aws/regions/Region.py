@@ -18,5 +18,5 @@ class Region(Attribute):
         newYork.inject("https://github.com/supermuesli/csdl", "aws/regions/NewYork.py")
 
         # add my custom option to the already existing options
-        self.options = Region().options + [california, eastVirginia, newYork]
+        self.options = [california, eastVirginia, newYork]
         self.value = None
