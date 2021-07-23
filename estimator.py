@@ -30,11 +30,11 @@ def estimate(req, usageHours):
             print("found match:", ccs.name)
             print("price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel)
             print("configuration: ", vars(ccs))
-            print("_"*128)
 
             # evaluate
             if ccsPrice < smallestPrice:
                 smallestPrice = ccsPrice
                 cheapestCCS = ccs
 
+        print("_"*128)
     return cheapestCCS, smallestPrice

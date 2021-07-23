@@ -14,7 +14,7 @@ class A1Large(CCS):
         self.readme = "enjoy"
 
         self.cpuCores.value = 4
-        self.cpuCores.mutable = False
+        self.cpuCores.mutable = True
 
         self.ram.value = 4
         self.ram.maxVal = 128

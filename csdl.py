@@ -716,10 +716,11 @@ def matchCCS(req, ccs):
             - If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.
     """
 
-    #print("checking", ccs.name, "for potential match")
+    print("checking", ccs.name, "for potential match")
 
     # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
     if not isRelated(req.extendsId, ccs.id):
+        print("requirement is not in any way related to", ccs.id)
         return False
 
     reqAttributes = extractAttributes(req)
@@ -731,26 +732,26 @@ def matchCCS(req, ccs):
             if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
                 if isRelated("NumericAttribute", ra.id):
                     if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
-                        print(ra.name, "is set as a requirement, but", ccs.name, "does not set it")
+                        print(ra.id, "is set as a requirement, but", ccs.id, "does not set it")
                         return False
                     if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
                         if ca.moreIsBetter:
                             if not ca.mutable:
-                                if ra.value < ca.value:  # value is too small and not mutable
-                                    print(ra.name, "is too small and cannot be made large enough:", ca.maxVal, "<", ra.value)
+                                if ra.value > ca.value:  # value is too small and not mutable
+                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
                                     return False
                             if ca.maxVal is not None:
                                 if ca.maxVal < ra.value:  # value cannot be made large enough
-                                    print(ra.name, "is too small and cannot be made large enough:", ca.maxVal, "<", ra.value)
+                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
                                     return False
                         else:
                             if not ca.mutable:
-                                if ra.value > ca.value:  # value is too large and not mutable
-                                    print(ra.name, "is too large and cannot be made small enough:", ca.minVal, ">", ra.value)
+                                if ra.value < ca.value:  # value is too large and not mutable
+                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
                                     return False
                             if ca.minVal is not None:
                                 if ca.minVal > ra.value:  # value cannot be made small enough
-                                    print(ra.name, "is too large and cannot be made small enough:", ca.minVal, ">", ra.value)
+                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
                                     return False
                     # requirement is fulfilled
                     break
@@ -758,7 +759,7 @@ def matchCCS(req, ccs):
                 elif isRelated("BoolAttribute", ra.id):
                     if not ca.mutable:
                         if ra.value != ca.value:  # value does not match and is not mutable
-                            print(ra.name, "does not match and is not mutable:", ra.value, "!=", ca.value)
+                            print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
                             return False
                     # requirement is fulfilled
                     break
@@ -767,11 +768,11 @@ def matchCCS(req, ccs):
                     if ra.choice is not None:
                         if ca.mutable:
                             if not sum([isRelated(ra.choice.id, c.id) for c in ca.options]):  # value mutable but not available
-                                print(ra.name, "option not available:", ra.choice, "not related to any of", ca.options)
+                                print(ra.id, "option not available:", ra.choice, "not related to any of", ca.options)
                                 return False
                         else:
                             if not isRelated(ra.choice.id, ca.choice.id):  # value does not match and is not mutable
-                                print(ra.name, "does not match:", ra.choice, "not related to", ca.choice)
+                                print(ra.id, "does not match:", ra.choice, "not related to", ca.choice)
                                 return False
                         # requirement is fulfilled
                         break
