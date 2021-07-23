@@ -602,28 +602,47 @@ def extractAttributes(ccs):
 
 
 def matchField(ccs, *attributeIds):
-    """ get the first field of type `Attribute` of - either the given `CCS` or one of its fields that are of type
-       `Attribute` -  that matches with the given `attributeId`. if the given `CCS` already matches with the `attributeId`, then that CCS will be returned instead.
+    """ Recursively get the first field of type `Attribute` of - either the given `CCS` or one if its subfields of type
+       `Attribute` - that are related to the given `attributeIds` in the given order. If the given `CCS` already matches with `attributeIds[0]`, then that CCS will be returned instead.
 
         Args:
             ccs (CCS): The CCS whose fields will be searched
-            attributeIds (list(str)): The id that a field of type Attribute should match with
+            attributeIds (tuple(str)): The id that a field of type Attribute should match with
 
         Returns:
             Attribute: The field that matched with attributeId
 
         Note:
             CCS also inherits from Attribute
+
+        Example:
+            >>> # returns the `storage` field of the VMAsAService instance
+            >>> matchField(VMAsAService(), "Storage")
+
+            >>> # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
+            >>> matchField(VMAsAService(), "StorageAsAService", "Storage")
+
+            >>> # returns the input `VMAsAService` instance
+            >>> matchField(VMAsAService(), "VMAsAService")
     """
-    if all([isRelated(ccs.id, attrId) for attrId in attributeIds]):
-        return ccs
+    if len(attributeIds) < 1:
+        return None
+
+    if isRelated(attributeIds[0], ccs.id):
+        if len(attributeIds) == 1:
+            return ccs
+        return matchField(ccs, attributeIds[1:])
 
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if all([isRelated(fields[key].id, attrId) for attrId in attributeIds]):
-                return fields[key]
-            return matchField(fields[key], attributeIds)
+            if isRelated(attributeIds[0], fields[key].id):
+                if len(attributeIds) == 1:
+                    return fields[key]
+                return matchField(fields[key], attributeIds[1:])
+            match = matchField(fields[key], attributeIds[0])
+            if match is not None:
+                return match
         except Exception as e:
             logging.debug(e)
     return None
