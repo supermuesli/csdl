@@ -205,7 +205,6 @@ class Attribute:
         self.id = None
         self.extendsId = None
         self.mutable = False
-        self.matched = False
         self.searchKeyWords = None
         self.description = None
 
@@ -603,8 +602,8 @@ def extractAttributes(ccs):
 
 
 def matchField(ccs, attributeId):
-    """ get the first field of type `Attribute` of the given `CCS` that matches with the given `attributeId`. if the
-        given `CCS` already matches with the `attributeId`, then that CCS will be returned instead.
+    """ get the first field of type `Attribute` of - either the given `CCS` or one of its fields that are of type
+       `Attribute` -  that matches with the given `attributeId`. if the given `CCS` already matches with the `attributeId`, then that CCS will be returned instead.
 
         Args:
             ccs (CCS): The CCS whose fields will be searched
@@ -616,7 +615,7 @@ def matchField(ccs, attributeId):
         Note:
             CCS also inherits from Attribute
     """
-    if ccs.id == attributeId:
+    if isRelated(ccs.id, attributeId):
         return ccs
 
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
@@ -726,7 +725,6 @@ def matchCCS(req, ccs):
                                     print(ra.name, "is too large and cannot be made small enough:", ca.minVal, ">", ra.value)
                                     return False
                     # requirement is fulfilled
-                    ra.matched = True
                     break
 
                 elif isRelated("BoolAttribute", ra.id):
@@ -735,7 +733,6 @@ def matchCCS(req, ccs):
                             print(ra.name, "does not match and is not mutable:", ra.value, "!=", ca.value)
                             return False
                     # requirement is fulfilled
-                    ra.matched = True
                     break
 
                 elif isRelated("ChoiceAttribute", ra.id):
@@ -749,7 +746,6 @@ def matchCCS(req, ccs):
                                 print(ra.name, "does not match:", ra.choice, "not related to", ca.choice)
                                 return False
                         # requirement is fulfilled
-                        ra.matched = True
                         break
     return True
 

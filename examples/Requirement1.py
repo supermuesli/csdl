@@ -15,4 +15,6 @@ class Requirement1(CCS):
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
         self.staticIpAddresses.value = 2
 
+        self.region.choice = self.region.options[0]  # Europe
+
         self.price.currency.choice = self.price.currency.options[0]  # USD
