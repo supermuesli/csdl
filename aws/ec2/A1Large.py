@@ -42,7 +42,7 @@ class A1Large(CCS):
 
             def run(self, req):
                 # check if the requirement contains an elasticIpAmount field inside a VMAsAService
-                match = matchField(req, "VMAsAService", "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
+                match = matchField(req, "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
 
                 # if there was a match, then we can compute the price
                 if match is not None:
