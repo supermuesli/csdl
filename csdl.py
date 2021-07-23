@@ -631,7 +631,7 @@ def matchField(ccs, *attributeIds):
         # done
         return None
 
-    if isRelated(attributeIds[0], ccs.id):
+    if isRelated(ccs.id, attributeIds[0]):
         if len(attributeIds) == 1:
             # done
             return ccs
@@ -641,7 +641,7 @@ def matchField(ccs, *attributeIds):
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if isRelated(attributeIds[0], fields[key].id):
+            if isRelated(fields[key].id, attributeIds[0]):
                 if len(attributeIds) == 1:
                     # done
                     return fields[key]
