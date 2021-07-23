@@ -41,7 +41,7 @@ class EBS(CCS):
                 return self.topClass.storage.minVal * 1.25
 
         # price
-        self.price.currency.value = self.price.currency.options[0]  # US-Dollar
+        self.price.currency.choice = self.price.currency.options[0]  # US-Dollar
         self.price.currency.mutable = False
         self.price.priceFuncs = [defaultPrice(self)]
 
