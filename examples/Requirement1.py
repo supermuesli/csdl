@@ -9,11 +9,11 @@ class Requirement1(CCS):
 
         self.ram.value = 16
         self.cpuCores.value = 129
-        self.storage.value = 5000
+        self.storage.value = 50
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
-        self.staticIpAddresses.value = 150
+        self.staticIpAddresses.value = 2
 
         self.region.choice = self.region.options[0]  # Europe
 
