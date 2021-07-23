@@ -768,11 +768,11 @@ def matchCCS(req, ccs):
                     if ra.choice is not None:
                         if ca.mutable:
                             if not sum([isRelated(ra.choice.id, c.id) for c in ca.options]):  # value mutable but not available
-                                print(ra.id, "option not available:", ra.choice, "not related to any of", ca.options)
+                                print(ra.id, "option not available:", ra.choice.id, "not related to any of", [o.id for o in ca.options])
                                 return False
                         else:
                             if not isRelated(ra.choice.id, ca.choice.id):  # value does not match and is not mutable
-                                print(ra.id, "does not match:", ra.choice, "not related to", ca.choice)
+                                print(ra.id, "does not match:", ra.choice.id, "not related to", ca.choice.id)
                                 return False
                         # requirement is fulfilled
                         break
