@@ -14,11 +14,10 @@ class A1Large(CCS):
         self.readme = "enjoy"
 
         self.cpuCores.value = 4
-        self.cpuCores.mutable = True
+        self.cpuCores.mutable = False
 
         self.ram.value = 4
-        self.ram.maxVal = 128
-        self.ram.mutable = True
+        self.ram.mutable = False
 
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True

@@ -13,7 +13,7 @@ def main():
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
     # TODO time interval for estimate function
-    # TODO regions
+    # TODO hierarchical regions
     # TODO staticIps
 
     # price estimate of cheapest ccs that fits requirements
