@@ -23,7 +23,7 @@ class EBS(CCS):
         self.storage.maxVal = 10000
         self.storage.mutable = True
 
-        self.region.inject("https://github.com/supermuesli/csdl", "aws/Region.py")
+        self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
         class defaultPrice(PriceFunc):
