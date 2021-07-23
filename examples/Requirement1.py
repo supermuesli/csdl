@@ -7,7 +7,7 @@ class Requirement1(CCS):
         self.setId("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
         self.extendsId = "VMAsAService"
 
-        self.ram.value = 16
+        self.ram.value = 4
         self.cpuCores.value = 4
         self.storage.value = 50
 
