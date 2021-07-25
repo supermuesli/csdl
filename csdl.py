@@ -202,6 +202,7 @@ importedClasses = {
 }
 """ AttributeIds that have already been imported mapped to their class names and extendsIds """
 
+
 def cleanGitCache():
     """ Delete all temporary directories that were created to clone git repositories into """
     gitRepos = []

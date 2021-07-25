@@ -69,5 +69,5 @@ class A1Large(CCS):
         self.price.currency.choice = self.price.currency.options[0]  # US-Dollar
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.ebs.price.priceFuncs
 
-        self.price.model = Subscription()
+        self.price.model.choice = self.price.model[4]  # subscription
         self.price.model.billingPeriod = 1  # per hour
