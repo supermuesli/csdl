@@ -153,11 +153,11 @@ importedClasses = {
     },
     "Static": {
         "className": "Static",
-        "extendsId": "PricingModel"
+        "extendsId": "NameAttribute"
     },
     "Dynamic": {
         "className": "Dynamic",
-        "extendsId": "PricingModel"
+        "extendsId": "NameAttribute"
     },
     "PayAndGo": {
         "className": "PayAndGo",
@@ -169,10 +169,6 @@ importedClasses = {
     },
     "Subscription": {
         "className": "Subscription",
-        "extendsId": "Static"
-    },
-    "Hybrid": {
-        "className": "Hybrid",
         "extendsId": "Static"
     },
     "Price": {

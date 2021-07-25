@@ -61,8 +61,8 @@
 </g>
 <!-- CCS&#45;&gt;Attribute -->
 <g id="edge10" class="edge"><title>CCS&#45;&gt;Attribute</title>
-<path fill="none" stroke="black" d="M2292.05,-170.032C2306.84,-197.301 2335.83,-252.711 2355.1,-302 2386.78,-382.993 2413.46,-482.533 2425.5,-530.106"/>
-<polygon fill="black" stroke="black" points="2422.14,-531.129 2427.97,-539.978 2428.93,-529.427 2422.14,-531.129"/>
+<path fill="none" stroke="black" d="M2289.09,-170.402C2312.55,-233.868 2393.62,-453.215 2422.25,-530.66"/>
+<polygon fill="black" stroke="black" points="2419.02,-532.04 2425.77,-540.206 2425.59,-529.613 2419.02,-532.04"/>
 </g>
 <!-- StorageAsAService -->
 <g id="node6" class="node"><title>StorageAsAService</title>
@@ -346,263 +346,253 @@
 </g>
 <!-- PricingModel -->
 <g id="node35" class="node"><title>PricingModel</title>
-<ellipse fill="none" stroke="black" cx="2281.66" cy="-383" rx="59.5901" ry="18"/>
-<text text-anchor="middle" x="2281.66" y="-379.3" font-family="Times,serif" font-size="14.00">PricingModel</text>
+<ellipse fill="none" stroke="black" cx="2281.66" cy="-504" rx="59.5901" ry="18"/>
+<text text-anchor="middle" x="2281.66" y="-500.3" font-family="Times,serif" font-size="14.00">PricingModel</text>
 </g>
 <!-- PricingModel&#45;&gt;Attribute -->
 <g id="edge34" class="edge"><title>PricingModel&#45;&gt;Attribute</title>
-<path fill="none" stroke="black" d="M2297.56,-400.419C2324.26,-431.634 2380.33,-497.187 2411.07,-533.126"/>
-<polygon fill="black" stroke="black" points="2408.79,-535.841 2417.95,-541.166 2414.11,-531.291 2408.79,-535.841"/>
+<path fill="none" stroke="black" d="M2320.82,-517.766C2342.15,-525.462 2368.77,-535.063 2390.65,-542.956"/>
+<polygon fill="black" stroke="black" points="2389.74,-546.349 2400.33,-546.45 2392.11,-539.764 2389.74,-546.349"/>
 </g>
 <!-- Static -->
 <g id="node36" class="node"><title>Static</title>
-<ellipse fill="none" stroke="black" cx="1909.64" cy="-261" rx="30.5947" ry="18"/>
-<text text-anchor="middle" x="1909.64" y="-257.3" font-family="Times,serif" font-size="14.00">Static</text>
+<ellipse fill="none" stroke="black" cx="1909.64" cy="-477" rx="30.5947" ry="18"/>
+<text text-anchor="middle" x="1909.64" y="-473.3" font-family="Times,serif" font-size="14.00">Static</text>
 </g>
-<!-- Static&#45;&gt;PricingModel -->
-<g id="edge35" class="edge"><title>Static&#45;&gt;PricingModel</title>
-<path fill="none" stroke="black" d="M1939.09,-255.847C1990.47,-248.164 2100.11,-239.369 2172.22,-288 2200.57,-307.121 2182.52,-333.443 2208.22,-356 2213.37,-360.521 2219.35,-364.312 2225.62,-367.486"/>
-<polygon fill="black" stroke="black" points="2224.4,-370.775 2234.95,-371.706 2227.28,-364.397 2224.4,-370.775"/>
+<!-- Static&#45;&gt;NameAttribute -->
+<g id="edge35" class="edge"><title>Static&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1940.08,-475.044C1989.79,-472.815 2092.72,-472.875 2172.22,-504 2190.84,-511.292 2190.67,-521.409 2208.22,-531 2214.69,-534.54 2221.73,-537.805 2228.79,-540.75"/>
+<polygon fill="black" stroke="black" points="2227.79,-544.12 2238.38,-544.564 2230.38,-537.616 2227.79,-544.12"/>
 </g>
 <!-- Dynamic -->
 <g id="node37" class="node"><title>Dynamic</title>
-<ellipse fill="none" stroke="black" cx="1909.64" cy="-207" rx="43.5923" ry="18"/>
-<text text-anchor="middle" x="1909.64" y="-203.3" font-family="Times,serif" font-size="14.00">Dynamic</text>
+<ellipse fill="none" stroke="black" cx="1909.64" cy="-423" rx="43.5923" ry="18"/>
+<text text-anchor="middle" x="1909.64" y="-419.3" font-family="Times,serif" font-size="14.00">Dynamic</text>
 </g>
-<!-- Dynamic&#45;&gt;PricingModel -->
-<g id="edge36" class="edge"><title>Dynamic&#45;&gt;PricingModel</title>
-<path fill="none" stroke="black" d="M1948.94,-198.917C2004.79,-189.512 2108.84,-181.333 2172.22,-234 2215.7,-270.132 2169.66,-314.654 2208.22,-356 2212.6,-360.703 2217.88,-364.591 2223.57,-367.804"/>
-<polygon fill="black" stroke="black" points="2222.25,-371.057 2232.77,-372.32 2225.34,-364.773 2222.25,-371.057"/>
+<!-- Dynamic&#45;&gt;NameAttribute -->
+<g id="edge36" class="edge"><title>Dynamic&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1949.91,-415.766C2005.11,-407.895 2106.26,-402.14 2172.22,-450 2204.1,-473.137 2179.52,-504.012 2208.22,-531 2212.77,-535.284 2218.07,-538.903 2223.69,-541.957"/>
+<polygon fill="black" stroke="black" points="2222.19,-545.121 2232.72,-546.306 2225.23,-538.814 2222.19,-545.121"/>
 </g>
 <!-- PayAndGo -->
 <g id="node38" class="node"><title>PayAndGo</title>
-<ellipse fill="none" stroke="black" cx="1335.49" cy="-369" rx="50.0912" ry="18"/>
-<text text-anchor="middle" x="1335.49" y="-365.3" font-family="Times,serif" font-size="14.00">PayAndGo</text>
+<ellipse fill="none" stroke="black" cx="1335.49" cy="-531" rx="50.0912" ry="18"/>
+<text text-anchor="middle" x="1335.49" y="-527.3" font-family="Times,serif" font-size="14.00">PayAndGo</text>
 </g>
 <!-- PayAndGo&#45;&gt;Static -->
 <g id="edge37" class="edge"><title>PayAndGo&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1381.95,-375.77C1439.59,-381.975 1540.01,-384.633 1611.06,-342 1635.8,-327.16 1622.37,-302.9 1647.06,-288 1716.51,-246.104 1815.54,-249.354 1869.65,-255.267"/>
-<polygon fill="black" stroke="black" points="1869.51,-258.775 1879.85,-256.473 1870.33,-251.823 1869.51,-258.775"/>
+<path fill="none" stroke="black" d="M1384.29,-526.489C1494.92,-516.047 1766.94,-490.374 1869.05,-480.736"/>
+<polygon fill="black" stroke="black" points="1869.61,-484.199 1879.24,-479.775 1868.95,-477.23 1869.61,-484.199"/>
 </g>
 <!-- PayPerResource -->
 <g id="node39" class="node"><title>PayPerResource</title>
-<ellipse fill="none" stroke="black" cx="1335.49" cy="-315" rx="68.4888" ry="18"/>
-<text text-anchor="middle" x="1335.49" y="-311.3" font-family="Times,serif" font-size="14.00">PayPerResource</text>
+<ellipse fill="none" stroke="black" cx="1335.49" cy="-477" rx="68.4888" ry="18"/>
+<text text-anchor="middle" x="1335.49" y="-473.3" font-family="Times,serif" font-size="14.00">PayPerResource</text>
 </g>
 <!-- PayPerResource&#45;&gt;Static -->
 <g id="edge38" class="edge"><title>PayPerResource&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1399.9,-309.015C1518.79,-297.794 1771.94,-273.902 1869.33,-264.71"/>
-<polygon fill="black" stroke="black" points="1869.71,-268.19 1879.34,-263.765 1869.05,-261.221 1869.71,-268.19"/>
+<path fill="none" stroke="black" d="M1403.8,-477C1523.96,-477 1771.82,-477 1868.64,-477"/>
+<polygon fill="black" stroke="black" points="1868.88,-480.5 1878.88,-477 1868.88,-473.5 1868.88,-480.5"/>
 </g>
 <!-- Subscription -->
 <g id="node40" class="node"><title>Subscription</title>
-<ellipse fill="none" stroke="black" cx="1335.49" cy="-261" rx="55.4913" ry="18"/>
-<text text-anchor="middle" x="1335.49" y="-257.3" font-family="Times,serif" font-size="14.00">Subscription</text>
+<ellipse fill="none" stroke="black" cx="1335.49" cy="-423" rx="55.4913" ry="18"/>
+<text text-anchor="middle" x="1335.49" y="-419.3" font-family="Times,serif" font-size="14.00">Subscription</text>
 </g>
 <!-- Subscription&#45;&gt;Static -->
 <g id="edge39" class="edge"><title>Subscription&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1390.83,-261C1505.19,-261 1768.43,-261 1868.79,-261"/>
-<polygon fill="black" stroke="black" points="1868.81,-264.5 1878.81,-261 1868.81,-257.5 1868.81,-264.5"/>
-</g>
-<!-- Hybrid -->
-<g id="node41" class="node"><title>Hybrid</title>
-<ellipse fill="none" stroke="black" cx="1335.49" cy="-207" rx="35.9954" ry="18"/>
-<text text-anchor="middle" x="1335.49" y="-203.3" font-family="Times,serif" font-size="14.00">Hybrid</text>
-</g>
-<!-- Hybrid&#45;&gt;Static -->
-<g id="edge40" class="edge"><title>Hybrid&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1370.99,-210.256C1471.41,-219.734 1763.13,-247.267 1869.36,-257.293"/>
-<polygon fill="black" stroke="black" points="1869.06,-260.78 1879.34,-258.235 1869.72,-253.811 1869.06,-260.78"/>
+<path fill="none" stroke="black" d="M1388.78,-427.935C1502.15,-438.635 1768.44,-463.768 1869.14,-473.272"/>
+<polygon fill="black" stroke="black" points="1868.91,-476.765 1879.19,-474.221 1869.56,-469.796 1868.91,-476.765"/>
 </g>
 <!-- Price -->
-<g id="node42" class="node"><title>Price</title>
-<ellipse fill="none" stroke="black" cx="2281.66" cy="-329" rx="28.6953" ry="18"/>
-<text text-anchor="middle" x="2281.66" y="-325.3" font-family="Times,serif" font-size="14.00">Price</text>
+<g id="node41" class="node"><title>Price</title>
+<ellipse fill="none" stroke="black" cx="2281.66" cy="-450" rx="28.6953" ry="18"/>
+<text text-anchor="middle" x="2281.66" y="-446.3" font-family="Times,serif" font-size="14.00">Price</text>
 </g>
 <!-- Price&#45;&gt;Attribute -->
-<g id="edge41" class="edge"><title>Price&#45;&gt;Attribute</title>
-<path fill="none" stroke="black" d="M2309.73,-333.428C2324.79,-337.153 2342.9,-343.903 2355.1,-356 2403.89,-404.376 2422.4,-486.806 2428.99,-529.887"/>
-<polygon fill="black" stroke="black" points="2425.55,-530.54 2430.42,-539.948 2432.48,-529.555 2425.55,-530.54"/>
+<g id="edge40" class="edge"><title>Price&#45;&gt;Attribute</title>
+<path fill="none" stroke="black" d="M2308.47,-456.51C2322.93,-460.898 2340.87,-467.617 2355.1,-477 2377.97,-492.076 2399.07,-515.103 2413.42,-532.756"/>
+<polygon fill="black" stroke="black" points="2410.95,-535.269 2419.9,-540.932 2416.43,-530.921 2410.95,-535.269"/>
 </g>
 <!-- Euro -->
-<g id="node43" class="node"><title>Euro</title>
-<ellipse fill="none" stroke="black" cx="1909.64" cy="-477" rx="27.8951" ry="18"/>
-<text text-anchor="middle" x="1909.64" y="-473.3" font-family="Times,serif" font-size="14.00">Euro</text>
+<g id="node42" class="node"><title>Euro</title>
+<ellipse fill="none" stroke="black" cx="1909.64" cy="-369" rx="27.8951" ry="18"/>
+<text text-anchor="middle" x="1909.64" y="-365.3" font-family="Times,serif" font-size="14.00">Euro</text>
 </g>
 <!-- Euro&#45;&gt;NameAttribute -->
-<g id="edge42" class="edge"><title>Euro&#45;&gt;NameAttribute</title>
-<path fill="none" stroke="black" d="M1937.6,-476.638C1985.72,-476.679 2089.13,-479.889 2172.22,-504 2198.08,-511.506 2225.2,-525.013 2245.85,-536.641"/>
-<polygon fill="black" stroke="black" points="2244.16,-539.703 2254.57,-541.654 2247.65,-533.635 2244.16,-539.703"/>
+<g id="edge41" class="edge"><title>Euro&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1936.19,-363.103C1987.58,-352.867 2104.33,-338.057 2172.22,-396 2219.45,-436.313 2166.47,-485.032 2208.22,-531 2212.21,-535.392 2216.98,-539.072 2222.14,-542.156"/>
+<polygon fill="black" stroke="black" points="2220.64,-545.322 2231.14,-546.802 2223.86,-539.102 2220.64,-545.322"/>
 </g>
 <!-- UsDollar -->
-<g id="node44" class="node"><title>UsDollar</title>
-<ellipse fill="none" stroke="black" cx="1909.64" cy="-423" rx="42.7926" ry="18"/>
-<text text-anchor="middle" x="1909.64" y="-419.3" font-family="Times,serif" font-size="14.00">UsDollar</text>
+<g id="node43" class="node"><title>UsDollar</title>
+<ellipse fill="none" stroke="black" cx="1909.64" cy="-315" rx="42.7926" ry="18"/>
+<text text-anchor="middle" x="1909.64" y="-311.3" font-family="Times,serif" font-size="14.00">UsDollar</text>
 </g>
 <!-- UsDollar&#45;&gt;NameAttribute -->
-<g id="edge43" class="edge"><title>UsDollar&#45;&gt;NameAttribute</title>
-<path fill="none" stroke="black" d="M1951.87,-419.053C2005.4,-415.708 2100.45,-415.941 2172.22,-450 2210.82,-468.321 2243.72,-506.244 2262.85,-531.912"/>
-<polygon fill="black" stroke="black" points="2260.08,-534.065 2268.79,-540.1 2265.75,-529.952 2260.08,-534.065"/>
+<g id="edge42" class="edge"><title>UsDollar&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1947.77,-306.464C2004.04,-295.922 2110.84,-285.653 2172.22,-342 2235.21,-399.83 2153.06,-465.66 2208.22,-531 2212.04,-535.533 2216.71,-539.306 2221.81,-542.446"/>
+<polygon fill="black" stroke="black" points="2220.25,-545.583 2230.73,-547.155 2223.52,-539.392 2220.25,-545.583"/>
 </g>
 <!-- JapaneseYen -->
-<g id="node45" class="node"><title>JapaneseYen</title>
-<ellipse fill="none" stroke="black" cx="1909.64" cy="-369" rx="56.59" ry="18"/>
-<text text-anchor="middle" x="1909.64" y="-365.3" font-family="Times,serif" font-size="14.00">JapaneseYen</text>
+<g id="node44" class="node"><title>JapaneseYen</title>
+<ellipse fill="none" stroke="black" cx="1909.64" cy="-261" rx="56.59" ry="18"/>
+<text text-anchor="middle" x="1909.64" y="-257.3" font-family="Times,serif" font-size="14.00">JapaneseYen</text>
 </g>
 <!-- JapaneseYen&#45;&gt;NameAttribute -->
-<g id="edge44" class="edge"><title>JapaneseYen&#45;&gt;NameAttribute</title>
-<path fill="none" stroke="black" d="M1962.09,-362.06C2017.94,-357.163 2107.78,-357.208 2172.22,-396 2223.64,-426.953 2255.85,-492.755 2270.8,-530.275"/>
-<polygon fill="black" stroke="black" points="2267.7,-531.977 2274.56,-540.055 2274.24,-529.465 2267.7,-531.977"/>
+<g id="edge43" class="edge"><title>JapaneseYen&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1956.29,-250.633C2014.6,-240.347 2114.82,-233.085 2172.22,-288 2251.11,-363.475 2139.52,-446.144 2208.22,-531 2211.81,-535.434 2216.2,-539.139 2221.03,-542.236"/>
+<polygon fill="black" stroke="black" points="2219.67,-545.479 2230.13,-547.18 2223.01,-539.329 2219.67,-545.479"/>
 </g>
 <!-- DatabaseAsAService -->
-<g id="node46" class="node"><title>DatabaseAsAService</title>
+<g id="node45" class="node"><title>DatabaseAsAService</title>
 <ellipse fill="none" stroke="black" cx="1335.49" cy="-153" rx="85.2851" ry="18"/>
 <text text-anchor="middle" x="1335.49" y="-149.3" font-family="Times,serif" font-size="14.00">DatabaseAsAService</text>
 </g>
 <!-- DatabaseAsAService&#45;&gt;SaaS -->
-<g id="edge45" class="edge"><title>DatabaseAsAService&#45;&gt;SaaS</title>
+<g id="edge44" class="edge"><title>DatabaseAsAService&#45;&gt;SaaS</title>
 <path fill="none" stroke="black" d="M1420.91,-153C1547.09,-153 1779.77,-153 1870.76,-153"/>
 <polygon fill="black" stroke="black" points="1870.89,-156.5 1880.89,-153 1870.89,-149.5 1870.89,-156.5"/>
 </g>
 <!-- SQLDatabaseAsAService -->
-<g id="node47" class="node"><title>SQLDatabaseAsAService</title>
+<g id="node46" class="node"><title>SQLDatabaseAsAService</title>
 <ellipse fill="none" stroke="black" cx="775.634" cy="-207" rx="102.082" ry="18"/>
 <text text-anchor="middle" x="775.634" y="-203.3" font-family="Times,serif" font-size="14.00">SQLDatabaseAsAService</text>
 </g>
 <!-- SQLDatabaseAsAService&#45;&gt;DatabaseAsAService -->
-<g id="edge46" class="edge"><title>SQLDatabaseAsAService&#45;&gt;DatabaseAsAService</title>
+<g id="edge45" class="edge"><title>SQLDatabaseAsAService&#45;&gt;DatabaseAsAService</title>
 <path fill="none" stroke="black" d="M865.336,-198.414C970.209,-188.262 1143.61,-171.477 1247.66,-161.405"/>
 <polygon fill="black" stroke="black" points="1248.2,-164.869 1257.82,-160.422 1247.52,-157.902 1248.2,-164.869"/>
 </g>
 <!-- NoSQLDatabaseAsAService -->
-<g id="node48" class="node"><title>NoSQLDatabaseAsAService</title>
+<g id="node47" class="node"><title>NoSQLDatabaseAsAService</title>
 <ellipse fill="none" stroke="black" cx="775.634" cy="-153" rx="112.38" ry="18"/>
 <text text-anchor="middle" x="775.634" y="-149.3" font-family="Times,serif" font-size="14.00">NoSQLDatabaseAsAService</text>
 </g>
 <!-- NoSQLDatabaseAsAService&#45;&gt;DatabaseAsAService -->
-<g id="edge47" class="edge"><title>NoSQLDatabaseAsAService&#45;&gt;DatabaseAsAService</title>
+<g id="edge46" class="edge"><title>NoSQLDatabaseAsAService&#45;&gt;DatabaseAsAService</title>
 <path fill="none" stroke="black" d="M888.184,-153C991.213,-153 1142.59,-153 1239.86,-153"/>
 <polygon fill="black" stroke="black" points="1239.97,-156.5 1249.97,-153 1239.97,-149.5 1239.97,-156.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@examples/Requirement1.py@latest -->
-<g id="node49" class="node"><title>github.com/supermuesli/csdl@examples/Requirement1.py@latest</title>
+<g id="node48" class="node"><title>github.com/supermuesli/csdl@examples/Requirement1.py@latest</title>
 <ellipse fill="none" stroke="black" cx="245.678" cy="-72" rx="245.857" ry="18"/>
 <text text-anchor="middle" x="245.678" y="-68.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@examples/Requirement1.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@examples/Requirement1.py@latest&#45;&gt;VMAsAService -->
-<g id="edge48" class="edge"><title>github.com/supermuesli/csdl@examples/Requirement1.py@latest&#45;&gt;VMAsAService</title>
+<g id="edge47" class="edge"><title>github.com/supermuesli/csdl@examples/Requirement1.py@latest&#45;&gt;VMAsAService</title>
 <path fill="none" stroke="black" d="M447.782,-61.7154C535.605,-57.2241 633.286,-52.2286 698.791,-48.8787"/>
 <polygon fill="black" stroke="black" points="699.214,-52.3617 709.022,-48.3555 698.856,-45.3709 699.214,-52.3617"/>
 </g>
 <!-- github.com/supermuesli/csdl@misc/StaticIp.py@latest -->
-<g id="node50" class="node"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
+<g id="node49" class="node"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1909.64" cy="-1071" rx="206.063" ry="18"/>
 <text text-anchor="middle" x="1909.64" y="-1067.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/StaticIp.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@misc/StaticIp.py@latest&#45;&gt;NumericAttribute -->
-<g id="edge49" class="edge"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest&#45;&gt;NumericAttribute</title>
+<g id="edge48" class="edge"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest&#45;&gt;NumericAttribute</title>
 <path fill="none" stroke="black" d="M2115.4,-1069.98C2135.84,-1076.2 2155.26,-1085.22 2172.22,-1098 2251.04,-1157.41 2272.72,-1283.44 2278.56,-1339.77"/>
 <polygon fill="black" stroke="black" points="2275.08,-1340.13 2279.5,-1349.75 2282.05,-1339.47 2275.08,-1340.13"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest -->
-<g id="node51" class="node"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</title>
+<g id="node50" class="node"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</title>
 <ellipse fill="none" stroke="black" cx="245.678" cy="-18" rx="221.761" ry="18"/>
 <text text-anchor="middle" x="245.678" y="-14.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService -->
-<g id="edge50" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService</title>
+<g id="edge49" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService</title>
 <path fill="none" stroke="black" d="M433.559,-27.5572C524.834,-32.2251 629.59,-37.5823 698.656,-41.1144"/>
 <polygon fill="black" stroke="black" points="698.838,-44.6282 709.004,-41.6436 699.195,-37.6373 698.838,-44.6282"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest -->
-<g id="node52" class="node"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest</title>
+<g id="node51" class="node"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1335.49" cy="-1017" rx="229.359" ry="18"/>
 <text text-anchor="middle" x="1335.49" y="-1013.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/Region.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;Region -->
-<g id="edge51" class="edge"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;Region</title>
+<g id="edge50" class="edge"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;Region</title>
 <path fill="none" stroke="black" d="M1565.08,-1017C1675.65,-1017 1798.17,-1017 1862.83,-1017"/>
 <polygon fill="black" stroke="black" points="1863.08,-1020.5 1873.08,-1017 1863.08,-1013.5 1863.08,-1020.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@misc/countries/USA.py@latest -->
-<g id="node53" class="node"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
+<g id="node52" class="node"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1335.49" cy="-855" rx="231.259" ry="18"/>
 <text text-anchor="middle" x="1335.49" y="-851.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/countries/USA.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@misc/countries/USA.py@latest&#45;&gt;NorthAmerica -->
-<g id="edge52" class="edge"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest&#45;&gt;NorthAmerica</title>
+<g id="edge51" class="edge"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest&#45;&gt;NorthAmerica</title>
 <path fill="none" stroke="black" d="M1567.14,-855C1664.11,-855 1769.91,-855 1837.65,-855"/>
 <polygon fill="black" stroke="black" points="1837.77,-858.5 1847.77,-855 1837.77,-851.5 1837.77,-858.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/California.py@latest -->
-<g id="node54" class="node"><title>github.com/supermuesli/csdl@aws/regions/California.py@latest</title>
+<g id="node53" class="node"><title>github.com/supermuesli/csdl@aws/regions/California.py@latest</title>
 <ellipse fill="none" stroke="black" cx="775.634" cy="-909" rx="239.358" ry="18"/>
 <text text-anchor="middle" x="775.634" y="-905.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/California.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/California.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest -->
-<g id="edge53" class="edge"><title>github.com/supermuesli/csdl@aws/regions/California.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
+<g id="edge52" class="edge"><title>github.com/supermuesli/csdl@aws/regions/California.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
 <path fill="none" stroke="black" d="M923.204,-894.812C1002.15,-887.171 1099.5,-877.747 1179.67,-869.986"/>
 <polygon fill="black" stroke="black" points="1180.25,-873.447 1189.86,-869 1179.57,-866.479 1180.25,-873.447"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest -->
-<g id="node55" class="node"><title>github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest</title>
+<g id="node54" class="node"><title>github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest</title>
 <ellipse fill="none" stroke="black" cx="775.634" cy="-855" rx="248.056" ry="18"/>
 <text text-anchor="middle" x="775.634" y="-851.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest -->
-<g id="edge54" class="edge"><title>github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
+<g id="edge53" class="edge"><title>github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
 <path fill="none" stroke="black" d="M1024.16,-855C1047.24,-855 1070.62,-855 1093.64,-855"/>
 <polygon fill="black" stroke="black" points="1093.84,-858.5 1103.84,-855 1093.84,-851.5 1093.84,-858.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/NewYork.py@latest -->
-<g id="node56" class="node"><title>github.com/supermuesli/csdl@aws/regions/NewYork.py@latest</title>
+<g id="node55" class="node"><title>github.com/supermuesli/csdl@aws/regions/NewYork.py@latest</title>
 <ellipse fill="none" stroke="black" cx="775.634" cy="-801" rx="238.558" ry="18"/>
 <text text-anchor="middle" x="775.634" y="-797.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/NewYork.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/NewYork.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest -->
-<g id="edge55" class="edge"><title>github.com/supermuesli/csdl@aws/regions/NewYork.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
+<g id="edge54" class="edge"><title>github.com/supermuesli/csdl@aws/regions/NewYork.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
 <path fill="none" stroke="black" d="M923.204,-815.188C1002.15,-822.829 1099.5,-832.253 1179.67,-840.014"/>
 <polygon fill="black" stroke="black" points="1179.57,-843.521 1189.86,-841 1180.25,-836.553 1179.57,-843.521"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/EBS.py@latest -->
-<g id="node57" class="node"><title>github.com/supermuesli/csdl@aws/EBS.py@latest</title>
+<g id="node56" class="node"><title>github.com/supermuesli/csdl@aws/EBS.py@latest</title>
 <ellipse fill="none" stroke="black" cx="775.634" cy="-99" rx="191.966" ry="18"/>
 <text text-anchor="middle" x="775.634" y="-95.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/EBS.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/EBS.py@latest&#45;&gt;StorageAsAService -->
-<g id="edge56" class="edge"><title>github.com/supermuesli/csdl@aws/EBS.py@latest&#45;&gt;StorageAsAService</title>
+<g id="edge55" class="edge"><title>github.com/supermuesli/csdl@aws/EBS.py@latest&#45;&gt;StorageAsAService</title>
 <path fill="none" stroke="black" d="M967.445,-99C1061.47,-99 1170.37,-99 1244.99,-99"/>
 <polygon fill="black" stroke="black" points="1245.29,-102.5 1255.29,-99 1245.29,-95.5001 1245.29,-102.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest -->
-<g id="node58" class="node"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</title>
+<g id="node57" class="node"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1335.49" cy="-1071" rx="250.756" ry="18"/>
 <text text-anchor="middle" x="1335.49" y="-1067.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/StaticIp.py@latest -->
-<g id="edge57" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
+<g id="edge56" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
 <path fill="none" stroke="black" d="M1586.61,-1071C1622.05,-1071 1658.24,-1071 1692.96,-1071"/>
 <polygon fill="black" stroke="black" points="1693.19,-1074.5 1703.19,-1071 1693.19,-1067.5 1693.19,-1074.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest -->
-<g id="node59" class="node"><title>github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest</title>
+<g id="node58" class="node"><title>github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1335.49" cy="-963" rx="275.651" ry="18"/>
 <text text-anchor="middle" x="1335.49" y="-959.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest&#45;&gt;Currency -->
-<g id="edge58" class="edge"><title>github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest&#45;&gt;Currency</title>
+<g id="edge57" class="edge"><title>github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest&#45;&gt;Currency</title>
 <path fill="none" stroke="black" d="M1611.25,-963C1704.32,-963 1798.98,-963 1855.76,-963"/>
 <polygon fill="black" stroke="black" points="1855.91,-966.5 1865.91,-963 1855.91,-959.5 1855.91,-966.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest -->
-<g id="node60" class="node"><title>github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1909.64" cy="-315" rx="262.653" ry="18"/>
-<text text-anchor="middle" x="1909.64" y="-311.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest</text>
+<g id="node59" class="node"><title>github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1909.64" cy="-207" rx="262.653" ry="18"/>
+<text text-anchor="middle" x="1909.64" y="-203.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest&#45;&gt;NameAttribute -->
-<g id="edge59" class="edge"><title>github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest&#45;&gt;NameAttribute</title>
-<path fill="none" stroke="black" d="M2138.8,-323.953C2150.55,-328.849 2161.79,-334.803 2172.22,-342 2176.5,-344.958 2239.35,-473.214 2267.36,-530.665"/>
-<polygon fill="black" stroke="black" points="2264.33,-532.43 2271.85,-539.887 2270.62,-529.364 2264.33,-532.43"/>
+<g id="edge58" class="edge"><title>github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M2004.41,-190.19C2060.51,-185.865 2129.06,-191.608 2172.22,-234 2267.07,-327.182 2125.93,-426.558 2208.22,-531 2211.75,-535.481 2216.1,-539.218 2220.91,-542.335"/>
+<polygon fill="black" stroke="black" points="2219.52,-545.566 2229.97,-547.302 2222.89,-539.427 2219.52,-545.566"/>
 </g>
 </g>
 </svg>
