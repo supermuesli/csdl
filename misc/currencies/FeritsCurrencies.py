@@ -12,5 +12,6 @@ class FeritsCurrencies(Attribute):
         indianRupee.inject("https://github.com/supermuesli/csdl", "misc/currencies/IndianRupee.py")
 
         # add my custom option to the already existing options
-        self.options = Currency().options + [indianRupee]
+        self.options = Currency().options
+        self.options["INR"] = indianRupee
         self.choice = None
