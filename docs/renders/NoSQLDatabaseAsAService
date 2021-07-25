@@ -1,4 +1,7 @@
 // NoSQLDatabaseAsAService fields
 digraph {
 	graph [rankdir=LR]
+	NoSQLDatabaseAsAService -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 }

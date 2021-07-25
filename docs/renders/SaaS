@@ -1,4 +1,7 @@
 // SaaS fields
 digraph {
 	graph [rankdir=LR]
+	SaaS -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 }

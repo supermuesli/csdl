@@ -1,6 +1,9 @@
 // VMAsAService fields
 digraph {
 	graph [rankdir=LR]
+	VMAsAService -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 	VMAsAService -> Region [color=red]
 	VMAsAService -> OperatingSystem [color=red]
 	OperatingSystem -> Linux [color=red]

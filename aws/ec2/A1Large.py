@@ -14,10 +14,10 @@ class A1Large(CCS):
         self.readme = "enjoy"
 
         self.cpuCores.value = 4
-        self.cpuCores.mutable = False
+        self.cpuCores.mutable = False  # attributes are immutable by default. this is just for demonstration
 
         self.ram.value = 4
-        self.ram.mutable = False
+        self.ram.mutable = False  # attributes are immutable by default. this is just for demonstration
 
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
@@ -53,7 +53,7 @@ class A1Large(CCS):
                     if match.value > 1:
                         return match.value * 2.5
 
-                # otherwise we assume a default value and the corresponding price (0 IPs cost 0 us-dollar)
+                # otherwise we assume a default value and the corresponding price (0 IPs cost 0 EUR)
                 return 0
 
         class defaultPrice(PriceFunc):

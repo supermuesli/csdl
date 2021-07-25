@@ -147,6 +147,10 @@ importedClasses = {
         "className": "NetworkDownloadSpeed",
         "extendsId": "NumericAttribute"
     },
+    "Price": {
+        "className": "Price",
+        "extendsId": "Attribute"
+    },
     "PricingModel": {
         "className": "PricingModel",
         "extendsId": "ChoiceAttribute"
@@ -237,6 +241,7 @@ class Attribute:
         self.mutable = False
         self.searchKeyWords = None
         self.description = None
+        self.matched = False
 
     def setId(self, gitRepo, filePath, branch=None, commit=None):
         """ Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
@@ -485,10 +490,12 @@ class Dynamic(NameAttribute):
         self.description = "dynamic pricing models depend on the configuration of the CCS and also on any other arbitrary thing, such as time or weather"
 
 
-class Price:
+class Price(Attribute):
     """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
+        self.id = "Price"
+        self.extendsId = "Attribute"
         self.currency = Currency()
         self.priceFuncs = []
         self.model = PricingModel()
@@ -644,7 +651,7 @@ def extractAttributes(ccs):
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if Attribute in fields[key].__class__.mro():  # https://stackoverflow.com/questions/31028237/getting-all-superclasses-in-python-3
+            if isRelated("Attribute", fields[key].id):
                 res += [fields[key]]
         except Exception as e:
             pass
@@ -776,54 +783,60 @@ def matchCCS(req, ccs):
 
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
-        for ca in ccsAttributes:
-            if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
-                if isRelated("NumericAttribute", ra.id):
-                    if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
-                        print(ra.id, "is set as a requirement, but", ccs.id, "does not set it")
-                        return False
-                    if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
-                        if ca.moreIsBetter:
-                            if not ca.mutable:
-                                if ra.value > ca.value:  # value is too small and not mutable
-                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
-                                    return False
-                            if ca.maxVal is not None:
-                                if ca.maxVal < ra.value:  # value cannot be made large enough
-                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
-                                    return False
-                        else:
-                            if not ca.mutable:
-                                if ra.value < ca.value:  # value is too large and not mutable
-                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
-                                    return False
-                            if ca.minVal is not None:
-                                if ca.minVal > ra.value:  # value cannot be made small enough
-                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
-                                    return False
-                    # requirement is fulfilled
-                    break
-
-                elif isRelated("BoolAttribute", ra.id):
-                    if not ca.mutable:
-                        if ra.value != ca.value:  # value does not match and is not mutable
-                            print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
+        if not ra.matched:
+            for ca in ccsAttributes:
+                if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
+                    if isRelated("NumericAttribute", ra.id):
+                        if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
+                            print(ra.id, "is set as a requirement, but", ccs.id, "does not set it")
                             return False
-                    # requirement is fulfilled
-                    break
+                        if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
+                            if ca.moreIsBetter:
+                                if not ca.mutable:
+                                    if ra.value > ca.value:  # value is too small and not mutable
+                                        print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
+                                        return False
+                                if ca.maxVal is not None:
+                                    if ca.maxVal < ra.value:  # value cannot be made large enough
+                                        print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
+                                        return False
+                            else:
+                                if not ca.mutable:
+                                    if ra.value < ca.value:  # value is too large and not mutable
+                                        print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
+                                        return False
+                                if ca.minVal is not None:
+                                    if ca.minVal > ra.value:  # value cannot be made small enough
+                                        print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
+                                        return False
+                        # requirement is fulfilled
+                        ra.matched = True
+                        break
 
-                elif isRelated("ChoiceAttribute", ra.id):
-                    if ra.choice is not None:
-                        if ca.mutable:
-                            if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
-                                print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
-                                return False
-                        else:
-                            if not isRelated(ra.options[ra.choice].id, ca.optinos[ca.choice].id):  # value does not match and is not mutable
-                                print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
+                    elif isRelated("BoolAttribute", ra.id):
+                        if not ca.mutable:
+                            if ra.value != ca.value:  # value does not match and is not mutable
+                                print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
                                 return False
                         # requirement is fulfilled
+                        ra.matched = True
                         break
+
+                    elif isRelated("ChoiceAttribute", ra.id):
+                        print("try", ra.id, ca.id)
+                        if ra.choice is not None:
+                            if ca.mutable:
+                                if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                    print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
+                                    return False
+                            else:
+                                if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
+                                    print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
+                                    return False
+                            # requirement is fulfilled
+                            ra.matched = True
+                            break
+                return matchField(ra, ca)
     return True
 
 

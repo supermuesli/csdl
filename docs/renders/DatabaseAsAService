@@ -1,4 +1,7 @@
 // DatabaseAsAService fields
 digraph {
 	graph [rankdir=LR]
+	DatabaseAsAService -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 }

@@ -1,6 +1,9 @@
 // github.com/supermuesli/csdl@examples/Requirement1.py@latest fields
 digraph {
 	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> Region [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> OperatingSystem [color=red]
 	OperatingSystem -> Linux [color=red]

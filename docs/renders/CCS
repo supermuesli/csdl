@@ -1,4 +1,7 @@
 // CCS fields
 digraph {
 	graph [rankdir=LR]
+	CCS -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 }

@@ -1,6 +1,9 @@
 // github.com/supermuesli/csdl@aws/EBS.py@latest fields
 digraph {
 	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> "github.com/supermuesli/csdl@aws/regions/Region.py@latest" [color=red]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> Storage [color=red]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageWriteSpeed [color=red]

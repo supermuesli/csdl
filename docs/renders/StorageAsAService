@@ -1,6 +1,9 @@
 // StorageAsAService fields
 digraph {
 	graph [rankdir=LR]
+	StorageAsAService -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 	StorageAsAService -> Region [color=red]
 	StorageAsAService -> Storage [color=red]
 	StorageAsAService -> StorageWriteSpeed [color=red]

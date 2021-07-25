@@ -1,6 +1,9 @@
 // ServerAsAService fields
 digraph {
 	graph [rankdir=LR]
+	ServerAsAService -> Price [color=red]
+	Price -> Currency [color=red]
+	Price -> PricingModel [color=red]
 	ServerAsAService -> Region [color=red]
 	ServerAsAService -> OperatingSystem [color=red]
 	OperatingSystem -> Linux [color=red]

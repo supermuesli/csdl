@@ -344,75 +344,75 @@
 <path fill="none" stroke="black" d="M1971.6,-1222.29C2027.33,-1218.97 2101.14,-1223.5 2154.02,-1260 2219.03,-1304.88 2247.07,-1400.56 2257.36,-1448.06"/>
 <polygon fill="black" stroke="black" points="2253.95,-1448.88 2259.4,-1457.97 2260.81,-1447.47 2253.95,-1448.88"/>
 </g>
-<!-- PricingModel -->
-<g id="node35" class="node"><title>PricingModel</title>
-<ellipse fill="none" stroke="black" cx="1891.44" cy="-963" rx="59.5901" ry="18"/>
-<text text-anchor="middle" x="1891.44" y="-959.3" font-family="Times,serif" font-size="14.00">PricingModel</text>
-</g>
-<!-- PricingModel&#45;&gt;ChoiceAttribute -->
-<g id="edge34" class="edge"><title>PricingModel&#45;&gt;ChoiceAttribute</title>
-<path fill="none" stroke="black" d="M1949.85,-967.189C2013.89,-971.862 2117.7,-979.437 2187.96,-984.564"/>
-<polygon fill="black" stroke="black" points="2187.84,-988.064 2198.07,-985.301 2188.35,-981.083 2187.84,-988.064"/>
-</g>
-<!-- Static -->
-<g id="node36" class="node"><title>Static</title>
-<ellipse fill="none" stroke="black" cx="1891.44" cy="-477" rx="30.5947" ry="18"/>
-<text text-anchor="middle" x="1891.44" y="-473.3" font-family="Times,serif" font-size="14.00">Static</text>
-</g>
-<!-- Static&#45;&gt;NameAttribute -->
-<g id="edge35" class="edge"><title>Static&#45;&gt;NameAttribute</title>
-<path fill="none" stroke="black" d="M1921.88,-475.044C1971.59,-472.815 2074.52,-472.875 2154.02,-504 2172.64,-511.292 2172.47,-521.409 2190.02,-531 2196.5,-534.54 2203.53,-537.805 2210.59,-540.75"/>
-<polygon fill="black" stroke="black" points="2209.6,-544.12 2220.18,-544.564 2212.18,-537.616 2209.6,-544.12"/>
-</g>
-<!-- Dynamic -->
-<g id="node37" class="node"><title>Dynamic</title>
-<ellipse fill="none" stroke="black" cx="1891.44" cy="-423" rx="43.5923" ry="18"/>
-<text text-anchor="middle" x="1891.44" y="-419.3" font-family="Times,serif" font-size="14.00">Dynamic</text>
-</g>
-<!-- Dynamic&#45;&gt;NameAttribute -->
-<g id="edge36" class="edge"><title>Dynamic&#45;&gt;NameAttribute</title>
-<path fill="none" stroke="black" d="M1931.71,-415.766C1986.91,-407.895 2088.06,-402.14 2154.02,-450 2185.9,-473.137 2161.32,-504.012 2190.02,-531 2194.57,-535.284 2199.87,-538.903 2205.49,-541.957"/>
-<polygon fill="black" stroke="black" points="2203.99,-545.121 2214.52,-546.306 2207.03,-538.814 2203.99,-545.121"/>
-</g>
-<!-- PayAndGo -->
-<g id="node38" class="node"><title>PayAndGo</title>
-<ellipse fill="none" stroke="black" cx="1326.39" cy="-531" rx="50.0912" ry="18"/>
-<text text-anchor="middle" x="1326.39" y="-527.3" font-family="Times,serif" font-size="14.00">PayAndGo</text>
-</g>
-<!-- PayAndGo&#45;&gt;Static -->
-<g id="edge37" class="edge"><title>PayAndGo&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1374.91,-526.443C1483.99,-515.981 1750.67,-490.405 1851.22,-480.762"/>
-<polygon fill="black" stroke="black" points="1851.63,-484.238 1861.25,-479.799 1850.96,-477.27 1851.63,-484.238"/>
-</g>
-<!-- PayPerResource -->
-<g id="node39" class="node"><title>PayPerResource</title>
-<ellipse fill="none" stroke="black" cx="1326.39" cy="-477" rx="68.4888" ry="18"/>
-<text text-anchor="middle" x="1326.39" y="-473.3" font-family="Times,serif" font-size="14.00">PayPerResource</text>
-</g>
-<!-- PayPerResource&#45;&gt;Static -->
-<g id="edge38" class="edge"><title>PayPerResource&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1394.75,-477C1513.2,-477 1755.26,-477 1850.59,-477"/>
-<polygon fill="black" stroke="black" points="1850.68,-480.5 1860.68,-477 1850.68,-473.5 1850.68,-480.5"/>
-</g>
-<!-- Subscription -->
-<g id="node40" class="node"><title>Subscription</title>
-<ellipse fill="none" stroke="black" cx="1326.39" cy="-423" rx="55.4913" ry="18"/>
-<text text-anchor="middle" x="1326.39" y="-419.3" font-family="Times,serif" font-size="14.00">Subscription</text>
-</g>
-<!-- Subscription&#45;&gt;Static -->
-<g id="edge39" class="edge"><title>Subscription&#45;&gt;Static</title>
-<path fill="none" stroke="black" d="M1379.6,-428.008C1491.39,-438.729 1751.79,-463.702 1851.05,-473.222"/>
-<polygon fill="black" stroke="black" points="1850.95,-476.729 1861.24,-474.2 1851.62,-469.761 1850.95,-476.729"/>
-</g>
 <!-- Price -->
-<g id="node41" class="node"><title>Price</title>
+<g id="node35" class="node"><title>Price</title>
 <ellipse fill="none" stroke="black" cx="2263.46" cy="-504" rx="28.6953" ry="18"/>
 <text text-anchor="middle" x="2263.46" y="-500.3" font-family="Times,serif" font-size="14.00">Price</text>
 </g>
 <!-- Price&#45;&gt;Attribute -->
-<g id="edge40" class="edge"><title>Price&#45;&gt;Attribute</title>
+<g id="edge34" class="edge"><title>Price&#45;&gt;Attribute</title>
 <path fill="none" stroke="black" d="M2289.61,-511.623C2303.87,-516.37 2321.81,-523.077 2336.91,-531 2354.06,-540.007 2371.88,-552.236 2386.07,-562.779"/>
 <polygon fill="black" stroke="black" points="2384.31,-565.839 2394.4,-569.082 2388.53,-560.257 2384.31,-565.839"/>
+</g>
+<!-- PricingModel -->
+<g id="node36" class="node"><title>PricingModel</title>
+<ellipse fill="none" stroke="black" cx="1891.44" cy="-963" rx="59.5901" ry="18"/>
+<text text-anchor="middle" x="1891.44" y="-959.3" font-family="Times,serif" font-size="14.00">PricingModel</text>
+</g>
+<!-- PricingModel&#45;&gt;ChoiceAttribute -->
+<g id="edge35" class="edge"><title>PricingModel&#45;&gt;ChoiceAttribute</title>
+<path fill="none" stroke="black" d="M1949.85,-967.189C2013.89,-971.862 2117.7,-979.437 2187.96,-984.564"/>
+<polygon fill="black" stroke="black" points="2187.84,-988.064 2198.07,-985.301 2188.35,-981.083 2187.84,-988.064"/>
+</g>
+<!-- Static -->
+<g id="node37" class="node"><title>Static</title>
+<ellipse fill="none" stroke="black" cx="1891.44" cy="-477" rx="30.5947" ry="18"/>
+<text text-anchor="middle" x="1891.44" y="-473.3" font-family="Times,serif" font-size="14.00">Static</text>
+</g>
+<!-- Static&#45;&gt;NameAttribute -->
+<g id="edge36" class="edge"><title>Static&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1921.88,-475.044C1971.59,-472.815 2074.52,-472.875 2154.02,-504 2172.64,-511.292 2172.47,-521.409 2190.02,-531 2196.5,-534.54 2203.53,-537.805 2210.59,-540.75"/>
+<polygon fill="black" stroke="black" points="2209.6,-544.12 2220.18,-544.564 2212.18,-537.616 2209.6,-544.12"/>
+</g>
+<!-- Dynamic -->
+<g id="node38" class="node"><title>Dynamic</title>
+<ellipse fill="none" stroke="black" cx="1891.44" cy="-423" rx="43.5923" ry="18"/>
+<text text-anchor="middle" x="1891.44" y="-419.3" font-family="Times,serif" font-size="14.00">Dynamic</text>
+</g>
+<!-- Dynamic&#45;&gt;NameAttribute -->
+<g id="edge37" class="edge"><title>Dynamic&#45;&gt;NameAttribute</title>
+<path fill="none" stroke="black" d="M1931.71,-415.766C1986.91,-407.895 2088.06,-402.14 2154.02,-450 2185.9,-473.137 2161.32,-504.012 2190.02,-531 2194.57,-535.284 2199.87,-538.903 2205.49,-541.957"/>
+<polygon fill="black" stroke="black" points="2203.99,-545.121 2214.52,-546.306 2207.03,-538.814 2203.99,-545.121"/>
+</g>
+<!-- PayAndGo -->
+<g id="node39" class="node"><title>PayAndGo</title>
+<ellipse fill="none" stroke="black" cx="1326.39" cy="-531" rx="50.0912" ry="18"/>
+<text text-anchor="middle" x="1326.39" y="-527.3" font-family="Times,serif" font-size="14.00">PayAndGo</text>
+</g>
+<!-- PayAndGo&#45;&gt;Static -->
+<g id="edge38" class="edge"><title>PayAndGo&#45;&gt;Static</title>
+<path fill="none" stroke="black" d="M1374.91,-526.443C1483.99,-515.981 1750.67,-490.405 1851.22,-480.762"/>
+<polygon fill="black" stroke="black" points="1851.63,-484.238 1861.25,-479.799 1850.96,-477.27 1851.63,-484.238"/>
+</g>
+<!-- PayPerResource -->
+<g id="node40" class="node"><title>PayPerResource</title>
+<ellipse fill="none" stroke="black" cx="1326.39" cy="-477" rx="68.4888" ry="18"/>
+<text text-anchor="middle" x="1326.39" y="-473.3" font-family="Times,serif" font-size="14.00">PayPerResource</text>
+</g>
+<!-- PayPerResource&#45;&gt;Static -->
+<g id="edge39" class="edge"><title>PayPerResource&#45;&gt;Static</title>
+<path fill="none" stroke="black" d="M1394.75,-477C1513.2,-477 1755.26,-477 1850.59,-477"/>
+<polygon fill="black" stroke="black" points="1850.68,-480.5 1860.68,-477 1850.68,-473.5 1850.68,-480.5"/>
+</g>
+<!-- Subscription -->
+<g id="node41" class="node"><title>Subscription</title>
+<ellipse fill="none" stroke="black" cx="1326.39" cy="-423" rx="55.4913" ry="18"/>
+<text text-anchor="middle" x="1326.39" y="-419.3" font-family="Times,serif" font-size="14.00">Subscription</text>
+</g>
+<!-- Subscription&#45;&gt;Static -->
+<g id="edge40" class="edge"><title>Subscription&#45;&gt;Static</title>
+<path fill="none" stroke="black" d="M1379.6,-428.008C1491.39,-438.729 1751.79,-463.702 1851.05,-473.222"/>
+<polygon fill="black" stroke="black" points="1850.95,-476.729 1861.24,-474.2 1851.62,-469.761 1850.95,-476.729"/>
 </g>
 <!-- Euro -->
 <g id="node42" class="node"><title>Euro</title>
