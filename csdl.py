@@ -11,10 +11,9 @@ import graphviz
 import requests
 from dulwich import porcelain
 
-""" caches all cloned git repositories """
 ccsGitCache = {}
+""" Caches all cloned git repositories """
 
-""" attributeIds that have already been imported mapped to their class names and extendsIds """
 importedClasses = {
     "VMAsAService": {
         "className": "VMAsAService",
@@ -177,10 +176,10 @@ importedClasses = {
         "extendsId": "DatabaseAsAService"
     }
 }
-
+""" AttributeIds that have already been imported mapped to their class names and extendsIds """
 
 def cleanGitCache():
-    """ delete all temporary directories that were created to clone git repositories into """
+    """ Delete all temporary directories that were created to clone git repositories into """
     gitRepos = []
     for gitRepo in ccsGitCache:
         ccsGitCache[gitRepo].cleanup()
@@ -190,17 +189,23 @@ def cleanGitCache():
 
 
 def randName():
-    """ returns a cryptographically secure 16 digit random string starting with the letter C"""
+    """ Returns a cryptographically secure 16 digit random string starting with the letter C"""
     return "C" + "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(15))
 
 
 class Attribute:
-    # TODO add docstring
+    """ Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+        extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+        requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+        arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.
+    """
+
     def __init__(self):
         super().__init__()
         self.name = None
         self.gitRepo = None
         self.commit = None
+        self.branch = None
         self.filePath = None
         self.id = None
         self.extendsId = None
@@ -208,9 +213,16 @@ class Attribute:
         self.searchKeyWords = None
         self.description = None
 
-    def setId(self, gitRepo, filePath, commit=None):
-        """ you call this if you create a new custom attribute """
-        # TODO add docstring
+    def setId(self, gitRepo, filePath, branch=None, commit=None):
+        """ Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
+            be loaded.
+
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to "local", indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+        """
 
         self.gitRepo = gitRepo
         self.commit = commit
@@ -222,11 +234,18 @@ class Attribute:
         else:
             self.id += "@latest"
 
-    def inject(self, gitRepo, filePath, commit=None, onlyFetchDependency=False):
-        """ you call this if you want to use a custom attribute """
-        # TODO add docstring
+    def inject(self, gitRepo, filePath, branch=None, commit=None, onlyFetchDependency=False):
+        """ Updates self with the fields of the Attribute that are attained from the given filePath.
 
-        self.setId(gitRepo, filePath, commit=commit)
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to "local", indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+                onlyFetchDependency (bool): Does not inject any fields to self if set to True, defaults to False.
+        """
+
+        self.setId(gitRepo, filePath, branch=branch, commit=commit)
 
         # git clone metamodel repository
         if gitRepo not in ccsGitCache:
@@ -237,10 +256,10 @@ class Attribute:
         if self.commit is not None:
             print("checkout commit " + self.commit)
             porcelain.update_head(ccsGitCache[gitRepo].name, self.commit)
-        # TODO else checkout latest commit ...
+        # TODO else checkout latest commit and branch...
 
         # inject metamodel into this Attribute
-        moduleId = gitRepo + "@" + filePath + "@" + "latest"  # TODO make this work with given commit id too ...
+        moduleId = gitRepo + "@" + filePath + "@" + "latest"  # TODO make this work with given commit id and branch too
         modulePath = ccsGitCache[gitRepo].name + "/" + filePath
         moduleName = filePath.split("/")[-1].split(".py")[0]
         # moduleDir = ''.join(modulePath.split(moduleName + ".py"))
@@ -370,10 +389,9 @@ class NumericAttribute(Attribute):
         self.moreIsBetter = True
 
 
-class PricingModel:
+class PricingModel(Attribute):
     def __init__(self):
         super().__init__()
-        self.description = None
 
 
 class Static(PricingModel):
@@ -432,7 +450,7 @@ class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
         super().__init__()
 
 
-class Price(Attribute):
+class Price:
     """ everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS """
     def __init__(self):
         super().__init__()
