@@ -66,8 +66,8 @@ class A1Large(CCS):
 
         # price
         self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/currencies/FeritsCurrencies.py")
-        self.price.currency.choice = self.price.currency.options[0]  # EUR
+        self.price.currency.choice = "EUR"  # EUR
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.ebs.price.priceFuncs
 
-        self.price.model.choice = self.price.model.options[4]  # subscription
+        self.price.model.choice = "subscription"
         self.price.model.billingPeriod = 1  # per hour

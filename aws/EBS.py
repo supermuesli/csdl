@@ -41,8 +41,8 @@ class EBS(CCS):
                 return self.topClass.storage.minVal * 1.25
 
         # price
-        self.price.currency.choice = self.price.currency.options[0]  # EUR
+        self.price.currency.choice = "EUR"  # EUR
         self.price.priceFuncs = [defaultPrice(self)]
 
-        self.price.model.choice = self.price.model.options[4]  # subscription
+        self.price.model.choice = "subscription"  # subscription
         self.price.model.billingPeriod = 1  # per hour

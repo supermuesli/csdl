@@ -1,5 +1,4 @@
 // github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest fields
 digraph {
 	graph [rankdir=LR]
-	"github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest" -> Euro [color=red]
 }

@@ -347,7 +347,7 @@ to be of the form link/to/repo@file/path.py@(commitID|latest), however this was 
         # , as well as the extension class to the class name derived from its extendsId field
         if moduleId not in importedClasses:
             nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of
-                                                # injected custom attributes happen to be identical
+            # injected custom attributes happen to be identical
             try:
                 extensionDigitStart = source.find("class " + moduleName + "(") + len("class ")  # NOTE this means that moduleName and the model main class name HAVE to be identical
                 extensionDigitEnd = source.find(")", extensionDigitStart)
@@ -391,14 +391,14 @@ class ChoiceAttribute(Attribute):
     """ ChoiceAttribute
 
         Attributes:
-            options (list): A list of NameAttributes
-            choice (NameAttribute): A NameAttribute from self.options
+            options (list): A dictionary of NameAttributes
+            choice (NameAttribute): The dictionary key of the chosen NameAttribute from self.options
     """
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
-        self.options = None  # list of NameAttribute instances
-        self.choice = None  # chosen NameAttribute instance
+        self.options = None  # dictionary of NameAttribute instances
+        self.choice = None  # dictionary key of chosen NameAttribute instance
 
 
 class NameAttribute(Attribute):
@@ -425,7 +425,13 @@ class PricingModel(ChoiceAttribute):
         super().__init__()
         self.id = "PricingModel"
         self.extendsId = "ChoiceAttribute"
-        self.options = ["Static", "Dynamic", "PayAndGo", "PayPerResource", "Subscription", "Hybrid"]
+        self.options = {
+            "static": Static(),
+            "dynamic": Dynamic(),
+            "payAndGo": PayAndGo(),
+            "payPerResource": PayPerResource(),
+            "subscription": Subscription()
+        }
         self.choice = None
 
 
@@ -808,12 +814,12 @@ def matchCCS(req, ccs):
                 elif isRelated("ChoiceAttribute", ra.id):
                     if ra.choice is not None:
                         if ca.mutable:
-                            if not sum([isRelated(ra.choice.id, c.id) for c in ca.options]):  # value mutable but not available
-                                print(ra.id, "option not available:", ra.choice.id, "not related to any of", [o.id for o in ca.options])
+                            if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
                                 return False
                         else:
-                            if not isRelated(ra.choice.id, ca.choice.id):  # value does not match and is not mutable
-                                print(ra.id, "does not match:", ra.choice.id, "not related to", ca.choice.id)
+                            if not isRelated(ra.options[ra.choice].id, ca.optinos[ca.choice].id):  # value does not match and is not mutable
+                                print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
                                 return False
                         # requirement is fulfilled
                         break
@@ -872,7 +878,15 @@ class Region(ChoiceAttribute):
         self.extendsId = "ChoiceAttribute"
         self.description = "The continent in which the CCS resides"
 
-        self.options = [Europe(), NorthAmerica(), SouthAmerica(), EastAsia(), Antarctica(), Africa(), Australia()]
+        self.options = {
+            "europe": Europe(),
+            "northAmerica": NorthAmerica(),
+            "southAmerica": SouthAmerica(),
+            "eastAsia": EastAsia(),
+            "antarctica": Antarctica(),
+            "africa": Africa(),
+            "australia": Australia()
+        }
         self.choice = None
 
 
@@ -939,7 +953,11 @@ class Currency(ChoiceAttribute):
         self.extendsId = "ChoiceAttribute"
         self.description = "The currency in which the price is charged"
 
-        self.options = [Euro(), UsDollar(), JapaneseYen()]
+        self.options = {
+            "EUR": Euro(),
+            "USD": UsDollar(),
+            "JPY": JapaneseYen()
+        }
         self.choice = None
 
 
@@ -1016,8 +1034,36 @@ class OperatingSystem(ChoiceAttribute):
         self.extendsId = "ChoiceAttribute"
         self.description = "The operating system a CCS runs on"
 
-        self.options = ["Linux", "Windows", "Mac"]
-        self.value = self.options[0]
+        self.options = {
+            "linux": Linux(),
+            "windows": Windows(),
+            "mac": Mac()}
+
+        self.value = self.options["linux"]
+
+
+class Linux(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Linux"
+        self.extendsId = "NameAttribute"
+        self.value = "Linux (Unix)"
+
+
+class Windows(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Windows"
+        self.extendsId = "NameAttribute"
+        self.value = "Windows"
+
+
+class Mac(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Mac"
+        self.extendsId = "NameAttribute"
+        self.value = "Mac (Unix)"
 
 
 class CpuCores(NumericAttribute):
