@@ -1,0 +1,4 @@
+// github.com/supermuesli/csdl@misc/currencies/AllCurrencies.py@latest fields
+digraph {
+	graph [rankdir=LR]
+}

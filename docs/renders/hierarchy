@@ -57,6 +57,6 @@ digraph {
 	"github.com/supermuesli/csdl@aws/regions/NewYork.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageAsAService [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=black]
-	"github.com/supermuesli/csdl@misc/currencies/FeritsCurrencies.py@latest" -> Currency [color=black]
+	"github.com/supermuesli/csdl@misc/currencies/AllCurrencies.py@latest" -> Currency [color=black]
 	"github.com/supermuesli/csdl@misc/currencies/IndianRupee.py@latest" -> NameAttribute [color=black]
 }
