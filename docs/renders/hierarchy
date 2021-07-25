@@ -34,7 +34,7 @@ digraph {
 	NetworkCapacity -> NumericAttribute [color=black]
 	NetworkUploadSpeed -> NumericAttribute [color=black]
 	NetworkDownloadSpeed -> NumericAttribute [color=black]
-	PricingModel -> Attribute [color=black]
+	PricingModel -> ChoiceAttribute [color=black]
 	Static -> NameAttribute [color=black]
 	Dynamic -> NameAttribute [color=black]
 	PayAndGo -> Static [color=black]

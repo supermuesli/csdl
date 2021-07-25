@@ -149,7 +149,7 @@ importedClasses = {
     },
     "PricingModel": {
         "className": "PricingModel",
-        "extendsId": "Attribute"
+        "extendsId": "ChoiceAttribute"
     },
     "Static": {
         "className": "Static",
