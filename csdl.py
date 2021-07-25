@@ -426,7 +426,7 @@ class PricingModel(ChoiceAttribute):
         self.id = "PricingModel"
         self.extendsId = "ChoiceAttribute"
         self.options = ["Static", "Dynamic", "PayAndGo", "PayPerResource", "Subscription", "Hybrid"]
-        self.value = None
+        self.choice = None
 
 
 class PayAndGo(NameAttribute):
@@ -940,7 +940,7 @@ class Currency(ChoiceAttribute):
         self.description = "The currency in which the price is charged"
 
         self.options = [Euro(), UsDollar(), JapaneseYen()]
-        self.choice = self.options[0]
+        self.choice = None
 
 
 class Euro(NameAttribute):

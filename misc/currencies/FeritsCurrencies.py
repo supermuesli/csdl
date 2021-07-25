@@ -13,4 +13,4 @@ class FeritsCurrencies(Attribute):
 
         # add my custom option to the already existing options
         self.options = Currency().options + [indianRupee]
-        self.value = None
+        self.choice = None

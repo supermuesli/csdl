@@ -19,4 +19,4 @@ class Region(Attribute):
 
         # add my custom option to the already existing options
         self.options = [california, eastVirginia, newYork]
-        self.value = None
+        self.choice = None
