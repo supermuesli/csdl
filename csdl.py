@@ -391,6 +391,12 @@ class BoolAttribute(Attribute):
 
 
 class ChoiceAttribute(Attribute):
+    """ ChoiceAttribute
+
+        Attributes:
+            options (list): A list of NameAttributes
+            choice (NameAttribute): A NameAttribute from self.options
+    """
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
@@ -426,46 +432,53 @@ class PricingModel(ChoiceAttribute):
         self.value = None
 
 
-class Static(PricingModel):
-    def __init__(self):
-        super().__init__()
-        self.id = "Static"
-        self.extendsId = "PricingModel"
-        self.description = "static pricing models only depend on the configuration of the CCS"
-
-
-class PayAndGo(Static):
+class PayAndGo(NameAttribute):
     def __init__(self):
         super().__init__()
         self.id = "PayAndGo"
         self.extendsId = "Static"
-        self.upFrontCost = None
         self.description = "you (pay) an upFrontCost once (and go) on to use the service"
+        self.value = "Pay and go"
+
+        self.upFrontCost = None
 
 
-class Subscription(Static):
+class Subscription(NameAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Subscription"
         self.extendsId = "Static"
+        self.description = "you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour"
+        self.value = "Subscription"
+
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
-        self.description = "you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour"
 
 
-class PayPerResource(Static):
+class PayPerResource(NameAttribute):
     def __init__(self):
         super().__init__()
         self.id = "PayPerResource"
         self.extendsId = "Static"
+        self.value = "Pay per resource"
         self.description = "you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour"
 
 
-class Dynamic(PricingModel):
+class Static(NameAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = "Static"
+        self.extendsId = "NameAttribute"
+        self.value = "Static"
+        self.description = "static pricing models depend only on the configuration of the CCS"
+
+
+class Dynamic(NameAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Dynamic"
-        self.extendsId = "PricingModel"
+        self.extendsId = "NameAttribute"
+        self.value = "Dynamic"
         self.description = "dynamic pricing models depend on the configuration of the CCS and also on any other arbitrary thing, such as time or weather"
 
 
@@ -509,12 +522,6 @@ class Price:
 
         if self.model.__class__ is PayPerResource:
             return sum([pf.run(req) for pf in self.priceFuncs]) * currencyConversion
-
-        if self.model.__class__ is Hybrid:
-            return self.model.interpreter() * currencyConversion
-
-        if self.model.__class__ is DataDriven:
-            return self.model.getEstimatedPrice() * currencyConversion
 
         # pricing model defaults to PayPerResource
         return sum([pf.run(req) for pf in self.priceFuncs]) * currencyConversion
