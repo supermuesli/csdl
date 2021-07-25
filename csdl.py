@@ -143,21 +143,17 @@ importedClasses = {
         "className": "NetworkDownloadSpeed",
         "extendsId": "NumericAttribute"
     },
-    "Price": {
-        "className": "Price",
-        "extendsId": "Attribute"
-    },
     "PricingModel": {
         "className": "PricingModel",
         "extendsId": "ChoiceAttribute"
     },
     "Static": {
         "className": "Static",
-        "extendsId": "NameAttribute"
+        "extendsId": "PricingModel"
     },
     "Dynamic": {
         "className": "Dynamic",
-        "extendsId": "NameAttribute"
+        "extendsId": "PricingModel"
     },
     "PayAndGo": {
         "className": "PayAndGo",
@@ -409,7 +405,7 @@ class NumericAttribute(Attribute):
         self.moreIsBetter = True
 
 
-class PricingModel(ChoiceAttribute):
+class PricingModel(ChoiceAttribute, ABC):
     def __init__(self):
         super().__init__()
         self.id = "PricingModel"
@@ -423,55 +419,71 @@ class PricingModel(ChoiceAttribute):
         }
         self.choice = None
 
+    @abstractmethod
+    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+        pass
 
-class PayAndGo(NameAttribute):
+
+class PayAndGo(PricingModel):
     def __init__(self):
         super().__init__()
         self.id = "PayAndGo"
         self.extendsId = "Static"
         self.description = "you (pay) an upFrontCost once (and go) on to use the service"
-        self.value = "Pay and go"
 
         self.upFrontCost = None
 
+    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+        self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
+        return self.upFrontCost
 
-class Subscription(NameAttribute):
+
+class Subscription(PricingModel):
     def __init__(self):
         super().__init__()
         self.id = "Subscription"
         self.extendsId = "Static"
         self.description = "you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour"
-        self.value = "Subscription"
 
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
 
+    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+        self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
+        return usageHours / self.billingPeriod * self.billingPeriodCost * currencyConversion
 
-class PayPerResource(NameAttribute):
+
+class PayPerResource(PricingModel):
     def __init__(self):
         super().__init__()
         self.id = "PayPerResource"
-        self.extendsId = "Static"
-        self.value = "Pay per resource"
+        self.extendsId = "PricingModel"
         self.description = "you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour"
 
+    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+        return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
 
-class Static(NameAttribute):
+
+class Static(PricingModel):
     def __init__(self):
         super().__init__()
         self.id = "Static"
-        self.extendsId = "NameAttribute"
-        self.value = "Static"
+        self.extendsId = "PricingModel"
         self.description = "static pricing models depend only on the configuration of the CCS"
 
+    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+        return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
 
-class Dynamic(NameAttribute):
+
+class Dynamic(PricingModel):
     def __init__(self):
         super().__init__()
         self.id = "Dynamic"
-        self.extendsId = "NameAttribute"
-        self.value = "Dynamic"
+        self.extendsId = "PricingModel"
         self.description = "dynamic pricing models depend on the configuration of the CCS and also on any other arbitrary thing, such as time or weather"
+
+    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+        return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
 
 
 class Price(Attribute):
@@ -482,7 +494,7 @@ class Price(Attribute):
         self.extendsId = "Attribute"
         self.currency = "EUR"  # ISO 4217 currency code
         self.priceFuncs = []
-        self.model = PricingModel()
+        self.model = Static()
 
     def get(self, req, usageHours=0):
         """ returns the total price """
@@ -506,20 +518,7 @@ class Price(Attribute):
 
         currencyConversion = 1  # TODO fix currencyConversion lol
 
-        # TODO dont do this here. instead, let the user model it in their pricing model attribute
-        if self.model.__class__ is PayAndGo:
-            self.model.upFrontCost = sum([pf.run(req) for pf in self.priceFuncs])
-            return self.model.upFrontCost * currencyConversion
-
-        if self.model.__class__ is Subscription:
-            self.model.billingPeriodCost = sum([pf.run(req) for pf in self.priceFuncs])
-            return usageHours/self.model.billingPeriod * self.model.billingPeriodCost * currencyConversion
-
-        if self.model.__class__ is PayPerResource:
-            return sum([pf.run(req) for pf in self.priceFuncs]) * currencyConversion
-
-        # pricing model defaults to PayPerResource
-        return sum([pf.run(req) for pf in self.priceFuncs]) * currencyConversion
+        return self.model.getPrice(self.priceFuncs, currencyConversion, usageHours=usageHours)
 
 
 # an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python
@@ -803,7 +802,6 @@ def matchCCS(req, ccs):
                             return False
 
                 elif isRelated("ChoiceAttribute", ra.id):
-                    print("try", ra.id, ca.id)
                     if ra.choice is not None:
                         if ca.mutable:
                             if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
