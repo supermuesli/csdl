@@ -147,6 +147,38 @@ importedClasses = {
         "className": "NetworkDownloadSpeed",
         "extendsId": "NumericAttribute"
     },
+    "PricingModel": {
+        "className": "PricingModel",
+        "extendsId": "Attribute"
+    },
+    "Static": {
+        "className": "Static",
+        "extendsId": "PricingModel"
+    },
+    "Dynamic": {
+        "className": "Dynamic",
+        "extendsId": "PricingModel"
+    },
+    "PayAndGo": {
+        "className": "PayAndGo",
+        "extendsId": "Static"
+    },
+    "PayPerResource": {
+        "className": "PayPerResource",
+        "extendsId": "Static"
+    },
+    "Subscription": {
+        "className": "Subscription",
+        "extendsId": "Static"
+    },
+    "Hybrid": {
+        "className": "Hybrid",
+        "extendsId": "Static"
+    },
+    "DataDriven": {
+        "className": "DataDriven",
+        "extendsId": "Dynamic"
+    },
     "Price": {
         "className": "Price",
         "extendsId": "Attribute"
@@ -392,18 +424,24 @@ class NumericAttribute(Attribute):
 class PricingModel(Attribute):
     def __init__(self):
         super().__init__()
+        self.id = "PricingModel"
+        self.extendsId = "Attribute"
 
 
 class Static(PricingModel):
     """ static pricing models only depend on the configuration of the CCS """
     def __init__(self):
         super().__init__()
+        self.id = "Static"
+        self.extendsId = "PricingModel"
 
 
 class PayAndGo(Static):
     """ you (pay) an upFrontCost once (and go) on to use the service """
     def __init__(self):
         super().__init__()
+        self.id = "PayAndGo"
+        self.extendsId = "Static"
         self.upFrontCost = None
 
 
@@ -411,6 +449,8 @@ class Subscription(Static):
     """ you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour """
     def __init__(self):
         super().__init__()
+        self.id = "Subscription"
+        self.extendsId = "Static"
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
 
@@ -419,12 +459,16 @@ class PayPerResource(Static):
     """ you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour """
     def __init__(self):
         super().__init__()
+        self.id = "PayPerResource"
+        self.extendsId = "Static"
 
 
 class Dynamic(PricingModel):
     """ dynamic pricing models depend on the configuration of the CCS and also on """
     def __init__(self):
         super().__init__()
+        self.id = "Dynamic"
+        self.extendsId = "PricingModel"
         self.interpreter = None
 
 
@@ -435,6 +479,9 @@ class DataDriven(Dynamic):
     """
     def __init__(self):
         super().__init__()
+        self.id = "DataDriven"
+        self.extendsId = "Dynamic"
+
         self.dataset = None
 
     def getEstimatedPrice(self):
@@ -448,6 +495,8 @@ class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
     """ any combination of all pricing models. """
     def __init__(self):
         super().__init__()
+        self.id = "Hybrid"
+        self.extendsId = "Static"
 
 
 class Price:
