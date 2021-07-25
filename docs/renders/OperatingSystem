@@ -1,5 +1,4 @@
 // OperatingSystem fields
 digraph {
 	graph [rankdir=LR]
-	OperatingSystem -> Linux [color=red]
 }

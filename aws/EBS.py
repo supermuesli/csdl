@@ -10,13 +10,11 @@ class EBS(CCS):
         self.name = "Elastic Block Storage"
         self.readme = "my email is: blabla@exmaple.com . i will answer any questions that you have :)"
         self.provider = "Amazon Web Services"
-        self.searchKeyWords = ["aws", "ec2", "virtual machine", "vm"]
+        self.searchKeyWords = ["aws", "elastic block storage", "ebs"]
 
         self.storageReadSpeed.value = 1000
-        self.storageReadSpeed.mutable = False
 
         self.storageWriteSpeed.value = 500
-        self.storageWriteSpeed.mutable = False
 
         self.storage.makeInt = True
         self.storage.minVal = 5
@@ -41,7 +39,7 @@ class EBS(CCS):
                 return self.topClass.storage.minVal * 1.25
 
         # price
-        self.price.currency.choice = "EUR"  # EUR
+        self.price.currency = "EUR"  # EUR
         self.price.priceFuncs = [defaultPrice(self)]
 
         self.price.model.choice = "subscription"  # subscription

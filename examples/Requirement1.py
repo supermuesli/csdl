@@ -16,5 +16,5 @@ class Requirement1(CCS):
         self.staticIpAddresses.value = 2
 
         self.region.choice = "northAmerica"
-        self.price.model.choice = "subscription"  # pay per resource
-        self.price.currency.choice = "EUR"
+        self.price.model.choice = "payPerResource"  # pay per resource
+        self.price.currency = "EUR"

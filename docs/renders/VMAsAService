@@ -6,7 +6,6 @@ digraph {
 	Price -> PricingModel [color=red]
 	VMAsAService -> Region [color=red]
 	VMAsAService -> OperatingSystem [color=red]
-	OperatingSystem -> Linux [color=red]
 	VMAsAService -> CpuCores [color=red]
 	VMAsAService -> CpuClockSpeed [color=red]
 	VMAsAService -> Ram [color=red]

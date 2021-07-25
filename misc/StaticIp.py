@@ -7,7 +7,7 @@ class StaticIp(Attribute):
         self.setId("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
         self.extendsId = "NumericAttribute"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.stepSize = 1

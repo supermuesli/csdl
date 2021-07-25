@@ -17,7 +17,6 @@ class A1Large(CCS):
         self.cpuCores.mutable = False  # attributes are immutable by default. this is just for demonstration
 
         self.ram.value = 4
-        self.ram.mutable = False  # attributes are immutable by default. this is just for demonstration
 
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
@@ -65,9 +64,8 @@ class A1Large(CCS):
                 return 1.25
 
         # price
-        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/currencies/AllCurrencies.py")
-        self.price.currency.choice = "EUR"  # EUR
+        self.price.currency = "USD"  # ISO 4217
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.ebs.price.priceFuncs
 
         self.price.model.choice = "subscription"
-        self.price.model.billingPeriod = 1  # per hour
+        self.price.model.billingPeriod = 1  # once per hour

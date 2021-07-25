@@ -6,7 +6,6 @@ digraph {
 	Price -> PricingModel [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> Region [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> OperatingSystem [color=red]
-	OperatingSystem -> Linux [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> CpuCores [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> CpuClockSpeed [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> Ram [color=red]

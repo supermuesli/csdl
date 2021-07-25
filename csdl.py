@@ -91,10 +91,6 @@ importedClasses = {
         "className": "Antarctica",
         "extendsId": "NameAttribute"
     },
-    "Currency": {
-        "className": "Currency",
-        "extendsId": "ChoiceAttribute"
-    },
     "Storage": {
         "className": "Storage",
         "extendsId": "NumericAttribute"
@@ -178,18 +174,6 @@ importedClasses = {
     "Price": {
         "className": "Price",
         "extendsId": "Attribute"
-    },
-    "Euro": {
-        "className": "Euro",
-        "extendsId": "NameAttribute"
-    },
-    "UsDollar": {
-        "className": "UsDollar",
-        "extendsId": "NameAttribute"
-    },
-    "JapaneseYen": {
-        "className": "JapaneseYen",
-        "extendsId": "NameAttribute"
     },
     "DatabaseAsAService": {
         "className": "DatabaseAsAService",
@@ -496,7 +480,7 @@ class Price(Attribute):
         super().__init__()
         self.id = "Price"
         self.extendsId = "Attribute"
-        self.currency = Currency()
+        self.currency = "EUR"  # ISO 4217 currency code
         self.priceFuncs = []
         self.model = PricingModel()
 
@@ -509,15 +493,15 @@ class Price(Attribute):
         ratesRelativeToUSD = json.loads(requests.get("https://openexchangerates.org/api/latest.json?app_id=" + apiKey + "&base=USD").content)["rates"]
         currencyConversion = 1
         try:
-            currencyConversion = ratesRelativeToUSD[self.currency.options[self.currency.choice].value]  # how many of CCSs currency is 1 USD
+            currencyConversion = ratesRelativeToUSD[self.currency]  # how many of CCSs currency is 1 USD
         except Exception as e:
-            logging.error(self.id, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency.options[self.currency.choice].value)
+            logging.error(self.id, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency)
             print(e)
 
         try:
-            currencyConversion = ratesRelativeToUSD[req.price.currency.options[req.price.currency.choice].value]  # how many of reqs currency is 1 USD
+            currencyConversion = ratesRelativeToUSD[req.price.currency]  # how many of reqs currency is 1 USD
         except Exception as e:
-            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.price.currency.options[req.price.currency.choice].value)
+            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.price.currency)
             print(e)
 
         currencyConversion = 1  # TODO fix currencyConversion lol
@@ -743,9 +727,13 @@ def isRelated(rid, cid):
             - two Attributes are related if either their ids match, or if some ancestors id of the second Attribute matches with the first Attribute
             - CCS also inherits from Attribute
     """
+    if rid is None or cid is None:
+        return False
+
     if rid == cid:
-        # print(rid, "and", cid, "match!")
+        #print(rid, "and", cid, "match!")
         return True
+
     extendsId = getExtendsId(cid)
     while extendsId is not None:
         if rid == extendsId:
@@ -754,6 +742,7 @@ def isRelated(rid, cid):
         extendsId = getExtendsId(extendsId)
     return False
 
+# TODO fix matchCCS such that it works recursively on all child attributes of the requirement. of make it such that you only set the requirements in one class (no child classes), but then depth information gets lost (which attribute should be matched to which attribute?
 
 def matchCCS(req, ccs):
     """ check if a requirement matches with a CCS
@@ -781,63 +770,56 @@ def matchCCS(req, ccs):
     reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
 
+    recursiveResult = True
+
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
-        if not ra.matched:
-            for ca in ccsAttributes:
-                if isRelated(ra.id, ca.id):  # attributes match by id or super class, now check if their values are satisfiable
-                    if isRelated("NumericAttribute", ra.id):
-                        if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
-                            print(ra.id, "is set as a requirement, but", ccs.id, "does not set it")
+        for ca in ccsAttributes:
+            if isRelated(ra.id, ca.id):
+                if isRelated("NumericAttribute", ra.id):
+                    if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
+                        print(ra.id, "is set as a requirement, but", ccs.id, "does not set it")
+                        return False
+                    if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
+                        if ca.moreIsBetter:
+                            if not ca.mutable:
+                                if ra.value > ca.value:  # value is too small and not mutable
+                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
+                                    return False
+                            if ca.maxVal is not None:
+                                if ca.maxVal < ra.value:  # value cannot be made large enough
+                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
+                                    return False
+                        else:
+                            if not ca.mutable:
+                                if ra.value < ca.value:  # value is too large and not mutable
+                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
+                                    return False
+                            if ca.minVal is not None:
+                                if ca.minVal > ra.value:  # value cannot be made small enough
+                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
+                                    return False
+
+                elif isRelated("BoolAttribute", ra.id):
+                    if not ca.mutable:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
                             return False
-                        if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
-                            if ca.moreIsBetter:
-                                if not ca.mutable:
-                                    if ra.value > ca.value:  # value is too small and not mutable
-                                        print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
-                                        return False
-                                if ca.maxVal is not None:
-                                    if ca.maxVal < ra.value:  # value cannot be made large enough
-                                        print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
-                                        return False
-                            else:
-                                if not ca.mutable:
-                                    if ra.value < ca.value:  # value is too large and not mutable
-                                        print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
-                                        return False
-                                if ca.minVal is not None:
-                                    if ca.minVal > ra.value:  # value cannot be made small enough
-                                        print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
-                                        return False
-                        # requirement is fulfilled
-                        ra.matched = True
-                        break
 
-                    elif isRelated("BoolAttribute", ra.id):
-                        if not ca.mutable:
-                            if ra.value != ca.value:  # value does not match and is not mutable
-                                print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
+                elif isRelated("ChoiceAttribute", ra.id):
+                    print("try", ra.id, ca.id)
+                    if ra.choice is not None:
+                        if ca.mutable:
+                            if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
                                 return False
-                        # requirement is fulfilled
-                        ra.matched = True
-                        break
-
-                    elif isRelated("ChoiceAttribute", ra.id):
-                        print("try", ra.id, ca.id)
-                        if ra.choice is not None:
-                            if ca.mutable:
-                                if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
-                                    print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
-                                    return False
-                            else:
-                                if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
-                                    print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
-                                    return False
-                            # requirement is fulfilled
-                            ra.matched = True
-                            break
-                return matchField(ra, ca)
-    return True
+                        else:
+                            if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
+                                print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
+                                return False
+            print("going recursive:", ra.id, ca.id)
+            recursiveResult = matchField(ra, ca)
+    return recursiveResult
 
 
 def renderHierarchy():
@@ -859,7 +841,7 @@ def renderHierarchy():
                 for field in vs:
                     # check if field is an Attribute
                     try:
-                        if Attribute in vs[field].__class__.mro():
+                        if isRelated("Attribute", vs[field].id):
                             # field edge
                             d2.edge(attrId.replace("https://", "").replace("http://", ""), vs[field].id.replace("https://", "").replace("http://", ""), color="red")
                             renderFields(d2, vs[field].id)
@@ -960,45 +942,6 @@ class Australia(NameAttribute):
         self.value = "Australia"
 
 
-class Currency(ChoiceAttribute):
-    def __init__(self):
-        super().__init__()
-        self.id = "Currency"
-        self.extendsId = "ChoiceAttribute"
-        self.description = "The currency in which the price is charged"
-
-        self.options = {
-            "EUR": Euro(),
-            "USD": UsDollar(),
-            "JPY": JapaneseYen()
-        }
-        self.choice = None
-
-
-class Euro(NameAttribute):
-    def __init__(self):
-        super().__init__()
-        self.id = "Euro"
-        self.extendsId = "NameAttribute"
-        self.value = "EUR"  # https://en.wikipedia.org/wiki/ISO_4217
-
-
-class UsDollar(NameAttribute):
-    def __init__(self):
-        super().__init__()
-        self.id = "UsDollar"
-        self.extendsId = "NameAttribute"
-        self.value = "USD"  # https://en.wikipedia.org/wiki/ISO_4217
-
-
-class JapaneseYen(NameAttribute):
-    def __init__(self):
-        super().__init__()
-        self.id = "JapaneseYen"
-        self.extendsId = "NameAttribute"
-        self.value = "JPY"  # https://en.wikipedia.org/wiki/ISO_4217
-
-
 class Storage(NumericAttribute):
     def __init__(self):
         super().__init__()
@@ -1006,7 +949,7 @@ class Storage(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "Storage amount in GB"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1020,7 +963,7 @@ class StorageWriteSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "Storage write speed in GB/s"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1034,7 +977,7 @@ class StorageReadSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "Storage read speed in GB/s"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1051,9 +994,10 @@ class OperatingSystem(ChoiceAttribute):
         self.options = {
             "linux": Linux(),
             "windows": Windows(),
-            "mac": Mac()}
+            "mac": Mac()
+        }
 
-        self.value = self.options["linux"]
+        self.value = None
 
 
 class Linux(NameAttribute):
@@ -1087,7 +1031,7 @@ class CpuCores(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "The amount of CPU cores"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1101,7 +1045,7 @@ class CpuClockSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "CPU clock speed in GHz"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1115,7 +1059,7 @@ class Ram(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "The amount of Ram in GB"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1129,7 +1073,7 @@ class RamClockSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "RAM clock speed in GHz"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1143,7 +1087,7 @@ class RamWriteSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "RAM write speed in GB/s"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1157,7 +1101,7 @@ class RamReadSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "RAM read speed in GB/s"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1171,7 +1115,7 @@ class NetworkCapacity(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "Network capacity in GB"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1185,7 +1129,7 @@ class NetworkUploadSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "Network upload speed in GB/s"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
@@ -1199,7 +1143,7 @@ class NetworkDownloadSpeed(NumericAttribute):
         self.extendsId = "NumericAttribute"
         self.description = "Network download speed in GB/s"
 
-        self.value = 0
+        self.value = None
         self.makeInt = True
         self.minVal = 0
         self.maxVal = inf
