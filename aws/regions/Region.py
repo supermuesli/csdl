@@ -5,7 +5,7 @@ class Region(Attribute):
     def __init__(self):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
-        self.extendsId = "Region"
+        self.extendsId = "ChoiceAttribute"
 
         # custom options that I want to add to the existing options
         california = NameAttribute()
@@ -17,7 +17,7 @@ class Region(Attribute):
         newYork = NameAttribute()
         newYork.inject("https://github.com/supermuesli/csdl", "aws/regions/NewYork.py")
 
-        # set my custom options, discarding the old ones
+        # set my custom options
         self.options = {
             "california": california,
             "eastVirginia": eastVirginia,
