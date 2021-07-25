@@ -17,4 +17,5 @@ class Requirement1(CCS):
 
         self.region.choice = self.region.options[1]  # Europe
 
+        self.price.model = Subscription()
         self.price.currency.choice = self.price.currency.options[0]  # USD
