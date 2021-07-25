@@ -65,7 +65,7 @@ class A1Large(CCS):
                 return 1.25
 
         # price
-        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/currencies/FeritsCurrencies.py")
+        self.price.currency.inject("https://github.com/supermuesli/csdl", "misc/currencies/AllCurrencies.py")
         self.price.currency.choice = "EUR"  # EUR
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.ebs.price.priceFuncs
 
