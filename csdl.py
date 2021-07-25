@@ -813,11 +813,6 @@ def matchCCS(req, ccs):
                             if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
                                 print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
                                 return
-            # check if attribute has child attributes and see if they match
-            childReqAttributes = extractAttributes(ra)
-            for cra in childReqAttributes:
-                if not matchCCS(cra, ca):
-                    return False
 
     return True
 
