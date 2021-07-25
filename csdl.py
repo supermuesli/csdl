@@ -620,7 +620,7 @@ class NoSQLDatabaseAsAService(DatabaseAsAService):
 
 
 def extractAttributes(attribute):
-    """ get all fields of an `Attribute` instance that are also of type `Attribute`
+    """ Recursively get all fields and subfields of an `Attribute` instance that are also of type `Attribute`
 
         Args:
             attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
@@ -636,7 +636,7 @@ def extractAttributes(attribute):
     for key in fields:
         try:
             if isRelated("Attribute", fields[key].id):
-                res += [fields[key]]
+                res += [fields[key]] + extractAttributes(fields[key])
         except Exception as e:
             pass
     return res
