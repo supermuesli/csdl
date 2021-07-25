@@ -17,5 +17,5 @@ class Requirement1(CCS):
 
         self.region.choice = self.region.options[1]  # Europe
 
-        self.price.model.value = self.price.model.options[4]
+        self.price.model.value = self.price.model.options[3]
         self.price.currency.choice = self.price.currency.options[0]  # USD

@@ -475,7 +475,7 @@ class Price:
         super().__init__()
         self.currency = Currency()
         self.priceFuncs = []
-        self.model = None
+        self.model = PricingModel()
 
     def get(self, req, usageHours=0):
         """ returns the total price """

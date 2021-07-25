@@ -41,7 +41,6 @@ digraph {
 	PayPerResource -> Static [color=black]
 	Subscription -> Static [color=black]
 	Hybrid -> Static [color=black]
-	DataDriven -> Dynamic [color=black]
 	Price -> Attribute [color=black]
 	Euro -> NameAttribute [color=black]
 	UsDollar -> NameAttribute [color=black]
