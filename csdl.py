@@ -619,11 +619,11 @@ class NoSQLDatabaseAsAService(DatabaseAsAService):
         self.extendsId = "DatabaseAsAService"
 
 
-def extractAttributes(ccs):
-    """ get all fields of a `CCS` instance that are of type `Attribute`
+def extractAttributes(attribute):
+    """ get all fields of an `Attribute` instance that are also of type `Attribute`
 
         Args:
-            ccs (CCS): The CCS of which all fields of type Attribute are to be extracted
+            attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
 
         Returns:
             list(Attribute): A list of Attribute instances
@@ -632,7 +632,7 @@ def extractAttributes(ccs):
             CCS also inherits from Attribute
     """
     res = []
-    fields = vars(ccs)  # https://stackoverflow.com/a/55320647
+    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
             if isRelated("Attribute", fields[key].id):
@@ -742,7 +742,6 @@ def isRelated(rid, cid):
         extendsId = getExtendsId(extendsId)
     return False
 
-# TODO fix matchCCS such that it works recursively on all child attributes of the requirement. of make it such that you only set the requirements in one class (no child classes), but then depth information gets lost (which attribute should be matched to which attribute?
 
 def matchCCS(req, ccs):
     """ check if a requirement matches with a CCS
@@ -769,8 +768,6 @@ def matchCCS(req, ccs):
 
     reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
-
-    recursiveResult = True
 
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
@@ -816,7 +813,13 @@ def matchCCS(req, ccs):
                             if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
                                 print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
                                 return
-    return recursiveResult
+            # check if attribute has child attributes and see if they match
+            childReqAttributes = extractAttributes(ra)
+            for cra in childReqAttributes:
+                if not matchCCS(cra, ca):
+                    return False
+
+    return True
 
 
 def renderHierarchy():
