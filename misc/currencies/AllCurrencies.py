@@ -1,10 +1,10 @@
 from csdl import *
 
 
-class FeritsCurrencies(Attribute):
+class AllCurrencies(Attribute):
     def __init__(self):
         super().__init__()
-        self.setId("https://github.com/supermuesli/csdl", "misc/currencies/FeritsCurrencies.py")
+        self.setId("https://github.com/supermuesli/csdl", "misc/currencies/AllCurrencies.py")
         self.extendsId = "Currency"
 
         # custom option that I want to add to the existing options

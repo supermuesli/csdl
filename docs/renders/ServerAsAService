@@ -3,6 +3,7 @@ digraph {
 	graph [rankdir=LR]
 	ServerAsAService -> Region [color=red]
 	ServerAsAService -> OperatingSystem [color=red]
+	OperatingSystem -> Linux [color=red]
 	ServerAsAService -> CpuCores [color=red]
 	ServerAsAService -> CpuClockSpeed [color=red]
 	ServerAsAService -> Ram [color=red]

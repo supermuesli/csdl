@@ -17,9 +17,10 @@ class Region(Attribute):
         newYork = NameAttribute()
         newYork.inject("https://github.com/supermuesli/csdl", "aws/regions/NewYork.py")
 
-        # add my custom option to the already existing options
-        self.options = Region().options
-        self.options["california"] = california
-        self.options["eastVirginia"] = eastVirginia
-        self.options["newYork"] = newYork
+        # set my custom options, discarding the old ones
+        self.options = {
+            "california": california,
+            "eastVirginia": eastVirginia,
+            "newYork": newYork
+        }
         self.choice = None

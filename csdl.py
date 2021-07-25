@@ -502,19 +502,20 @@ class Price:
         ratesRelativeToUSD = json.loads(requests.get("https://openexchangerates.org/api/latest.json?app_id=" + apiKey + "&base=USD").content)["rates"]
         currencyConversion = 1
         try:
-            currencyConversion = ratesRelativeToUSD[self.currency.choice.value]  # how many of CCSs currency is 1 USD
+            currencyConversion = ratesRelativeToUSD[self.currency.options[self.currency.choice].value]  # how many of CCSs currency is 1 USD
         except Exception as e:
-            logging.error(self.name, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency.choice.value)
+            logging.error(self.id, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency.options[self.currency.choice].value)
             print(e)
 
         try:
-            currencyConversion = ratesRelativeToUSD[req.price.currency.choice.value]  # how many of reqs currency is 1 USD
+            currencyConversion = ratesRelativeToUSD[req.price.currency.options[req.price.currency.choice].value]  # how many of reqs currency is 1 USD
         except Exception as e:
-            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.price.currency.choice.value)
+            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.price.currency.options[req.price.currency.choice].value)
             print(e)
 
         currencyConversion = 1  # TODO fix currencyConversion lol
 
+        # TODO dont do this here. instead, let the user model it in their pricing model attribute
         if self.model.__class__ is PayAndGo:
             self.model.upFrontCost = sum([pf.run(req) for pf in self.priceFuncs])
             return self.model.upFrontCost * currencyConversion

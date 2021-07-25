@@ -3,6 +3,7 @@ digraph {
 	graph [rankdir=LR]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> "github.com/supermuesli/csdl@aws/regions/Region.py@latest" [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> OperatingSystem [color=red]
+	OperatingSystem -> Linux [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> CpuCores [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> CpuClockSpeed [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> Ram [color=red]
