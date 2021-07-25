@@ -175,10 +175,6 @@ importedClasses = {
         "className": "Hybrid",
         "extendsId": "Static"
     },
-    "DataDriven": {
-        "className": "DataDriven",
-        "extendsId": "Dynamic"
-    },
     "Price": {
         "className": "Price",
         "extendsId": "Attribute"
@@ -421,82 +417,56 @@ class NumericAttribute(Attribute):
         self.moreIsBetter = True
 
 
-class PricingModel(Attribute):
+class PricingModel(ChoiceAttribute):
     def __init__(self):
         super().__init__()
         self.id = "PricingModel"
-        self.extendsId = "Attribute"
+        self.extendsId = "ChoiceAttribute"
+        self.options = ["Static", "Dynamic", "PayAndGo", "PayPerResource", "Subscription", "Hybrid"]
+        self.value = None
 
 
 class Static(PricingModel):
-    """ static pricing models only depend on the configuration of the CCS """
     def __init__(self):
         super().__init__()
         self.id = "Static"
         self.extendsId = "PricingModel"
+        self.description = "static pricing models only depend on the configuration of the CCS"
 
 
 class PayAndGo(Static):
-    """ you (pay) an upFrontCost once (and go) on to use the service """
     def __init__(self):
         super().__init__()
         self.id = "PayAndGo"
         self.extendsId = "Static"
         self.upFrontCost = None
+        self.description = "you (pay) an upFrontCost once (and go) on to use the service"
 
 
 class Subscription(Static):
-    """ you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour """
     def __init__(self):
         super().__init__()
         self.id = "Subscription"
         self.extendsId = "Static"
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
+        self.description = "you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour"
 
 
 class PayPerResource(Static):
-    """ you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour """
     def __init__(self):
         super().__init__()
         self.id = "PayPerResource"
         self.extendsId = "Static"
+        self.description = "you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour"
 
 
 class Dynamic(PricingModel):
-    """ dynamic pricing models depend on the configuration of the CCS and also on """
     def __init__(self):
         super().__init__()
         self.id = "Dynamic"
         self.extendsId = "PricingModel"
-        self.interpreter = None
-
-
-class DataDriven(Dynamic):
-    """ if python was not the metamodel language, then this datadriven dynamic pricing would not be possible. how else would
-        you describe arbitrary callbacks using a selfmade DSL? it would be possible, but complicated to design a DSL that
-        is in itself turing complete. it makes more sense to just use python directly
-    """
-    def __init__(self):
-        super().__init__()
-        self.id = "DataDriven"
-        self.extendsId = "Dynamic"
-
-        self.dataset = None
-
-    def getEstimatedPrice(self):
-        """ estimate the price based on the given dataset. the interpreter has to be a function that interprets
-            the dataset and returns the current price based on it. note that you have to implement the interpreter
-            first. """
-        return self.interpreter()
-
-
-class Hybrid(PayAndGo, PayPerResource, Subscription, DataDriven):
-    """ any combination of all pricing models. """
-    def __init__(self):
-        super().__init__()
-        self.id = "Hybrid"
-        self.extendsId = "Static"
+        self.description = "dynamic pricing models depend on the configuration of the CCS and also on any other arbitrary thing, such as time or weather"
 
 
 class Price:

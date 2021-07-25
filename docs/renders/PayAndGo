@@ -1,0 +1,4 @@
+// PayAndGo fields
+digraph {
+	graph [rankdir=LR]
+}

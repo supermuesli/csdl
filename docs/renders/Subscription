@@ -1,0 +1,4 @@
+// Subscription fields
+digraph {
+	graph [rankdir=LR]
+}

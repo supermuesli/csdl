@@ -1,0 +1,4 @@
+// PricingModel fields
+digraph {
+	graph [rankdir=LR]
+}

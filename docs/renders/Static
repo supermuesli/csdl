@@ -1,0 +1,4 @@
+// Static fields
+digraph {
+	graph [rankdir=LR]
+}

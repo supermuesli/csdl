@@ -1,0 +1,4 @@
+// PayPerResource fields
+digraph {
+	graph [rankdir=LR]
+}
