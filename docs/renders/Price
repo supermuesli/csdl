@@ -1,6 +1,5 @@
 // Price fields
 digraph {
 	graph [rankdir=LR]
-	Price -> Currency [color=red]
 	Price -> PricingModel [color=red]
 }

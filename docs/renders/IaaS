@@ -2,7 +2,6 @@
 digraph {
 	graph [rankdir=LR]
 	IaaS -> Price [color=red]
-	Price -> Currency [color=red]
 	Price -> PricingModel [color=red]
 	IaaS -> Region [color=red]
 }

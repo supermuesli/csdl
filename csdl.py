@@ -402,8 +402,8 @@ class NumericAttribute(Attribute):
         super().__init__()
         self.id = "NumericAttribute"
         self.value = None
-        self.minVal = None
-        self.maxVal = None
+        self.minVal = -inf
+        self.maxVal = inf
         self.stepSize = None
         self.makeInt = False
         self.moreIsBetter = True
@@ -777,10 +777,10 @@ def matchCCS(req, ccs):
         for ca in ccsAttributes:
             if isRelated(ra.id, ca.id):
                 if isRelated("NumericAttribute", ra.id):
-                    if ra.value is not None and ca.value is None:  # requirement sets this attribute, but CCS does not
-                        print(ra.id, "is set as a requirement, but", ccs.id, "does not set it")
-                        return False
-                    if ra.value is not None and ca.value is not None:  # both requirement and CCS set this attribute
+                    if ra.value is not None:  # both requirement and CCS set this attribute
+                        if not ca.mutable and ca.value is None:
+                            print(ra.id, "is set as a requirement, but", ccs.id, "can not set it")
+                            return False
                         if ca.moreIsBetter:
                             if not ca.mutable:
                                 if ra.value > ca.value:  # value is too small and not mutable
@@ -791,10 +791,9 @@ def matchCCS(req, ccs):
                                     print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
                                     return False
                         else:
-                            if not ca.mutable:
-                                if ra.value < ca.value:  # value is too large and not mutable
-                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
-                                    return False
+                            if ra.value < ca.value:  # value is too large and not mutable
+                                print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
+                                return False
                             if ca.minVal is not None:
                                 if ca.minVal > ra.value:  # value cannot be made small enough
                                     print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
@@ -816,9 +815,7 @@ def matchCCS(req, ccs):
                         else:
                             if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
                                 print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
-                                return False
-            print("going recursive:", ra.id, ca.id)
-            recursiveResult = matchField(ra, ca)
+                                return
     return recursiveResult
 
 
