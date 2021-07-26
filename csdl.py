@@ -758,7 +758,6 @@ def matchCCS(req, ccs):
     """
 
     print("checking", ccs.name, "for potential match")
-    print(req.id, req.extendsId, ccs.id)
 
     # requirement is a custom attribute ... because "@" in req.id
     if "@" in req.id:
