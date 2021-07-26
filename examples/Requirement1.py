@@ -8,7 +8,7 @@ class Requirement1(CCS):
         self.extendsId = "VMAsAService"
 
         self.ram.value = 4
-        self.cpuCores.value = 4
+        self.cpuCores.value = 9
         self.storage.value = 500
 
         self.staticIpAddresses = NumericAttribute()
