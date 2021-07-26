@@ -184,7 +184,8 @@ importedClasses = {
         "extendsId": "DatabaseAsAService"
     }
 }
-""" AttributeIds that have already been imported mapped to their class names and extendsIds """
+""" AttributeIds that have already been imported mapped to their class names and extendsIds. Whenever a new Attribute
+    is added (not imported) to the framework, it needs to be included in here. """
 
 
 def cleanGitCache():
@@ -662,7 +663,7 @@ def matchField(ccs, *attributeIds):
 
         Example:
             >>> # returns the `storage` field of the VMAsAService instance
-            >>> matchField(VMAsAService(), "Storage")
+            >>> matchField(VMAsAService, "Storage")
 
             >>> # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
             >>> matchField(VMAsAService(), "StorageAsAService", "Storage")
