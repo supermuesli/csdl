@@ -1,7 +1,7 @@
 from csdl import *
 
 
-class Requirement1(VMAsAService):
+class Requirement1(Attribute):
     def __init__(self):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
