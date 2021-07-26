@@ -43,4 +43,4 @@ class EBS(CCS):
         self.price.priceFuncs = [defaultPrice(self)]
 
         self.price.model.choice = "subscription"  # subscription
-        self.price.model.billingPeriod = 1  # per hour
+        self.price.model.options[self.price.model.choice].billingPeriod = 1  # once per hour

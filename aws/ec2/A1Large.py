@@ -68,4 +68,4 @@ class A1Large(CCS):
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.ebs.price.priceFuncs
 
         self.price.model.choice = "subscription"
-        self.price.model.billingPeriod = 1  # once per hour
+        self.price.model.options[self.price.model.choice].billingPeriod = 1  # once per hour
