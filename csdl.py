@@ -684,7 +684,7 @@ def matchField(ccs, *attributeIds):
             # done
             return ccs
         # continue search for next attributeId
-        return matchField(ccs, attributeIds[1:])
+        return matchField(ccs, *attributeIds[1:])
 
     attributes = extractAttributes(ccs)
 
@@ -694,7 +694,7 @@ def matchField(ccs, *attributeIds):
                 # done
                 return attr
             # continue search for next attributeId
-            return matchField(attr, attributeIds[1:])
+            return matchField(attr, *attributeIds[1:])
     return None
 
 
