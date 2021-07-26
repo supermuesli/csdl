@@ -454,35 +454,35 @@
 <path fill="none" stroke="black" d="M2019.79,-915.52C2032.92,-920.733 2045.35,-927.444 2056.53,-936 2134.91,-995.993 2156.82,-1121.71 2162.79,-1177.86"/>
 <polygon fill="black" stroke="black" points="2159.31,-1178.2 2163.76,-1187.82 2166.28,-1177.53 2159.31,-1178.2"/>
 </g>
-<!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest -->
-<g id="node46" class="node"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</title>
-<ellipse fill="none" stroke="black" cx="245.678" cy="-18" rx="221.761" ry="18"/>
-<text text-anchor="middle" x="245.678" y="-14.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</text>
-</g>
-<!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService -->
-<g id="edge45" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService</title>
-<path fill="none" stroke="black" d="M433.559,-27.5572C524.834,-32.2251 629.59,-37.5823 698.656,-41.1144"/>
-<polygon fill="black" stroke="black" points="698.838,-44.6282 709.004,-41.6436 699.195,-37.6373 698.838,-44.6282"/>
-</g>
-<!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest -->
-<g id="node47" class="node"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1827.1" cy="-693" rx="229.359" ry="18"/>
-<text text-anchor="middle" x="1827.1" y="-689.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/Region.py@latest</text>
-</g>
-<!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;ChoiceAttribute -->
-<g id="edge46" class="edge"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;ChoiceAttribute</title>
-<path fill="none" stroke="black" d="M1970.78,-707.047C1999.28,-710.645 2028.93,-714.955 2056.53,-720 2073.52,-723.106 2091.81,-727.317 2108.43,-731.489"/>
-<polygon fill="black" stroke="black" points="2107.99,-734.988 2118.55,-734.071 2109.72,-728.206 2107.99,-734.988"/>
-</g>
 <!-- github.com/supermuesli/csdl@misc/countries/USA.py@latest -->
-<g id="node48" class="node"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
+<g id="node46" class="node"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1310.79" cy="-639" rx="231.259" ry="18"/>
 <text text-anchor="middle" x="1310.79" y="-635.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/countries/USA.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@misc/countries/USA.py@latest&#45;&gt;NorthAmerica -->
-<g id="edge47" class="edge"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest&#45;&gt;NorthAmerica</title>
+<g id="edge45" class="edge"><title>github.com/supermuesli/csdl@misc/countries/USA.py@latest&#45;&gt;NorthAmerica</title>
 <path fill="none" stroke="black" d="M1542.24,-639C1619.35,-639 1699.7,-639 1755.15,-639"/>
 <polygon fill="black" stroke="black" points="1755.21,-642.5 1765.21,-639 1755.21,-635.5 1755.21,-642.5"/>
+</g>
+<!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest -->
+<g id="node47" class="node"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</title>
+<ellipse fill="none" stroke="black" cx="245.678" cy="-18" rx="221.761" ry="18"/>
+<text text-anchor="middle" x="245.678" y="-14.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</text>
+</g>
+<!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService -->
+<g id="edge46" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;VMAsAService</title>
+<path fill="none" stroke="black" d="M433.559,-27.5572C524.834,-32.2251 629.59,-37.5823 698.656,-41.1144"/>
+<polygon fill="black" stroke="black" points="698.838,-44.6282 709.004,-41.6436 699.195,-37.6373 698.838,-44.6282"/>
+</g>
+<!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest -->
+<g id="node48" class="node"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1827.1" cy="-693" rx="229.359" ry="18"/>
+<text text-anchor="middle" x="1827.1" y="-689.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/Region.py@latest</text>
+</g>
+<!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;ChoiceAttribute -->
+<g id="edge47" class="edge"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest&#45;&gt;ChoiceAttribute</title>
+<path fill="none" stroke="black" d="M1970.78,-707.047C1999.28,-710.645 2028.93,-714.955 2056.53,-720 2073.52,-723.106 2091.81,-727.317 2108.43,-731.489"/>
+<polygon fill="black" stroke="black" points="2107.99,-734.988 2118.55,-734.071 2109.72,-728.206 2107.99,-734.988"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/regions/California.py@latest -->
 <g id="node49" class="node"><title>github.com/supermuesli/csdl@aws/regions/California.py@latest</title>

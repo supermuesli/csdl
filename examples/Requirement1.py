@@ -17,8 +17,10 @@ class Requirement1(CCS):
 
         usa = NameAttribute()
         usa.inject("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
-        self.region.options = {"USA": usa}
-        self.region.choice = "USA"
+        self.region.options = {
+            "usa": usa
+        }
+        self.region.choice = "usa"
         
         self.price.model.choice = "subscription"  # pay per resource
         self.price.currency = "EUR"
