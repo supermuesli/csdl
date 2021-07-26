@@ -26,4 +26,3 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService sind inje
         self.region.choice = "usa"
         
         self.price.model.choice = "subscription"  # pay per resource
-        self.price.currency = "EUR"

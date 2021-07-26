@@ -6,10 +6,10 @@ from csdl import *
 
 def main():
     usageHours = 24
+    currency = "EUR"
 
     # user requirements
     req = VMAsAService()
-    req.inject("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
 
@@ -23,7 +23,7 @@ def main():
     # conclusion: wie gut habe ich die research questions beantwortet? habe ich sie überhaupt behantwortet? was kann man noch machen?
 
     # price estimate of cheapest ccs that fits requirements
-    estimate(req, usageHours)
+    estimate(req, currency=currency, usageHours=usageHours)
 
     # render acquired attribute hierarchy
     renderHierarchy()

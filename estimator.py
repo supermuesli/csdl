@@ -2,7 +2,7 @@ from csdl import *
 from math import inf
 
 
-def estimate(req, usageHours):
+def estimate(req, currency="EUR", usageHours=1):
     """ given some requirements"""
 
     # mock up database of all known CCS (in reality this should be fetched from csdlhub.com or something like that)
@@ -22,13 +22,12 @@ def estimate(req, usageHours):
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
             # get price using the given requirements as configurations
-            ccsPrice = ccs.price.get(req, usageHours=usageHours)
-            ccsCurrency = ccs.price.currency
-            ccsPricingModel = ccs.price.model
+            ccsPrice = ccs.price.get(req, currency=currency, usageHours=usageHours)
+            ccsPricingModel = ccs.price.model.options[ccs.price.model.choice]
 
             # print results
             print("found match:", ccs.name)
-            print("price: ", ccsPrice, ccsCurrency, "using pricing model:", ccsPricingModel.id, ":", ccsPricingModel.description)
+            print("price: ", ccsPrice, currency, "using pricing model:", ccsPricingModel.id, ":", ccsPricingModel.description)
             print("configuration: ", vars(ccs))
 
             # evaluate

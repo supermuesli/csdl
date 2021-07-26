@@ -34,7 +34,8 @@ class EBS(CCS):
                 # get attribute with the id Storage
                 match = matchField(req, "Storage")
                 if match is not None:
-                    return 1.25*match.value
+                    if match.value is not None:
+                        return 1.25*match.value
 
                 return self.topClass.storage.minVal * 1.25
 

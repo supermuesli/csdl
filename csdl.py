@@ -426,7 +426,7 @@ class PricingModelInterface(NameAttribute, ABC):
         super().__init__()
 
     @abstractmethod
-    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         pass
 
 
@@ -439,7 +439,7 @@ class PayAndGo(PricingModelInterface):
 
         self.upFrontCost = None
 
-    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
         return self.upFrontCost
 
@@ -454,7 +454,7 @@ class Subscription(PricingModelInterface):
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
 
-    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
         return usageHours / self.billingPeriod * self.billingPeriodCost * currencyConversion
 
@@ -466,7 +466,7 @@ class PayPerResource(PricingModelInterface):
         self.extendsId = "NameAttribute"
         self.description = "you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour"
 
-    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
 
 
@@ -477,7 +477,7 @@ class Static(PricingModelInterface):
         self.extendsId = "NameAttribute"
         self.description = "static pricing models depend only on the configuration of the CCS"
 
-    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
 
 
@@ -488,7 +488,7 @@ class Dynamic(PricingModelInterface):
         self.extendsId = "PricingModel"
         self.description = "dynamic pricing models depend on the configuration of the CCS and also on any other arbitrary thing, such as time or weather"
 
-    def getPrice(self, req, priceFuncs, currencyConversion, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
 
 
@@ -498,33 +498,35 @@ class Price(Attribute):
         super().__init__()
         self.id = "Price"
         self.extendsId = "Attribute"
-        self.currency = "EUR"  # ISO 4217 currency code
+        self.currency = None  # expecting ISO 4217 currency code as string
         self.priceFuncs = []
         self.model = PricingModel()
 
-    def get(self, req, usageHours=0):
+    def get(self, req, currency="EUR", usageHours=0):
         """ returns the total price """
 
         # convert prices to the same currency
         # TODO inject API key using command line flag or environment variable or config file
         apiKey = "080197719e5c4ef0b73f339e208f1f67"
+        # TODO cache this table for at least one day
         ratesRelativeToUSD = json.loads(requests.get("https://openexchangerates.org/api/latest.json?app_id=" + apiKey + "&base=USD").content)["rates"]
         currencyConversion = 1
         try:
-            currencyConversion = ratesRelativeToUSD[self.currency]  # how many of CCSs currency is 1 USD
+            currencyConversion = ratesRelativeToUSD[currency]  # how many of requirements currency is 1 USD
+        except Exception as e:
+            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:",currency)
+            print(e)
+
+        try:
+            currencyConversion /= ratesRelativeToUSD[self.currency]  # how many of CCSs currency is 1 USD
         except Exception as e:
             logging.error(self.id, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency)
             print(e)
 
-        try:
-            currencyConversion = ratesRelativeToUSD[req.price.currency]  # how many of reqs currency is 1 USD
-        except Exception as e:
-            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:", req.price.currency)
-            print(e)
+        if self.model.choice is None:
+            logging.error(self.id, "does not provide a pricing model choice")
 
-        currencyConversion = 1  # TODO fix currencyConversion lol
-
-        return self.model.options[self.model.choice].getPrice(req, self.priceFuncs, currencyConversion, usageHours=usageHours)
+        return self.model.options[self.model.choice].getPrice(req, self.priceFuncs, currencyConversion=currencyConversion, usageHours=usageHours)
 
 
 # an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python

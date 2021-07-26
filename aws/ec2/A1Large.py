@@ -37,20 +37,22 @@ class A1Large(CCS):
 
         # price functions
         class elasticIpPrice(PriceFunc):
-            def __init__(self):
+            def __init__(self, topClass):
                 super().__init__()
                 self.description = "the amount of elastic ips specified takes a toll on the price"
+                self.topClass = topClass
 
             def run(self, req):
-                # check if the requirement contains an elasticIpAmount field inside a VMAsAService
-                match = matchField(req, "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
+                # check if the requirement contains an elasticIpAmount field inside an A1Large instance
+                match = matchField(req, self.topClass.id, "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
 
                 # if there was a match, then we can compute the price
                 if match is not None:
-                    if match.value == 1:
-                        return 2
-                    if match.value > 1:
-                        return match.value * 2.5
+                    if match.value is not None:
+                        if match.value == 1:
+                            return 2
+                        if match.value > 1:
+                            return match.value * 2.5
 
                 # otherwise we assume a default value and the corresponding price (0 IPs cost 0 EUR)
                 return 0
@@ -65,7 +67,7 @@ class A1Large(CCS):
 
         # price
         self.price.currency = "USD"  # ISO 4217
-        self.price.priceFuncs = [defaultPrice(), elasticIpPrice()] + self.ebs.price.priceFuncs
+        self.price.priceFuncs = [defaultPrice(), elasticIpPrice(self)] + self.ebs.price.priceFuncs
 
         self.price.model.choice = "subscription"
         self.price.model.options[self.price.model.choice].billingPeriod = 1  # once per hour
