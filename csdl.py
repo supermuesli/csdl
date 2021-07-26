@@ -675,21 +675,22 @@ def matchField(ccs, *attributeIds):
         # done
         return None
 
-    fields = vars(ccs)  # https://stackoverflow.com/a/55320647
-    for key in fields:
-        try:
-            if isRelated(fields[key].id, attributeIds[0]):
-                if len(attributeIds) == 1:
-                    # done
-                    return fields[key]
-                # continue search for next attributeId
-                return matchField(fields[key], attributeIds[1:])
-            # check if subfield
-            match = matchField(fields[key], attributeIds[0])
-            if match is not None:
-                return match
-        except Exception as e:
-            logging.debug(e)
+    if isRelated(ccs.extendsId, attributeIds[0]):
+        if len(attributeIds) == 1:
+            # done
+            return ccs
+        # continue search for next attributeId
+        return matchField(ccs, attributeIds[1:])
+
+    attributes = extractAttributes(ccs)
+
+    for attr in attributes:
+        if isRelated(attr.id, attributeIds[0]):
+            if len(attributeIds) == 1:
+                # done
+                return attr
+            # continue search for next attributeId
+            return matchField(attr, attributeIds[1:])
     return None
 
 
@@ -722,22 +723,27 @@ def isRelated(rid, cid):
             bool: True if the Attributes are related, else False
 
         Note:
-            - two Attributes are related if either their ids match, or if some ancestors id of the second Attribute matches with the first Attribute
+            - two Attributes are related if either their ids match or an extendsId in any depth matches with either id
             - CCS also inherits from Attribute
     """
     if rid is None or cid is None:
         return False
 
     if rid == cid:
-        #print(rid, "and", cid, "match!")
         return True
 
     extendsId = getExtendsId(cid)
     while extendsId is not None:
         if rid == extendsId:
-            # print(rid, "and", cid, "match!")
             return True
         extendsId = getExtendsId(extendsId)
+
+    extendsId = getExtendsId(rid)
+    while extendsId is not None:
+        if cid == extendsId:
+            return True
+        extendsId = getExtendsId(extendsId)
+
     return False
 
 
