@@ -1,7 +1,10 @@
 from csdl import *
 
 
-class Requirement1(Attribute):
+class Requirement1(Attribute):  # does not have to extend VMAsAService sind injection will already refactor the code to do it later, but
+                                # it is good practise to be explicit and do it anyway. also, the IDE should make better autocompletions that way
+                                # . note that custom attributes cannot be extended, however, so the closest related Attribute
+                                # should be extended instead.
     def __init__(self):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
