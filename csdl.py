@@ -217,8 +217,8 @@ class Attribute:
         self.commit = None
         self.branch = None
         self.filePath = None
-        self.id = None
-        self.extendsId = None
+        self.id = "Attribute"
+        self.extendsId = "object"
         self.mutable = False
         self.searchKeyWords = None
         self.description = None
@@ -767,9 +767,10 @@ def matchCCS(req, ccs):
     """
 
     print("checking", ccs.name, "for potential match")
+    print(req.id, req.extendsId, ccs.id)
 
     # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
-    if not isRelated(req.extendsId, ccs.id):
+    if not isRelated(req.extendsId, ccs.id) and not isRelated(req.id, ccs.id):
         print("requirement is not in any way related to", ccs.id)
         return False
 

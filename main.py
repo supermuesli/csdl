@@ -9,7 +9,7 @@ def main():
     currency = "EUR"
 
     # user requirements
-    req = VMAsAService()
+    req = Attribute()
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
 
