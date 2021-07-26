@@ -670,11 +670,15 @@ def matchField(ccs, *attributeIds):
             >>> # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
             >>> matchField(VMAsAService(), "StorageAsAService", "Storage")
 
+            >>> # returns the VMAsAService instance
+            >>> matchField(VMAsAService(), "VMAsAService")
+
     """
     if len(attributeIds) < 1:
         # done
         return None
 
+    # its the extendsId that has to match because requirements (of type CCS) never have ids that relate to anything
     if isRelated(ccs.extendsId, attributeIds[0]):
         if len(attributeIds) == 1:
             # done
