@@ -48,7 +48,7 @@ class A1Large(CCS):
 
                 # if there was a match, then we can compute the price
                 if match is not None:
-                    if match.value is not None:
+                    if match.value is not None:  # a match does not automatically mean that the value is set
                         if match.value == 1:
                             return 2
                         if match.value > 1:

@@ -33,8 +33,8 @@ class EBS(CCS):
             def run(self, req):
                 # get attribute with the id Storage
                 match = matchField(req, "Storage")
-                if match is not None:
-                    if match.value is not None:
+                if match is not None:  # there was a match
+                    if match.value is not None:  # a match does not automatically mean that the value is set
                         return 1.25*match.value
 
                 return self.topClass.storage.minVal * 1.25

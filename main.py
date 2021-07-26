@@ -9,7 +9,8 @@ def main():
     currency = "EUR"
 
     # user requirements
-    req = Attribute()
+    req = VMAsAService()
+    req.inject("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
 

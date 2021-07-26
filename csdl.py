@@ -651,7 +651,7 @@ def extractAttributes(attribute):
 
 def matchField(ccs, *attributeIds):
     """ Recursively get the first field of type `Attribute` of - either the given `CCS` or one if its subfields of type
-       `Attribute` - that are related to the given `attributeIds` in the given order. If the given `CCS` already matches with `attributeIds[0]`, then that CCS will be returned instead.
+       `Attribute` - that are related to the given `attributeIds` in the given order.
 
         Args:
             ccs (CCS): The CCS whose fields will be searched
@@ -670,19 +670,10 @@ def matchField(ccs, *attributeIds):
             >>> # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
             >>> matchField(VMAsAService(), "StorageAsAService", "Storage")
 
-            >>> # returns the input `VMAsAService` instance
-            >>> matchField(VMAsAService(), "VMAsAService")
     """
     if len(attributeIds) < 1:
         # done
         return None
-
-    if isRelated(ccs.id, attributeIds[0]):
-        if len(attributeIds) == 1:
-            # done
-            return ccs
-        # continue search for next attributeId
-        return matchField(ccs, attributeIds[1:])
 
     fields = vars(ccs)  # https://stackoverflow.com/a/55320647
     for key in fields:
@@ -769,10 +760,17 @@ def matchCCS(req, ccs):
     print("checking", ccs.name, "for potential match")
     print(req.id, req.extendsId, ccs.id)
 
-    # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
-    if not isRelated(req.extendsId, ccs.id) and not isRelated(req.id, ccs.id):
-        print("requirement is not in any way related to", ccs.id)
-        return False
+    # requirement is a custom attribute ... because "@" in req.id
+    if "@" in req.id:
+        # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
+        if not isRelated(req.extendsId, ccs.id):
+            print("requirement is not in any way related to", ccs.id)
+            return False
+    else:
+        # requirement is a framework attribute
+        if not isRelated(req.id, ccs.id):
+            print("requirement is not in any way related to", ccs.id)
+            return False
 
     reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
