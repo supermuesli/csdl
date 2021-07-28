@@ -32,7 +32,7 @@ class EC2(CCS):
 
         # price functions
         class elasticIpPrice(PriceFunc):
-            def __init__(self, topClass):
+            def __init__(self):
                 super().__init__()
                 self.description = "the amount of elastic ips specified takes a toll on the price"
 

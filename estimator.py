@@ -7,7 +7,7 @@ def estimate(req, currency="EUR", usageHours=1):
 
     # mock up database of all known CCS (in reality this should be fetched from csdlhub.com or something like that)
     vm1 = VMAsAService()
-    vm1.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
+    vm1.inject("https://github.com/supermuesli/csdl", "aws/ec2/EC2.py")
 
     ebs1 = StorageAsAService()
     ebs1.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")

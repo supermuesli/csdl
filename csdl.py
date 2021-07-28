@@ -803,7 +803,7 @@ def matchCCS(req, ccs):
             - If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.
     """
 
-    print("checking", ccs.name, "for potential match")
+    print("checking", ccs.id, "for potential match")
 
     # requirement is a custom attribute ... because "@" in req.id
     if "@" in req.id:

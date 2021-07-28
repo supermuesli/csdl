@@ -1,19 +1,8 @@
 // github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest fields
 digraph {
 	graph [rankdir=LR]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> Price [color=red]
-	Price -> PricingModel [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> "github.com/supermuesli/csdl@aws/regions/Region.py@latest" [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> OperatingSystem [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> CpuCores [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> CpuClockSpeed [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> Ram [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> RamClockSpeed [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> RamWriteSpeed [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> RamReadSpeed [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> NetworkCapacity [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> NetworkUploadSpeed [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> NetworkDownloadSpeed [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> "github.com/supermuesli/csdl@aws/EBS.py@latest" [color=red]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> Price [color=red]
 	Price -> PricingModel [color=red]
@@ -21,5 +10,4 @@ digraph {
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> Storage [color=red]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageWriteSpeed [color=red]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageReadSpeed [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> "github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" [color=red]
 }
