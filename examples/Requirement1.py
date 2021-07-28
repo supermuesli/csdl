@@ -12,7 +12,7 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService sind inje
 
         self.ram.value = 4
         self.cpuCores.value = 4
-        self.storage.value = 500
+        self.storage.value = 5000
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
