@@ -737,6 +737,9 @@ def matchField(ccs, *attributeIds):
                 return attr
             # continue search for next attributeId
             return matchField(attr, *attributeIds[1:])
+
+    # no match found
+    logging.info("failed to match", attributeIds, ". for better price estimation, you should set those attribute in your requirement as well")
     return None
 
 
