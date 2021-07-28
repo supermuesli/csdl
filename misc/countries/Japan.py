@@ -7,4 +7,4 @@ class Japan(Attribute):
         self.setId("https://github.com/supermuesli/csdl", "misc/countries/Japan.py")
         self.extendsId = "EastAsia"
 
-        self.value = "Japan"
+        self.name = "Japan"

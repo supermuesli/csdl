@@ -8,13 +8,13 @@ class Region(Attribute):
         self.extendsId = "ChoiceAttribute"
 
         # custom options that I want to add to the existing options
-        california = NameAttribute()
+        california = OptionAttribute()
         california.inject("https://github.com/supermuesli/csdl", "aws/regions/California.py")
 
-        eastVirginia = NameAttribute()
+        eastVirginia = OptionAttribute()
         eastVirginia.inject("https://github.com/supermuesli/csdl", "aws/regions/EastVirginia.py")
 
-        newYork = NameAttribute()
+        newYork = OptionAttribute()
         newYork.inject("https://github.com/supermuesli/csdl", "aws/regions/NewYork.py")
 
         # set my custom options

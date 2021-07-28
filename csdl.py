@@ -47,8 +47,8 @@ importedClasses = {
         "className": "BoolAttribute",
         "extendsId": "Attribute"
     },
-    "NameAttribute": {
-        "className": "NameAttribute",
+    "OptionAttribute": {
+        "className": "OptionAttribute",
         "extendsId": "Attribute"
     },
     "CCS": {
@@ -65,31 +65,31 @@ importedClasses = {
     },
     "NorthAmerica": {
         "className": "NorthAmerica",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "Australia": {
         "className": "Australia",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "Africa": {
         "className": "Africa",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "EastAsia": {
         "className": "EastAsia",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "SouthAmerica": {
         "className": "SouthAmerica",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "Europe": {
         "className": "Europe",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "Antarctica": {
         "className": "Antarctica",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "Storage": {
         "className": "Storage",
@@ -149,11 +149,11 @@ importedClasses = {
     },
     "Static": {
         "className": "Static",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "Dynamic": {
         "className": "Dynamic",
-        "extendsId": "NameAttribute"
+        "extendsId": "OptionAttribute"
     },
     "PayAndGo": {
         "className": "PayAndGo",
@@ -377,21 +377,21 @@ class ChoiceAttribute(Attribute):
     """ ChoiceAttribute
 
         Attributes:
-            options (list): A dictionary of NameAttributes
-            choice (NameAttribute): The dictionary key of the chosen NameAttribute from self.options
+            options (list): A dictionary of OptionAttributes
+            choice (Attribute): The dictionary key of the chosen OptionAttribute from self.options
     """
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
-        self.options = None  # dictionary of NameAttribute instances
-        self.choice = None  # dictionary key of chosen NameAttribute instance
+        self.options = None  # dictionary of Attribute instances
+        self.choice = None  # dictionary key of chosen Attribute instance
 
 
-class NameAttribute(Attribute):
+class OptionAttribute(Attribute):
     def __init__(self):
         super().__init__()
-        self.id = "NameAttribute"
-        self.value = None
+        self.id = "OptionAttribute"
+        self.extendsId = "Attribute"
 
 
 class NumericAttribute(Attribute):
@@ -421,7 +421,7 @@ class PricingModel(ChoiceAttribute):
         self.choice = None
 
 
-class PricingModelInterface(NameAttribute, ABC):
+class PricingModelInterface(OptionAttribute, ABC):
     def __init__(self):
         super().__init__()
 
@@ -463,8 +463,9 @@ class PayPerResource(PricingModelInterface):
     def __init__(self):
         super().__init__()
         self.id = "PayPerResource"
-        self.extendsId = "NameAttribute"
+        self.extendsId = "OptionAttribute"
         self.description = "you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour"
+        self.name = "Pay per resource"
 
     def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
@@ -474,8 +475,9 @@ class Static(PricingModelInterface):
     def __init__(self):
         super().__init__()
         self.id = "Static"
-        self.extendsId = "NameAttribute"
+        self.extendsId = "OptionAttribute"
         self.description = "static pricing models depend only on the configuration of the CCS"
+        self.name = "Static"
 
     def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
@@ -502,32 +504,6 @@ class Price(Attribute):
         self.priceFuncs = []
         self.model = PricingModel()
 
-    def get(self, req, currency="EUR", usageHours=0):
-        """ returns the total price """
-
-        # convert prices to the same currency
-        # TODO inject API key using command line flag or environment variable or config file
-        apiKey = "080197719e5c4ef0b73f339e208f1f67"
-        # TODO cache this table for at least one day
-        ratesRelativeToUSD = json.loads(requests.get("https://openexchangerates.org/api/latest.json?app_id=" + apiKey + "&base=USD").content)["rates"]
-        currencyConversion = 1
-        try:
-            currencyConversion = ratesRelativeToUSD[currency]  # how many of requirements currency is 1 USD
-        except Exception as e:
-            logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:",currency)
-            print(e)
-
-        try:
-            currencyConversion /= ratesRelativeToUSD[self.currency]  # how many of CCSs currency is 1 USD
-        except Exception as e:
-            logging.error(self.id, "uses a currency with a currency code that does not comply with ISO_4217:", self.currency)
-            print(e)
-
-        if self.model.choice is None:
-            logging.error(self.id, "does not provide a pricing model choice")
-
-        return self.model.options[self.model.choice].getPrice(req, self.priceFuncs, currencyConversion=currencyConversion, usageHours=usageHours)
-
 
 # an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python
 class PriceFunc(ABC):
@@ -539,6 +515,42 @@ class PriceFunc(ABC):
     def run(self, req):
         """ returns the value of this price function """
         pass
+
+
+def estimatePrice(req, ccs, currency="EUR", usageHours=0):
+    """ returns the total price """
+
+    # append priceFuncs of all subfields
+    allPriceFuncs = extractPriceFuncs(ccs)
+
+    # convert prices to the same currency
+    # TODO inject API key using command line flag or environment variable or config file
+    apiKey = "080197719e5c4ef0b73f339e208f1f67"
+    # TODO cache this table for at least one day
+    ratesRelativeToUSD = json.loads(
+        requests.get("https://openexchangerates.org/api/latest.json?app_id=" + apiKey + "&base=USD").content)[
+        "rates"]
+    currencyConversion = 1
+    try:
+        currencyConversion = ratesRelativeToUSD[currency]  # how many of requirements currency is 1 USD
+    except Exception as e:
+        logging.error("your requirement uses a currency with a currency code that does not comply with ISO_4217:",
+                      currency)
+        print(e)
+
+    try:
+        currencyConversion /= ratesRelativeToUSD[ccs.price.currency]  # how many of CCSs currency is 1 USD
+    except Exception as e:
+        logging.error(ccs.price.id, "uses a currency with a currency code that does not comply with ISO_4217:",
+                      ccs.price.currency)
+        print(e)
+
+    if ccs.price.model.choice is None:
+        logging.error(ccs.price.id, "does not provide a pricing model choice")
+
+    return ccs.price.model.options[ccs.price.model.choice].getPrice(req, allPriceFuncs,
+                                                          currencyConversion=currencyConversion,
+                                                          usageHours=usageHours)
 
 
 class CCS(Attribute):
@@ -628,7 +640,8 @@ class NoSQLDatabaseAsAService(DatabaseAsAService):
 
 
 def extractAttributes(attribute):
-    """ Recursively get all fields and subfields of an `Attribute` instance that are also of type `Attribute`
+    """ Recursively get all fields and subfields of an `Attribute` instance that are also of type `Attribute`. Also
+        scans the options field of ChoiceAttributes
 
         Args:
             attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
@@ -643,16 +656,44 @@ def extractAttributes(attribute):
     fields = vars(attribute)  # https://stackoverflow.com/a/55320647
     for key in fields:
         try:
-            if isRelated("Attribute", fields[key].id):
+            if isAncestorOf("Attribute", fields[key].id):
                 res += [fields[key]] + extractAttributes(fields[key])
+                if isAncestorOf("ChoiceAttribute", fields[key].id):
+                    # also extract all choices of the choiceAttribute and their Attribute type subfields
+                    res += [fields[key].options[choice] for choice in fields[key].options]
+                    for attrs in [extractAttributes(fields[key].options[choice]) for choice in fields[key].options]:
+                        res += attrs
         except Exception as e:
             pass
     return res
 
 
+def extractPriceFuncs(attribute):
+    """ Recursively get all fields and subfields of an `Attribute` instance that are of type `Price`. Also
+        scans the options field of ChoiceAttributes
+
+        Args:
+            attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
+
+        Returns:
+            list(Attribute): A list of Attribute instances
+
+        Note:
+            CCS also inherits from Attribute
+    """
+    priceFuncs = []
+    attrs = extractAttributes(attribute)
+    for attr in attrs:
+        if isAncestorOf("Price", attr.id):
+            priceFuncs += attr.priceFuncs
+
+    return priceFuncs
+
+
 def matchField(ccs, *attributeIds):
     """ Recursively get the first field of type `Attribute` of - either the given `CCS` or one if its subfields of type
-       `Attribute` - that are related to the given `attributeIds` in the given order.
+       `Attribute` - that are related to the given `attributeIds` in the given order. Options of Attributes of type
+       ChoiceAttribute will also be scanned for matches
 
         Args:
             ccs (CCS): The CCS whose fields will be searched
@@ -680,7 +721,7 @@ def matchField(ccs, *attributeIds):
         return None
 
     # its the extendsId that has to match because requirements (of type CCS) never have ids that relate to anything
-    if isRelated(ccs.extendsId, attributeIds[0]):
+    if isAncestorOf(ccs.extendsId, attributeIds[0]):
         if len(attributeIds) == 1:
             # done
             return ccs
@@ -690,7 +731,7 @@ def matchField(ccs, *attributeIds):
     attributes = extractAttributes(ccs)
 
     for attr in attributes:
-        if isRelated(attr.id, attributeIds[0]):
+        if isAncestorOf(attr.id, attributeIds[0]):
             if len(attributeIds) == 1:
                 # done
                 return attr
@@ -717,8 +758,8 @@ def getExtendsId(attributeId):
     return None
 
 
-def isRelated(rid, cid):
-    """ (aka isAncestorOf) checks if an Attribute is related to another Attribute
+def isAncestorOf(rid, cid):
+    """ checks if an Attribute is related to another Attribute
 
         Args:
              rid (str): id of the first Attribute
@@ -767,12 +808,12 @@ def matchCCS(req, ccs):
     # requirement is a custom attribute ... because "@" in req.id
     if "@" in req.id:
         # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
-        if not isRelated(req.extendsId, ccs.id):
+        if not isAncestorOf(req.extendsId, ccs.id):
             print("requirement is not in any way related to", ccs.id)
             return False
     else:
         # requirement is a framework attribute
-        if not isRelated(req.id, ccs.id):
+        if not isAncestorOf(req.id, ccs.id):
             print("requirement is not in any way related to", ccs.id)
             return False
 
@@ -782,8 +823,8 @@ def matchCCS(req, ccs):
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
         for ca in ccsAttributes:
-            if isRelated(ra.id, ca.id):
-                if isRelated("NumericAttribute", ra.id):
+            if isAncestorOf(ra.id, ca.id):
+                if isAncestorOf("NumericAttribute", ra.id):
                     if ra.value is not None:  # both requirement and CCS set this attribute
                         if not ca.mutable and ca.value is None:
                             print(ra.id, "is set as a requirement, but", ccs.id, "can not set it")
@@ -806,20 +847,20 @@ def matchCCS(req, ccs):
                                     print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
                                     return False
 
-                elif isRelated("BoolAttribute", ra.id):
+                elif isAncestorOf("BoolAttribute", ra.id):
                     if not ca.mutable:
                         if ra.value != ca.value:  # value does not match and is not mutable
                             print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
                             return False
 
-                elif isRelated("ChoiceAttribute", ra.id):
+                elif isAncestorOf("ChoiceAttribute", ra.id):
                     if ra.choice is not None:
                         if ca.mutable:
-                            if not any([isRelated(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                            if not any([isAncestorOf(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
                                 print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
                                 return False
                         else:
-                            if not isRelated(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
+                            if not isAncestorOf(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
                                 print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
                                 return
 
@@ -845,7 +886,7 @@ def renderHierarchy():
                 for field in vs:
                     # check if field is an Attribute
                     try:
-                        if isRelated("Attribute", vs[field].id):
+                        if isAncestorOf("Attribute", vs[field].id):
                             # field edge
                             d2.edge(attrId.replace("https://", "").replace("http://", ""), vs[field].id.replace("https://", "").replace("http://", ""), color="red")
                             renderFields(d2, vs[field].id)
@@ -890,60 +931,60 @@ class Region(ChoiceAttribute):
         self.choice = None
 
 
-class Europe(NameAttribute):
+class Europe(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Europe"
-        self.extendsId = "NameAttribute"
-        self.value = "Europe"
+        self.extendsId = "OptionAttribute"
+        self.name = "Europe"
 
 
-class NorthAmerica(NameAttribute):
+class NorthAmerica(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "NorthAmerica"
-        self.extendsId = "NameAttribute"
-        self.value = "North America"
+        self.extendsId = "OptionAttribute"
+        self.name = "North America"
 
 
-class SouthAmerica(NameAttribute):
+class SouthAmerica(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "SouthAmerica"
-        self.extendsId = "NameAttribute"
-        self.value = "South America"
+        self.extendsId = "OptionAttribute"
+        self.name = "South America"
 
 
-class EastAsia(NameAttribute):
+class EastAsia(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "EastAsia"
-        self.extendsId = "NameAttribute"
-        self.value = "East Asia"
+        self.extendsId = "OptionAttribute"
+        self.name = "East Asia"
 
 
-class Antarctica(NameAttribute):
+class Antarctica(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Antarctica"
-        self.extendsId = "NameAttribute"
-        self.value = "Antarctica"
+        self.extendsId = "OptionAttribute"
+        self.name = "Antarctica"
 
 
-class Africa(NameAttribute):
+class Africa(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Africa"
-        self.extendsId = "NameAttribute"
-        self.value = "Africa"
+        self.extendsId = "OptionAttribute"
+        self.name = "Africa"
 
 
-class Australia(NameAttribute):
+class Australia(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Australia"
-        self.extendsId = "NameAttribute"
-        self.value = "Australia"
+        self.extendsId = "OptionAttribute"
+        self.name = "Australia"
 
 
 class Storage(NumericAttribute):
@@ -1004,27 +1045,27 @@ class OperatingSystem(ChoiceAttribute):
         self.value = None
 
 
-class Linux(NameAttribute):
+class Linux(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Linux"
-        self.extendsId = "NameAttribute"
+        self.extendsId = "OptionAttribute"
         self.value = "Linux (Unix)"
 
 
-class Windows(NameAttribute):
+class Windows(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Windows"
-        self.extendsId = "NameAttribute"
+        self.extendsId = "OptionAttribute"
         self.value = "Windows"
 
 
-class Mac(NameAttribute):
+class Mac(OptionAttribute):
     def __init__(self):
         super().__init__()
         self.id = "Mac"
-        self.extendsId = "NameAttribute"
+        self.extendsId = "OptionAttribute"
         self.value = "Mac (Unix)"
 
 

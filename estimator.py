@@ -22,7 +22,7 @@ def estimate(req, currency="EUR", usageHours=1):
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
             # get price using the given requirements as configurations
-            ccsPrice = ccs.price.get(req, currency=currency, usageHours=usageHours)
+            ccsPrice = estimatePrice(req, ccs, currency=currency, usageHours=usageHours)
             ccsPricingModel = ccs.price.model.options[ccs.price.model.choice]
 
             # print results

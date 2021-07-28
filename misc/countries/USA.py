@@ -7,4 +7,4 @@ class USA(Attribute):
         self.setId("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
         self.extendsId = "NorthAmerica"
 
-        self.value = "United States of America"
+        self.name = "United States of America"

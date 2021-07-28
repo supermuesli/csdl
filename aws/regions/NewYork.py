@@ -7,4 +7,4 @@ class NewYork(Attribute):
         self.setId("https://github.com/supermuesli/csdl", "aws/regions/NewYork.py")
         self.extendsId = "https://github.com/supermuesli/csdl@misc/countries/USA.py@latest"
 
-        self.value = "New York"
+        self.name = "New York"
