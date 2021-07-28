@@ -547,6 +547,7 @@ class CCS(Attribute):
         self.id = "CCS"
         self.extendsId = "Attribute"
 
+        self.pageUrl = None
         self.price = Price()
 
 
@@ -717,7 +718,7 @@ def getExtendsId(attributeId):
 
 
 def isRelated(rid, cid):
-    """ checks if an Attribute is related to another Attribute
+    """ (aka isAncestorOf) checks if an Attribute is related to another Attribute
 
         Args:
              rid (str): id of the first Attribute
@@ -727,7 +728,7 @@ def isRelated(rid, cid):
             bool: True if the Attributes are related, else False
 
         Note:
-            - two Attributes are related if either their ids match or an extendsId in any depth matches with either id
+            - two Attributes are related if either their ids match or an extendsId of the second attribute in any depth matches with the first attribute
             - CCS also inherits from Attribute
     """
     if rid is None or cid is None:
@@ -739,12 +740,6 @@ def isRelated(rid, cid):
     extendsId = getExtendsId(cid)
     while extendsId is not None:
         if rid == extendsId:
-            return True
-        extendsId = getExtendsId(extendsId)
-
-    extendsId = getExtendsId(rid)
-    while extendsId is not None:
-        if cid == extendsId:
             return True
         extendsId = getExtendsId(extendsId)
 
