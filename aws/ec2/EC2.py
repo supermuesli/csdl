@@ -25,7 +25,11 @@ class EC2(CCS):
         }
         self.machineType.mutable = True
 
-        # non-inherited fields
+        # deactivate fields that get covered by self.machineType
+        self.cpuCores = None
+        self.ram = None
+        self.storage = None
+
         self.elasticIpAmount = NumericAttribute()
         self.elasticIpAmount.inject("https://github.com/supermuesli/csdl", "aws/ec2/ElasticIpAmount.py")
         self.elasticIpAmount.mutable = True
