@@ -8,7 +8,7 @@ class EC2(CCS):
         self.extendsId = "VMAsAService"
 
         # inherited fields
-        self.name = "Elastic Cloud Compute a1.large"
+        self.name = "Elastic Cloud Compute"
         self.provider = "Amazon Web Services"
         self.searchKeyWords = ["aws", "ec2", "virtual machine", "vm", "a1 large"]  # help users find this model
         self.readme = "enjoy"

@@ -714,33 +714,40 @@ def matchField(ccs, *attributeIds):
 
             >>> # returns the VMAsAService instance
             >>> matchField(VMAsAService(), "VMAsAService")
-
     """
-    if len(attributeIds) < 1:
-        # done
+
+    def matchFieldHelper(_ccs, *_attributeIds):
+        if len(_attributeIds) < 1:
+            # done
+            return None
+
+        # its the extendsId that has to match because requirements (of type CCS) never have ids that relate to anything
+        if isAncestorOf(_ccs.extendsId, _attributeIds[0]):
+            if len(_attributeIds) == 1:
+                # done
+                return _ccs
+            # continue search for next attributeId
+            return matchFieldHelper(_ccs, *_attributeIds[1:])
+
+        attributes = extractAttributes(_ccs)
+
+        for attr in attributes:
+            if isAncestorOf(attr.id, _attributeIds[0]):
+                if len(_attributeIds) == 1:
+                    # done
+                    return attr
+                # continue search for next attributeId
+                return matchFieldHelper(attr, *_attributeIds[1:])
+
+        # no match found
         return None
 
-    # its the extendsId that has to match because requirements (of type CCS) never have ids that relate to anything
-    if isAncestorOf(ccs.extendsId, attributeIds[0]):
-        if len(attributeIds) == 1:
-            # done
-            return ccs
-        # continue search for next attributeId
-        return matchField(ccs, *attributeIds[1:])
-
-    attributes = extractAttributes(ccs)
-
-    for attr in attributes:
-        if isAncestorOf(attr.id, attributeIds[0]):
-            if len(attributeIds) == 1:
-                # done
-                return attr
-            # continue search for next attributeId
-            return matchField(attr, *attributeIds[1:])
-
-    # no match found
-    logging.info("failed to match", attributeIds, ". for better price estimation, you should set those attribute in your requirement as well")
-    return None
+    match = matchFieldHelper(ccs, *attributeIds)
+    if match is None:
+        print("WARNING: your requirements did not match", attributeIds,
+              "in that order. for better price estimation, you should set those attributes in that order in your "
+              "requirements!")
+    return match
 
 
 def getExtendsId(attributeId):
@@ -806,7 +813,7 @@ def matchCCS(req, ccs):
             - If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.
     """
 
-    print("checking", ccs.id, "for potential match")
+    print("checking", ccs.name, "for potential match")
 
     # requirement is a custom attribute ... because "@" in req.id
     if "@" in req.id:

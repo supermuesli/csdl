@@ -44,7 +44,6 @@ digraph {
 	SQLDatabaseAsAService -> DatabaseAsAService [color=black]
 	NoSQLDatabaseAsAService -> DatabaseAsAService [color=black]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> VMAsAService [color=black]
-	"github.com/supermuesli/csdl@misc/StaticIp.py@latest" -> NumericAttribute [color=black]
 	"github.com/supermuesli/csdl@misc/countries/USA.py@latest" -> NorthAmerica [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> VMAsAService [color=black]
 	"github.com/supermuesli/csdl@aws/regions/Region.py@latest" -> ChoiceAttribute [color=black]
@@ -53,5 +52,6 @@ digraph {
 	"github.com/supermuesli/csdl@aws/regions/NewYork.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> OptionAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageAsAService [color=black]
+	"github.com/supermuesli/csdl@misc/StaticIp.py@latest" -> NumericAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=black]
 }

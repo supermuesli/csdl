@@ -17,5 +17,4 @@ digraph {
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> NetworkCapacity [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> NetworkUploadSpeed [color=red]
 	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> NetworkDownloadSpeed [color=red]
-	"github.com/supermuesli/csdl@examples/Requirement1.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=red]
 }
