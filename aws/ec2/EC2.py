@@ -4,7 +4,7 @@ from csdl import *
 class EC2(CCS):
     def __init__(self):
         super().__init__()
-        self.setId("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
+        self.setId("https://github.com/supermuesli/csdl", "aws/ec2/EC2.py")
         self.extendsId = "VMAsAService"
 
         # inherited fields
