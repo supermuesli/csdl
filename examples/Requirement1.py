@@ -26,4 +26,4 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService sind inje
         self.region.choice = "usa"
         
         self.price.model.choice = "subscription"  # pay per resource
-        self.price.model.options[self.price.model.choice].billingPeriod = 1  # bill me once per hour
+        self.price.model.options[self.price.model.choice].billingPeriod = 1  # tell me the price per hour

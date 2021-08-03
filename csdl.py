@@ -522,7 +522,8 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
     """ returns the total price """
 
     # get prices of all subfields
-    allSubCCSPrices = extractPrices(ccs).remove(ccs.price)
+    allSubCCSPrices = extractPrices(ccs)
+    allSubCCSPrices.remove(ccs.price)
 
     # convert prices to the same currency
     # TODO inject API key using command line flag or environment variable or config file
@@ -550,7 +551,6 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
     # get top-level ccs with the required pricing method if specified in requirements
-    print(req.price.model.options[req.price.model.choice].billingPeriod)
     totalPrice = req.price.model.options[req.price.model.choice].getPrice(req, ccs.price.priceFuncs,
                                                               currencyConversion=currencyConversion,
                                                               usageHours=usageHours)
