@@ -1,6 +1,7 @@
 import ast
 import json
 import logging
+import math
 import tempfile
 import random
 import string
@@ -520,8 +521,8 @@ class PriceFunc(ABC):
 def estimatePrice(req, ccs, currency="EUR", usageHours=0):
     """ returns the total price """
 
-    # append priceFuncs of all subfields
-    allPriceFuncs = extractPriceFuncs(ccs)
+    # get prices of all subfields
+    allSubCCSPrices = extractPrices(ccs).remove(ccs.price)
 
     # convert prices to the same currency
     # TODO inject API key using command line flag or environment variable or config file
@@ -548,9 +549,24 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
     if ccs.price.model.choice is None:
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
-    return ccs.price.model.options[ccs.price.model.choice].getPrice(req, allPriceFuncs,
-                                                          currencyConversion=currencyConversion,
-                                                          usageHours=usageHours)
+    # get top-level ccs with the required pricing method if specified in requirements
+    totalPrice = req.price.model.options[req.price.model.choice].getPrice(req, ccs.price.priceFuncs,
+                                                              currencyConversion=currencyConversion,
+                                                              usageHours=usageHours)
+
+    # get cheapest price of all of the subCCS
+    for price in allSubCCSPrices:
+        # get cheapest pricing method for this subCCS price and add it to the totalPrice
+        cheapestPrice = inf
+        for choice in price.model.options:
+            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs,
+                                                              currencyConversion=currencyConversion,
+                                                              usageHours=usageHours)
+            if curPrice < cheapestPrice:
+                cheapestPrice = curPrice
+
+        totalPrice += cheapestPrice
+    return totalPrice
 
 
 class CCS(Attribute):
@@ -668,7 +684,7 @@ def extractAttributes(attribute):
     return res
 
 
-def extractPriceFuncs(attribute):
+def extractPrices(attribute):
     """ Recursively get all fields and subfields of an `Attribute` instance that are of type `Price`. Also
         scans the options field of ChoiceAttributes
 
@@ -685,7 +701,7 @@ def extractPriceFuncs(attribute):
     attrs = extractAttributes(attribute)
     for attr in attrs:
         if isAncestorOf("Price", attr.id):
-            priceFuncs += attr.priceFuncs
+            priceFuncs += [attr]
 
     return priceFuncs
 
