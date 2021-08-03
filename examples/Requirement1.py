@@ -14,9 +14,9 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService sind inje
         self.cpuCores.value = 4
         self.storage.value = 500
 
-        #self.staticIpAddresses = NumericAttribute()
-        #self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
-        #self.staticIpAddresses.value = 2
+        self.staticIpAddresses = NumericAttribute()
+        self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
+        self.staticIpAddresses.value = 2
 
         usa = OptionAttribute()
         usa.inject("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
