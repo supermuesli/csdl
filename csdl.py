@@ -380,14 +380,14 @@ class ChoiceAttribute(Attribute):
 
         Attributes:
             options (list): A dictionary of OptionAttributes
-            choice (Attribute): The dictionary key of the chosen OptionAttribute from self.options
+            value (Attribute): The dictionary key of the chosen OptionAttribute from self.options
     """
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
         self.extendsId = "Attribute"
         self.options = None  # dictionary of Attribute instances
-        self.choice = None  # dictionary key of chosen Attribute instance
+        self.value = None  # dictionary key of chosen Attribute instance
 
 
 class OptionAttribute(Attribute):
@@ -521,7 +521,7 @@ class PriceFunc(ABC):
         pass
 
 
-def extractConfigurationTree(ccs):
+def extractConfigurationTree(req, ccs):
     """ extract the configuration of all CCS and their sub CCS """
 
     def helper(attr):
@@ -536,7 +536,7 @@ def extractConfigurationTree(ccs):
                     hasAttributes = True
                     res[attr.id].update(helper(fields[key]))
             except Exception as e:
-                print(e)
+                #print(e)
                 pass
 
         if not hasAttributes:
@@ -579,10 +579,10 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
                       ccs.price.currency)
         print(e)
 
-    if ccs.price.model.choice is None:
+    if ccs.price.model.value is None:
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
-    totalPrice = {"price": 0, "config": extractConfigurationTree(ccs)}
+    totalPrice = {"price": 0, "config": extractConfigurationTree(req, ccs)}
 
     # get cheapest price of all of the subCCS
     for price in allSubCCSPrices:
@@ -762,7 +762,7 @@ def matchAttribute(ccs, *attributeIds):
             >>> matchAttribute(VMAsAService(), "VMAsAService")
     """
 
-    def matchFieldHelper(_ccs, *_attributeIds):
+    def matchAttributeHelper(_ccs, *_attributeIds):
         if len(_attributeIds) < 1:
             # done
             return None
@@ -773,7 +773,7 @@ def matchAttribute(ccs, *attributeIds):
                 # done
                 return _ccs
             # continue search for next attributeId
-            return matchFieldHelper(_ccs, *_attributeIds[1:])
+            return matchAttributeHelper(_ccs, *_attributeIds[1:])
 
         attributes = extractAttributes(_ccs)
 
@@ -783,12 +783,12 @@ def matchAttribute(ccs, *attributeIds):
                     # done
                     return attr
                 # continue search for next attributeId
-                return matchFieldHelper(attr, *_attributeIds[1:])
+                return matchAttributeHelper(attr, *_attributeIds[1:])
 
         # no match found
         return None
 
-    match = matchFieldHelper(ccs, *attributeIds)
+    match = matchAttributeHelper(ccs, *attributeIds)
     if match is None:
         print("WARNING: your requirements did not match", attributeIds,
               "in that order. for better price estimation, you should set those attributes in that order in your "
@@ -876,6 +876,8 @@ def matchCCS(req, ccs):
     reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
 
+    configuration = {}
+
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
         for ca in ccsAttributes:
@@ -903,23 +905,48 @@ def matchCCS(req, ccs):
                                     print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
                                     return False
 
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+                    else:
+                        configuration[ra.id] = ra.value
+
+                    # ra is satisfied by ca
+
                 elif isAncestorOf("BoolAttribute", ra.id):
                     if not ca.mutable:
                         if ra.value != ca.value:  # value does not match and is not mutable
                             print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
                             return False
 
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+                    else:
+                        configuration[ra.id] = ra.value
+
+                    # ra is satisfied by ca
+
                 elif isAncestorOf("ChoiceAttribute", ra.id):
-                    if ra.choice is not None:
+                    if ra.value is not None:
                         if ca.mutable:
-                            if not any([isAncestorOf(ra.options[ra.choice].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
-                                print(ra.id, "option not available:", ra.options[ra.choice].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
+                            if not any([isAncestorOf(ra.options[ra.value].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                print(ra.id, "option not available:", ra.options[ra.value].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
                                 return False
                         else:
-                            if not isAncestorOf(ra.options[ra.choice].id, ca.options[ca.choice].id):  # value does not match and is not mutable
-                                print(ra.id, "does not match:", ra.options[ra.choice].id, "not related to", ca.options[ca.choice].id)
-                                return
+                            if not isAncestorOf(ra.options[ra.value].id, ca.options[ca.value].id):  # value does not match and is not mutable
+                                print(ra.id, "does not match:", ra.options[ra.value].id, "not related to", ca.options[ca.value].id)
+                                return False
 
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+                    else:
+                        configuration[ra.id] = ra.value
+
+                    # ra is satisfied by ca
+
+    # req is satisfied by ccs
     return True
 
 

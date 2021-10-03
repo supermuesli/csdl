@@ -23,4 +23,4 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService since inj
         self.region.options = {
             "usa": usa
         }
-        self.region.choice = "usa"
+        self.region.value = "usa"

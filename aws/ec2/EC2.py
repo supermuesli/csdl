@@ -61,5 +61,5 @@ class EC2(CCS):
         self.price.currency = "USD"  # ISO 4217
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()]
 
-        self.price.model.choice = "subscription"
-        self.price.model.options[self.price.model.choice].billingPeriod = 1  # once per hour
+        self.price.model.value = "subscription"
+        self.price.model.options[self.price.model.value].billingPeriod = 1  # once per hour
