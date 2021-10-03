@@ -18,14 +18,25 @@ def estimate(req, currency="EUR", usageHours=1):
 
     # scan through entire CCS database and find matches
     smallestPrice = inf
-    cheapestCCS = None
     print("_"*128)
+
+    priceConfig = None
     for ccs in db:
         # check if the requirements match with the current CCS
-        if matchCCS(req, ccs):
+        match, conf = matchCCS(req, ccs)
+        if match:
             # get price using the given requirements as configurations
             priceConfig = estimatePrice(req, ccs, currency=currency, usageHours=usageHours)
-            ccsPricingModel = ccs.price.model.options[ccs.price.model.value]
+
+            curAttr = priceConfig["config"][[d for d in priceConfig["config"]][0]]
+            for depthId in curAttr:
+                for flatId in conf:
+                    print(depthId, flatId)
+                    if isAncestorOf(depthId, flatId):
+                        if curAttr.value is None:
+                            curAttr.value = conf[flatId]
+                curAttr = priceConfig["config"][depthId]
+
 
             # print results
             print("found match:", ccs.name)
@@ -36,7 +47,6 @@ def estimate(req, currency="EUR", usageHours=1):
             # evaluate
             if priceConfig["price"] < smallestPrice:
                 smallestPrice = priceConfig["price"]
-                cheapestCCS = ccs
 
         print("_"*128)
     return priceConfig

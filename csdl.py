@@ -506,7 +506,7 @@ class Price(Attribute):
         self.extendsId = "Attribute"
         self.currency = None  # expecting ISO 4217 currency code as string
         self.priceFuncs = []
-        self.model = PricingModel()
+        self.value = PricingModel()
 
 
 # an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python
@@ -521,7 +521,7 @@ class PriceFunc(ABC):
         pass
 
 
-def extractConfigurationTree(req, ccs):
+def extractConfigurationTree(ccs):
     """ extract the configuration of all CCS and their sub CCS """
 
     def helper(attr):
@@ -579,19 +579,19 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
                       ccs.price.currency)
         print(e)
 
-    if ccs.price.model.value is None:
+    if ccs.price.value.value is None:
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
-    totalPrice = {"price": 0, "config": extractConfigurationTree(req, ccs)}
+    totalPrice = {"price": 0, "config": extractConfigurationTree(ccs)}
 
     # get cheapest price of all of the subCCS
     for price in allSubCCSPrices:
         # get cheapest pricing method for this subCCS price and add it to the totalPrice
         cheapestPrice = inf
-        for choice in price.model.options:
-            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs,
-                                                              currencyConversion=currencyConversion,
-                                                              usageHours=usageHours)
+        for choice in price.value.options:
+            curPrice = price.value.options[choice].getPrice(req, price.priceFuncs,
+                                                            currencyConversion=currencyConversion,
+                                                            usageHours=usageHours)
             if curPrice < cheapestPrice:
                 cheapestPrice = curPrice
 
@@ -844,7 +844,7 @@ def isAncestorOf(rid, cid):
 
 
 def matchCCS(req, ccs):
-    """ check if a requirement matches with a CCS
+    """ check if a requirement matches with a CCS and return a satisfying configuration.
 
         Args:
             req (CCS): The requirements
@@ -852,6 +852,7 @@ def matchCCS(req, ccs):
 
         Returns:
             bool: True if they match, else False
+            dict: configuration, None if unsatisfied
 
         Note:
             - A requirement matches with a CCS if and only if every single Attribute field of the requirement is satisfied through a related Attribute field in the CCS
@@ -866,12 +867,12 @@ def matchCCS(req, ccs):
         # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
         if not isAncestorOf(req.extendsId, ccs.id):
             print("requirement is not in any way related to", ccs.id)
-            return False
+            return False, None
     else:
         # requirement is a framework attribute
         if not isAncestorOf(req.id, ccs.id):
             print("requirement is not in any way related to", ccs.id)
-            return False
+            return False, None
 
     reqAttributes = extractAttributes(req)
     ccsAttributes = extractAttributes(ccs)
@@ -880,22 +881,24 @@ def matchCCS(req, ccs):
 
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
+        configuration[ra.id] = ra.value
+
         for ca in ccsAttributes:
             if isAncestorOf(ra.id, ca.id):
                 if isAncestorOf("NumericAttribute", ra.id):
                     if ra.value is not None:  # both requirement and CCS set this attribute
                         if not ca.mutable and ca.value is None:
                             print(ra.id, "is set as a requirement, but", ccs.id, "can not set it")
-                            return False
+                            return False, None
                         if ca.moreIsBetter:
                             if not ca.mutable:
                                 if ra.value > ca.value:  # value is too small and not mutable
                                     print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
-                                    return False
+                                    return False, None
                             if ca.maxVal is not None:
                                 if ca.maxVal < ra.value:  # value cannot be made large enough
                                     print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
-                                    return False
+                                    return False, None
                         else:
                             if ra.value < ca.value:  # value is too large and not mutable
                                 print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
@@ -903,13 +906,12 @@ def matchCCS(req, ccs):
                             if ca.minVal is not None:
                                 if ca.minVal > ra.value:  # value cannot be made small enough
                                     print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
-                                    return False
+                                    return False, None
 
                     # get configuration
                     if not ca.mutable:
                         configuration[ra.id] = ca.value
-                    else:
-                        configuration[ra.id] = ra.value
+
 
                     # ra is satisfied by ca
 
@@ -917,13 +919,11 @@ def matchCCS(req, ccs):
                     if not ca.mutable:
                         if ra.value != ca.value:  # value does not match and is not mutable
                             print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
-                            return False
+                            return False, None
 
                     # get configuration
                     if not ca.mutable:
                         configuration[ra.id] = ca.value
-                    else:
-                        configuration[ra.id] = ra.value
 
                     # ra is satisfied by ca
 
@@ -932,22 +932,20 @@ def matchCCS(req, ccs):
                         if ca.mutable:
                             if not any([isAncestorOf(ra.options[ra.value].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
                                 print(ra.id, "option not available:", ra.options[ra.value].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
-                                return False
+                                return False, None
                         else:
                             if not isAncestorOf(ra.options[ra.value].id, ca.options[ca.value].id):  # value does not match and is not mutable
                                 print(ra.id, "does not match:", ra.options[ra.value].id, "not related to", ca.options[ca.value].id)
-                                return False
+                                return False, None
 
                     # get configuration
                     if not ca.mutable:
                         configuration[ra.id] = ca.value
-                    else:
-                        configuration[ra.id] = ra.value
 
                     # ra is satisfied by ca
 
     # req is satisfied by ccs
-    return True
+    return True, configuration
 
 
 def renderHierarchy():

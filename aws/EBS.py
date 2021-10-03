@@ -44,5 +44,5 @@ class EBS(CCS):
         self.price.currency = "EUR"  # EUR
         self.price.priceFuncs = [defaultPrice(self)]
 
-        self.price.model.value = "subscription"  # subscription
-        self.price.model.options[self.price.model.value].billingPeriod = 1  # once per hour
+        self.price.value.value = "subscription"  # subscription
+        self.price.value.options[self.price.value.value].billingPeriod = 1  # once per hour
