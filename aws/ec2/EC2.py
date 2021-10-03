@@ -16,14 +16,8 @@ class EC2(CCS):
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
-        a1large = Attribute()
-        a1large.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
-
         self.machineType = ChoiceAttribute()
-        self.machineType.options = {
-            "a1large": a1large
-        }
-        self.machineType.mutable = True
+        self.machineType.inject("github.com/supermuesli/pycsdl", "aws/ec2/MachineType.py")
 
         # deactivate fields that get covered by self.machineType
         self.cpuCores = None
