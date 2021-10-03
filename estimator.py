@@ -31,10 +31,11 @@ def estimate(req, currency="EUR", usageHours=1):
             curAttr = priceConfig["config"][[d for d in priceConfig["config"]][0]]
             for depthId in curAttr:
                 for flatId in conf:
-                    print(depthId, flatId)
                     if isAncestorOf(depthId, flatId):
-                        if curAttr.value is None:
-                            curAttr.value = conf[flatId]
+                        print(curAttr)
+                        print(conf[flatId])
+                        curAttr[depthId]["value"] = conf[flatId]
+                print(curAttr)
                 curAttr = priceConfig["config"][depthId]
 
 
