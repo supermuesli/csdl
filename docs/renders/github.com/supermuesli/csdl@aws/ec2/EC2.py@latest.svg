@@ -134,15 +134,15 @@
 <path fill="none" stroke="red" d="M220.35,-351.028C253.361,-308.043 343.872,-199.424 448.063,-153 492.251,-133.312 545.03,-125.612 590.672,-123.21"/>
 <polygon fill="red" stroke="red" points="591.064,-126.696 600.898,-122.753 590.752,-119.703 591.064,-126.696"/>
 </g>
-<!-- ChoiceAttribute -->
-<g id="node15" class="node"><title>ChoiceAttribute</title>
-<ellipse fill="none" stroke="black" cx="698.941" cy="-72" rx="67.6881" ry="18"/>
-<text text-anchor="middle" x="698.941" y="-68.3" font-family="Times,serif" font-size="14.00">ChoiceAttribute</text>
+<!-- github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest -->
+<g id="node15" class="node"><title>github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</title>
+<ellipse fill="none" stroke="black" cx="698.941" cy="-72" rx="239.358" ry="18"/>
+<text text-anchor="middle" x="698.941" y="-68.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</text>
 </g>
-<!-- github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;ChoiceAttribute -->
-<g id="edge14" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;ChoiceAttribute</title>
-<path fill="none" stroke="red" d="M216.812,-350.749C244.94,-300.328 331.545,-158.897 448.063,-99 502.454,-71.0404 572.187,-65.6027 624.159,-66.4068"/>
-<polygon fill="red" stroke="red" points="624.228,-69.9093 634.307,-66.646 624.393,-62.9112 624.228,-69.9093"/>
+<!-- github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest -->
+<g id="edge14" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</title>
+<path fill="none" stroke="red" d="M216.812,-350.749C244.94,-300.328 331.545,-158.897 448.063,-99 459.505,-93.1182 471.626,-88.2331 484.118,-84.1931"/>
+<polygon fill="red" stroke="red" points="485.19,-87.5255 493.738,-81.2659 483.152,-80.8287 485.19,-87.5255"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest -->
 <g id="node16" class="node"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</title>

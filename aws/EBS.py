@@ -33,7 +33,7 @@ class EBS(CCS):
 
             def run(self, req):
                 # get attribute with the id Storage
-                match = matchField(req, "Storage")
+                match = matchAttribute(req, "Storage")
                 if match is not None:  # there was a match
                     if match.value is not None:  # a match does not automatically mean that the value is set
                         return 1.25*match.value

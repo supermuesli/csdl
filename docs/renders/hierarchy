@@ -51,6 +51,7 @@ digraph {
 	"github.com/supermuesli/csdl@aws/regions/California.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
 	"github.com/supermuesli/csdl@aws/regions/EastVirginia.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
 	"github.com/supermuesli/csdl@aws/regions/NewYork.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
+	"github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest" -> ChoiceAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest" -> OptionAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/EBS.py@latest" -> StorageAsAService [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" -> "github.com/supermuesli/csdl@misc/StaticIp.py@latest" [color=black]

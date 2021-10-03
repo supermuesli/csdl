@@ -36,7 +36,7 @@ class EC2(CCS):
 
             def run(self, req):
                 # check if the requirement contains an elasticIpAmount field inside an EC2 instance
-                match = matchField(req, "https://github.com/supermuesli/csdl@aws/ec2/EC2.py@latest", "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
+                match = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/ec2/EC2.py@latest", "https://github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest")
 
                 # if there was a match, then we can compute the price
                 if match is not None:

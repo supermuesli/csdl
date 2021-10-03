@@ -7,7 +7,7 @@ class MachineType(Attribute):
         self.setId("https://github.com/supermuesli/csdl", "aws/ec2/MachineType.py")
         self.extendsId = "ChoiceAttribute"
 
-        a1large = Attribute()
+        a1large = OptionAttribute()
         a1large.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
 
         self.options = {

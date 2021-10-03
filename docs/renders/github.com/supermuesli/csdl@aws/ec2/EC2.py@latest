@@ -14,6 +14,6 @@ digraph {
 	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> NetworkCapacity [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> NetworkUploadSpeed [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> NetworkDownloadSpeed [color=red]
-	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> ChoiceAttribute [color=red]
+	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> "github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest" [color=red]
 	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> "github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest" [color=red]
 }

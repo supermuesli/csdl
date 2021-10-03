@@ -371,6 +371,7 @@ class BoolAttribute(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "BoolAttribute"
+        self.extendsId = "Attribute"
         self.value = None
 
 
@@ -384,6 +385,7 @@ class ChoiceAttribute(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "ChoiceAttribute"
+        self.extendsId = "Attribute"
         self.options = None  # dictionary of Attribute instances
         self.choice = None  # dictionary key of chosen Attribute instance
 
@@ -399,6 +401,7 @@ class NumericAttribute(Attribute):
     def __init__(self):
         super().__init__()
         self.id = "NumericAttribute"
+        self.extendsId = "Attribute"
         self.value = None
         self.minVal = -inf
         self.maxVal = inf
@@ -524,15 +527,25 @@ def extractConfigurationTree(ccs):
     def helper(attr):
         res = {attr.id: {}}
         fields = vars(attr)  # https://stackoverflow.com/a/55320647
+        hasAttributes = False
         for key in fields:
             # scan all fields and filter out the attributes
             try:
                 if isAncestorOf("Attribute", fields[key].id):
                     # if fields[key] is an attribute ...
+                    hasAttributes = True
                     res[attr.id].update(helper(fields[key]))
             except Exception as e:
                 print(e)
                 pass
+
+        if not hasAttributes:
+            if attr.extendsId == "ChoiceAttribute":
+                res[attr.id]["value"] = fields["choice"]
+            else:
+                res[attr.id]["value"] = fields["value"]
+            res[attr.id]["description"] = fields["description"]
+
         return res
 
     return helper(ccs)
@@ -723,7 +736,7 @@ def extractPrices(attribute):
     return priceFuncs
 
 
-def matchField(ccs, *attributeIds):
+def matchAttribute(ccs, *attributeIds):
     """ Recursively get the first field of type `Attribute` of - either the given `CCS` or one if its subfields of type
        `Attribute` - that are related to the given `attributeIds` in the given order. Options of Attributes of type
        ChoiceAttribute will also be scanned for matches
@@ -740,13 +753,13 @@ def matchField(ccs, *attributeIds):
 
         Example:
             >>> # returns the `storage` field of the VMAsAService instance
-            >>> matchField(VMAsAService, "Storage")
+            >>> matchAttribute(VMAsAService, "Storage")
 
             >>> # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
-            >>> matchField(VMAsAService(), "StorageAsAService", "Storage")
+            >>> matchAttribute(VMAsAService(), "StorageAsAService", "Storage")
 
             >>> # returns the VMAsAService instance
-            >>> matchField(VMAsAService(), "VMAsAService")
+            >>> matchAttribute(VMAsAService(), "VMAsAService")
     """
 
     def matchFieldHelper(_ccs, *_attributeIds):
