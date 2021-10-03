@@ -12,9 +12,9 @@ class EBS(CCS):
         self.provider = "Amazon Web Services"
         self.searchKeyWords = ["aws", "elastic block storage", "ebs"]
 
-        self.storageReadSpeed.model = 1000
+        self.storageReadSpeed.value = 1000
 
-        self.storageWriteSpeed.model = 500
+        self.storageWriteSpeed.value = 500
 
         self.storage.makeInt = True
         self.storage.minVal = 5
@@ -35,8 +35,8 @@ class EBS(CCS):
                 # get attribute with the id Storage
                 match = matchAttribute(req, "Storage")
                 if match is not None:  # there was a match
-                    if match.model is not None:  # a match does not automatically mean that the value is set
-                        return 1.25*match.model
+                    if match.value is not None:  # a match does not automatically mean that the value is set
+                        return 1.25*match.value
 
                 return self.topClass.storage.minVal * 1.25
 
@@ -44,5 +44,5 @@ class EBS(CCS):
         self.price.currency = "EUR"  # EUR
         self.price.priceFuncs = [defaultPrice(self)]
 
-        self.price.model.model = "subscription"  # subscription
-        self.price.model.options[self.price.model.model].billingPeriod = 1  # once per hour
+        self.price.value.value = "subscription"  # subscription
+        self.price.value.options[self.price.value.value].billingPeriod = 1  # once per hour

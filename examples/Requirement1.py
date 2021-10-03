@@ -10,9 +10,9 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService since inj
         self.setId("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
         self.extendsId = "VMAsAService"
 
-        self.ram.model = 4
-        self.cpuCores.model = 4
-        self.storage.model = 500
+        self.ram.value = 4
+        self.cpuCores.value = 4
+        self.storage.value = 500
 
         self.staticIpAddresses = NumericAttribute()
         self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
@@ -23,4 +23,4 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService since inj
         self.region.options = {
             "usa": usa
         }
-        self.region.model = "usa"
+        self.region.value = "usa"
