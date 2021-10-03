@@ -1,9 +1,9 @@
 from csdl import *
 
 
-class Requirement1(Attribute):  # does not have to extend VMAsAService sind injection will already refactor the code to do it later, but
+class Requirement1(Attribute):  # does not have to extend VMAsAService since injection will already refactor the code to do it later, but
                                 # it is good practise to be explicit and do it anyway. also, the IDE should make better autocompletions that way
-                                # . note that custom attributes cannot be extended, however, so the closest related Attribute
+                                # . note that custom attributes cannot be extended, so the closest related Attribute
                                 # should be extended instead.
     def __init__(self):
         super().__init__()
@@ -24,6 +24,3 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService sind inje
             "usa": usa
         }
         self.region.choice = "usa"
-        
-        self.price.model.choice = "subscription"  # pay per resource
-        self.price.model.options[self.price.model.choice].billingPeriod = 1  # tell me the price per hour

@@ -1,6 +1,6 @@
 from csdl import *
 
-
+# ccs model
 class EBS(CCS):
     def __init__(self):
         super().__init__()
@@ -24,6 +24,7 @@ class EBS(CCS):
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
+        # price model
         class defaultPrice(PriceFunc):
             def __init__(self, topClass):
                 super().__init__()

@@ -1,3 +1,5 @@
+import pprint
+
 from csdl import *
 from math import inf
 
@@ -22,18 +24,19 @@ def estimate(req, currency="EUR", usageHours=1):
         # check if the requirements match with the current CCS
         if matchCCS(req, ccs):
             # get price using the given requirements as configurations
-            ccsPrice = estimatePrice(req, ccs, currency=currency, usageHours=usageHours)
+            priceConfig = estimatePrice(req, ccs, currency=currency, usageHours=usageHours)
             ccsPricingModel = ccs.price.model.options[ccs.price.model.choice]
 
             # print results
             print("found match:", ccs.name)
-            print("price: ", ccsPrice, currency, "using pricing model:", ccsPricingModel.id, ":", ccsPricingModel.description)
-            print("configuration: ", vars(ccs))
+            print("price: ", priceConfig["price"], currency, "using pricing model:")
+            print("configuration:")
+            pprint.pprint(priceConfig["config"])
 
             # evaluate
-            if ccsPrice < smallestPrice:
-                smallestPrice = ccsPrice
+            if priceConfig["price"] < smallestPrice:
+                smallestPrice = priceConfig["price"]
                 cheapestCCS = ccs
 
         print("_"*128)
-    return cheapestCCS, smallestPrice
+    return priceConfig

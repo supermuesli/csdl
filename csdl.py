@@ -518,12 +518,31 @@ class PriceFunc(ABC):
         pass
 
 
-def estimatePrice(req, ccs, currency="EUR", usageHours=0):
-    """ returns the total price """
+def extractConfigurationTree(ccs):
+    """ extract the configuration of all CCS and their sub CCS """
 
-    # get prices of all subfields
+    def helper(attr):
+        res = {attr.id: {}}
+        fields = vars(attr)  # https://stackoverflow.com/a/55320647
+        for key in fields:
+            # scan all fields and filter out the attributes
+            try:
+                if isAncestorOf("Attribute", fields[key].id):
+                    # if fields[key] is an attribute ...
+                    res[attr.id].update(helper(fields[key]))
+            except Exception as e:
+                print(e)
+                pass
+        return res
+
+    return helper(ccs)
+
+
+def estimatePrice(req, ccs, currency="EUR", usageHours=0):
+    """ returns a dict containing the total price and a dict of configurations that it resulted from """
+
+    # get prices of all CCS and their subCCS
     allSubCCSPrices = extractPrices(ccs)
-    allSubCCSPrices.remove(ccs.price)
 
     # convert prices to the same currency
     # TODO inject API key using command line flag or environment variable or config file
@@ -550,10 +569,7 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
     if ccs.price.model.choice is None:
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
-    # get top-level ccs with the required pricing method if specified in requirements
-    totalPrice = req.price.model.options[req.price.model.choice].getPrice(req, ccs.price.priceFuncs,
-                                                              currencyConversion=currencyConversion,
-                                                              usageHours=usageHours)
+    totalPrice = {"price": 0, "config": extractConfigurationTree(ccs)}
 
     # get cheapest price of all of the subCCS
     for price in allSubCCSPrices:
@@ -566,7 +582,7 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
             if curPrice < cheapestPrice:
                 cheapestPrice = curPrice
 
-        totalPrice += cheapestPrice
+        totalPrice["price"] += cheapestPrice
     return totalPrice
 
 
