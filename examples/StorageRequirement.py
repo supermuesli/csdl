@@ -12,3 +12,10 @@ class StorageRequirement(Attribute):
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.value = "northernVirginia"
 
+        self.transferIn = Attribute()
+        self.transferIn.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/In.py")
+        self.transferIn.value = 10
+
+        self.transferOut = Attribute()
+        self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
+        self.transferOut.value = 1000
