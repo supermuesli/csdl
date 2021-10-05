@@ -24,4 +24,4 @@ class StorageRequirement(Attribute):
 
         self.s3type = Attribute()
         self.s3type.inject("https://github.com/supermuesli/csdl", "aws/s3/S3Type.py")
-        self.s3type.value = "standard"
+        self.s3type.value = "standardInfreqAccess"

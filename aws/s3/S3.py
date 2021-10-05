@@ -60,7 +60,7 @@ class S3(CCS):
                                             if storageMatch.value is not None:  # matching value is set
                                                 return storageMatch.value * 0.0125
 
-                                    elif s3typeMatch.value == "standard":
+                                    if s3typeMatch.value == "standard":
 
                                         if storageMatch is not None:  # there was a match
                                             if storageMatch.value is not None:  # matching value is set
