@@ -54,16 +54,13 @@ class S3(CCS):
 
                             if s3typeMatch is not None:  # there was a match
                                 if s3typeMatch.value is not None:  # matching value is set
-                                    print("s3typeMatchval:",s3typeMatch)
                                     if s3typeMatch.value == "standardInfreqAccess":
-                                        print("standardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccess")
 
                                         if storageMatch is not None:  # there was a match
                                             if storageMatch.value is not None:  # matching value is set
-                                                return storageMatch.value * 0.0125
+                                                return storageMatch.value * 9999
 
                                     if s3typeMatch.value == "standard":
-                                        print("standardstandardstandardstandardstandardstandardstandardstandardstandardstandard")
 
                                         if storageMatch is not None:  # there was a match
                                             if storageMatch.value is not None:  # matching value is set
