@@ -5,12 +5,12 @@ from csdl import *
 
 
 def main():
-    usageHours = 24
-    currency = "EUR"
+    usageHours = 24*28
+    currency = "USD"
 
     # user requirements
-    req = VMAsAService()
-    req.inject("https://github.com/supermuesli/csdl", "examples/Requirement1.py")
+    req = CCS()
+    req.inject("https://github.com/supermuesli/csdl", "examples/storageRequirement.py")
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
 
