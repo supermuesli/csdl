@@ -11,8 +11,8 @@ class Region(Attribute):
         california = OptionAttribute()
         california.inject("https://github.com/supermuesli/csdl", "aws/regions/California.py")
 
-        eastVirginia = OptionAttribute()
-        eastVirginia.inject("https://github.com/supermuesli/csdl", "aws/regions/EastVirginia.py")
+        northernVirginia = OptionAttribute()
+        northernVirginia.inject("https://github.com/supermuesli/csdl", "aws/regions/NorthernVirginia.py")
 
         newYork = OptionAttribute()
         newYork.inject("https://github.com/supermuesli/csdl", "aws/regions/NewYork.py")
@@ -20,7 +20,7 @@ class Region(Attribute):
         # set my custom options
         self.options = {
             "california": california,
-            "eastVirginia": eastVirginia,
+            "northernVirginia": northernVirginia,
             "newYork": newYork
         }
         self.choice = None
