@@ -148,25 +148,17 @@ importedClasses = {
         "className": "PricingModel",
         "extendsId": "ChoiceAttribute"
     },
-    "Static": {
-        "className": "Static",
-        "extendsId": "OptionAttribute"
-    },
-    "Dynamic": {
-        "className": "Dynamic",
-        "extendsId": "OptionAttribute"
-    },
     "PayAndGo": {
         "className": "PayAndGo",
-        "extendsId": "Static"
+        "extendsId": "OptionAttribute"
     },
     "PayPerResource": {
         "className": "PayPerResource",
-        "extendsId": "Static"
+        "extendsId": "OptionAttribute"
     },
     "Subscription": {
         "className": "Subscription",
-        "extendsId": "Static"
+        "extendsId": "OptionAttribute"
     },
     "Price": {
         "className": "Price",
@@ -417,8 +409,6 @@ class PricingModel(ChoiceAttribute):
         self.id = "PricingModel"
         self.extendsId = "ChoiceAttribute"
         self.options = {
-            "static": Static(),
-            "dynamic": Dynamic(),
             "payAndGo": PayAndGo(),
             "payPerResource": PayPerResource(),
             "subscription": Subscription()
@@ -439,7 +429,7 @@ class PayAndGo(PricingModelInterface):
     def __init__(self):
         super().__init__()
         self.id = "PayAndGo"
-        self.extendsId = "Static"
+        self.extendsId = "OptionAttribute"
         self.description = "you (pay) an upFrontCost once (and go) on to use the service"
 
         self.upFrontCost = None
@@ -453,7 +443,7 @@ class Subscription(PricingModelInterface):
     def __init__(self):
         super().__init__()
         self.id = "Subscription"
-        self.extendsId = "Static"
+        self.extendsId = "OptionAttribute"
         self.description = "you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour"
 
         self.billingPeriodCost = None
@@ -474,29 +464,6 @@ class PayPerResource(PricingModelInterface):
 
     def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
-
-
-class Static(PricingModelInterface):
-    def __init__(self):
-        super().__init__()
-        self.id = "Static"
-        self.extendsId = "OptionAttribute"
-        self.description = "static pricing models depend only on the configuration of the CCS"
-        self.name = "Static"
-
-    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
-        return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
-
-
-class Dynamic(PricingModelInterface):
-    def __init__(self):
-        super().__init__()
-        self.id = "Dynamic"
-        self.extendsId = "PricingModel"
-        self.description = "dynamic pricing models depend on the configuration of the CCS and also on any other arbitrary thing, such as time or weather"
-
-    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
-        return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion * usageHours
 
 
 class Price(Attribute):
