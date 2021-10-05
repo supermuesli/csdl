@@ -10,7 +10,7 @@ def main():
 
     # user requirements
     req = CCS()
-    req.inject("https://github.com/supermuesli/csdl", "examples/storageRequirement.py")
+    req.inject("https://github.com/supermuesli/csdl", "examples/StorageRequirement.py")
 
     # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
 
