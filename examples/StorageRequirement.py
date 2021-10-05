@@ -11,7 +11,7 @@ class StorageRequirement(Attribute):
 
         awsRegions = Attribute()
         awsRegions.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
-        self.region.update(awsRegions.options)
+        self.region.options.update(awsRegions.options)
         self.region.value = "northernVirginia"
 
         self.transferIn = Attribute()
