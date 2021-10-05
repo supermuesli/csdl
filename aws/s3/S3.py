@@ -189,6 +189,7 @@ class S3(CCS):
 
                             if transferOutMatch is not None:
                                 if transferOutMatch.value is not None:
+                                    print("transferOutMatch.value", transferOutMatch.value)
                                     if transferOutMatch.value <= 1:
                                         res += 0.00 * transferOutMatch.value
                                     elif 1 < transferOutMatch.value <= 9.99*1000:
@@ -200,7 +201,6 @@ class S3(CCS):
                                     elif 150*1000 < transferOutMatch.value:
                                         res += 0.05 * transferOutMatch.value
 
-                print("res", res)
                 return res
 
         # price
