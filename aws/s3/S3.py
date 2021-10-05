@@ -44,6 +44,7 @@ class S3(CCS):
 
                 # discover an s3type field in req
                 s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
+                print("s3typeMatchs3typeMatchs3typeMatchs3typeMatchs3typeMatchs3typeMatch",s3typeMatch)
 
                 # discover a region field in req
                 regionMatch = matchAttribute(req, "Region")
@@ -58,7 +59,7 @@ class S3(CCS):
 
                                         if storageMatch is not None:  # there was a match
                                             if storageMatch.value is not None:  # matching value is set
-                                                return storageMatch.value * 9999
+                                                return storageMatch.value * 0.0125
 
                                     if s3typeMatch.value == "standard":
 
