@@ -13,6 +13,8 @@ class S3(CCS):
         self.searchKeyWords = ["aws", "s3", "storage as a service", "storage"]  # help users find this model
         self.readme = "enjoy"
 
+        self.storage.isMutable = True
+
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
@@ -37,7 +39,7 @@ class S3(CCS):
 
             def run(self, req):
                 # discover a storage field in req
-                storageMatch = matchAttribute(req, "storage")
+                storageMatch = matchAttribute(req, "Storage")
 
                 # discover an s3type field in req
                 s3typeMatch = matchAttribute(req, "S3Type")

@@ -1,0 +1,11 @@
+// github.com/supermuesli/csdl@aws/s3/S3.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@aws/s3/S3.py@latest" -> Price [color=red]
+	Price -> PricingModel [color=red]
+	"github.com/supermuesli/csdl@aws/s3/S3.py@latest" -> "github.com/supermuesli/csdl@aws/regions/Region.py@latest" [color=red]
+	"github.com/supermuesli/csdl@aws/s3/S3.py@latest" -> Storage [color=red]
+	"github.com/supermuesli/csdl@aws/s3/S3.py@latest" -> StorageWriteSpeed [color=red]
+	"github.com/supermuesli/csdl@aws/s3/S3.py@latest" -> StorageReadSpeed [color=red]
+	"github.com/supermuesli/csdl@aws/s3/S3.py@latest" -> "github.com/supermuesli/csdl@aws/s3/S3Type.py@latest" [color=red]
+}

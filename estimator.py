@@ -14,7 +14,10 @@ def estimate(req, currency="EUR", usageHours=1):
     ebs1 = StorageAsAService()
     ebs1.inject("https://github.com/supermuesli/csdl", "aws/EBS.py")
 
-    db = [vm1, ebs1]
+    s3 = StorageAsAService()
+    s3.inject("https://github.com/supermuesli/csdl", "aws/s3/S3.py")
+
+    db = [vm1, ebs1, s3]
 
     # scan through entire CCS database and find matches
     smallestPrice = inf

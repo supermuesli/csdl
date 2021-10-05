@@ -1,0 +1,10 @@
+// github.com/supermuesli/csdl@examples/StorageRequirement.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> Price [color=red]
+	Price -> PricingModel [color=red]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> "github.com/supermuesli/csdl@aws/regions/Region.py@latest" [color=red]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> Storage [color=red]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> StorageWriteSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> StorageReadSpeed [color=red]
+}
