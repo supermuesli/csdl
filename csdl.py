@@ -577,7 +577,7 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
                       ccs.price.currency)
         print(e)
 
-    if ccs.price.value.value is None:
+    if ccs.price.model.value is None:
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
     totalPrice = {"price": 0, "config": extractConfigurationTree(ccs)}
@@ -586,8 +586,8 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
     for price in allSubCCSPrices:
         # get cheapest pricing method for this subCCS price and add it to the totalPrice
         cheapestPrice = inf
-        for choice in price.value.options:
-            curPrice = price.value.options[choice].getPrice(req, price.priceFuncs,
+        for choice in price.model.options:
+            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs,
                                                             currencyConversion=currencyConversion,
                                                             usageHours=usageHours)
             if curPrice < cheapestPrice:
