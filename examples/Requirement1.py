@@ -20,7 +20,7 @@ class Requirement1(Attribute):  # does not have to extend VMAsAService since inj
 
         usa = OptionAttribute()
         usa.inject("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
-        self.region.options = {
+        self.region.update({
             "usa": usa
-        }
+        })
         self.region.value = "usa"
