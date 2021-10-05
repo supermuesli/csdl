@@ -197,7 +197,7 @@ class S3(CCS):
                                         res += 0.085 * transferOutMatch.value
                                     elif 40*1000 < transferOutMatch.value <= 100*1000:
                                         res += 0.07 * transferOutMatch.value
-                                    elif 150*1000 < transferOutMatch.value:
+                                    elif 100*1000 < transferOutMatch.value:
                                         res += 0.05 * transferOutMatch.value
 
                 return res
