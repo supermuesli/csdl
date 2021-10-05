@@ -60,22 +60,23 @@ class S3(CCS):
                                             if storageMatch.value is not None:  # matching value is set
                                                 return storageMatch.value * 0.0125
 
-                # else default to s3-standard in northern virginia
-                if storageMatch is not None:  # there was a match
-                    if storageMatch.value is not None:  # matching value is set
-                        if storageMatch.value <= 50 * 1000:               # first 50 TB/Month
-                            return storageMatch.value * 0.023
-                        if 50 * 1000 < storageMatch.value <= 450 * 1000:  # next 450 TB/Month
-                            return storageMatch.value * 0.022
-                        if 500 * 1000 < storageMatch.value:               # over 500 TB/Month
-                            return storageMatch.value * 0.021
+                                    elif s3typeMatch.value == "standard":
+
+                                        if storageMatch is not None:  # there was a match
+                                            if storageMatch.value is not None:  # matching value is set
+                                                if storageMatch.value <= 50 * 1000:               # first 50 TB/Month
+                                                    return storageMatch.value * 0.023
+                                                if 50 * 1000 < storageMatch.value <= 450 * 1000:  # next 450 TB/Month
+                                                    return storageMatch.value * 0.022
+                                                if 500 * 1000 < storageMatch.value:               # over 500 TB/Month
+                                                    return storageMatch.value * 0.021
 
                 return 0
 
         class requestsPrice(PriceFunc):
             def __init__(self):
                 super().__init__()
-                self.description = "what you pay per 1000 PUT, COPY, POST, GET, SELECT and LIST reqeusts per billing period (1 month)"
+                self.description = "what you pay per 1000 PUT, COPY, POST, GET, SELECT and LIST requests per billing period (1 month)"
 
             def run(self, req):
                 res = 0
