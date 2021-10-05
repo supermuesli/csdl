@@ -10,5 +10,5 @@ class StorageRequirement(Attribute):
         self.storage.value = 5000
 
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
-        self.region.value = "northernVirignia"
+        self.region.value = "northernVirginia"
 
