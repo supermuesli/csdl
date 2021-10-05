@@ -18,6 +18,7 @@ class EC2(CCS):
 
         self.machineType = ChoiceAttribute()
         self.machineType.inject("https://github.com/supermuesli/csdl", "aws/ec2/MachineType.py")
+        self.machineType.mutable = True
 
         # deactivate fields that get covered by self.machineType
         self.cpuCores = None

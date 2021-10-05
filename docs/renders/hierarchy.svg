@@ -514,105 +514,105 @@
 <path fill="none" stroke="black" d="M2047.94,-1238.99C2061.16,-1244.49 2073.7,-1251.39 2085.12,-1260 2163.96,-1319.4 2185.63,-1445.43 2191.47,-1501.76"/>
 <polygon fill="black" stroke="black" points="2187.99,-1502.13 2192.41,-1511.75 2194.95,-1501.47 2187.99,-1502.13"/>
 </g>
+<!-- github.com/supermuesli/csdl@aws/s3/S3Type.py@latest -->
+<g id="node52" class="node"><title>github.com/supermuesli/csdl@aws/s3/S3Type.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1821.9" cy="-963" rx="213.362" ry="18"/>
+<text text-anchor="middle" x="1821.9" y="-959.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/S3Type.py@latest</text>
+</g>
+<!-- github.com/supermuesli/csdl@aws/s3/S3Type.py@latest&#45;&gt;ChoiceAttribute -->
+<g id="edge51" class="edge"><title>github.com/supermuesli/csdl@aws/s3/S3Type.py@latest&#45;&gt;ChoiceAttribute</title>
+<path fill="none" stroke="black" d="M1983.86,-974.725C2030.85,-978.148 2079.97,-981.725 2118.85,-984.557"/>
+<polygon fill="black" stroke="black" points="2118.79,-988.062 2129.01,-985.298 2119.29,-981.08 2118.79,-988.062"/>
+</g>
+<!-- github.com/supermuesli/csdl@aws/s3/Standard.py@latest -->
+<g id="node53" class="node"><title>github.com/supermuesli/csdl@aws/s3/Standard.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1821.9" cy="-369" rx="217.162" ry="18"/>
+<text text-anchor="middle" x="1821.9" y="-365.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/Standard.py@latest</text>
+</g>
+<!-- github.com/supermuesli/csdl@aws/s3/Standard.py@latest&#45;&gt;OptionAttribute -->
+<g id="edge52" class="edge"><title>github.com/supermuesli/csdl@aws/s3/Standard.py@latest&#45;&gt;OptionAttribute</title>
+<path fill="none" stroke="black" d="M1924.41,-353.123C1978.36,-350.575 2042.22,-357.81 2085.12,-396 2140.22,-445.041 2072.69,-502.373 2121.12,-558 2124.76,-562.176 2129.1,-565.707 2133.84,-568.693"/>
+<polygon fill="black" stroke="black" points="2132.24,-571.809 2142.7,-573.499 2135.58,-565.655 2132.24,-571.809"/>
+</g>
+<!-- github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest -->
+<g id="node54" class="node"><title>github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1821.9" cy="-315" rx="263.453" ry="18"/>
+<text text-anchor="middle" x="1821.9" y="-311.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest</text>
+</g>
+<!-- github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest&#45;&gt;OptionAttribute -->
+<g id="edge53" class="edge"><title>github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest&#45;&gt;OptionAttribute</title>
+<path fill="none" stroke="black" d="M2059.21,-322.971C2068.49,-328.265 2077.2,-334.558 2085.12,-342 2156.06,-408.633 2059.2,-482.914 2121.12,-558 2124.51,-562.102 2128.58,-565.58 2133.04,-568.531"/>
+<polygon fill="black" stroke="black" points="2131.6,-571.736 2142.03,-573.578 2135.03,-565.632 2131.6,-571.736"/>
+</g>
 <!-- github.com/supermuesli/csdl@aws/ec2/EC2.py@latest -->
-<g id="node52" class="node"><title>github.com/supermuesli/csdl@aws/ec2/EC2.py@latest</title>
+<g id="node55" class="node"><title>github.com/supermuesli/csdl@aws/ec2/EC2.py@latest</title>
 <ellipse fill="none" stroke="black" cx="206.032" cy="-18" rx="206.063" ry="18"/>
 <text text-anchor="middle" x="206.032" y="-14.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/EC2.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;VMAsAService -->
-<g id="edge51" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;VMAsAService</title>
+<g id="edge54" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/EC2.py@latest&#45;&gt;VMAsAService</title>
 <path fill="none" stroke="black" d="M412.375,-18C492.102,-18 578.494,-18 638.572,-18"/>
 <polygon fill="black" stroke="black" points="638.728,-21.5001 648.728,-18 638.728,-14.5001 638.728,-21.5001"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest -->
-<g id="node53" class="node"><title>github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1821.9" cy="-963" rx="239.358" ry="18"/>
-<text text-anchor="middle" x="1821.9" y="-959.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</text>
+<g id="node56" class="node"><title>github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1821.9" cy="-909" rx="239.358" ry="18"/>
+<text text-anchor="middle" x="1821.9" y="-905.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest&#45;&gt;ChoiceAttribute -->
-<g id="edge52" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest&#45;&gt;ChoiceAttribute</title>
-<path fill="none" stroke="black" d="M1994.4,-975.492C2038.04,-978.671 2082.72,-981.925 2118.66,-984.544"/>
-<polygon fill="black" stroke="black" points="2118.82,-988.064 2129.04,-985.3 2119.33,-981.083 2118.82,-988.064"/>
+<g id="edge55" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/MachineType.py@latest&#45;&gt;ChoiceAttribute</title>
+<path fill="none" stroke="black" d="M2011.06,-920.098C2036.23,-923.982 2061.5,-929.147 2085.12,-936 2110.81,-943.451 2137.74,-956.827 2158.34,-968.401"/>
+<polygon fill="black" stroke="black" points="2156.63,-971.454 2167.04,-973.396 2160.11,-965.383 2156.63,-971.454"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest -->
-<g id="node54" class="node"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1821.9" cy="-369" rx="221.761" ry="18"/>
-<text text-anchor="middle" x="1821.9" y="-365.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</text>
+<g id="node57" class="node"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</title>
+<ellipse fill="none" stroke="black" cx="1821.9" cy="-261" rx="221.761" ry="18"/>
+<text text-anchor="middle" x="1821.9" y="-257.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;OptionAttribute -->
-<g id="edge53" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;OptionAttribute</title>
-<path fill="none" stroke="black" d="M1925.38,-353.079C1979.13,-350.663 2042.48,-358.038 2085.12,-396 2140.22,-445.041 2072.69,-502.373 2121.12,-558 2124.76,-562.176 2129.1,-565.707 2133.84,-568.693"/>
-<polygon fill="black" stroke="black" points="2132.24,-571.809 2142.7,-573.499 2135.58,-565.655 2132.24,-571.809"/>
+<g id="edge56" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/A1Large.py@latest&#45;&gt;OptionAttribute</title>
+<path fill="none" stroke="black" d="M1913.24,-244.582C1970.03,-239.797 2040.71,-244.891 2085.12,-288 2172,-372.312 2045.63,-463.357 2121.12,-558 2124.44,-562.156 2128.46,-565.673 2132.9,-568.648"/>
+<polygon fill="black" stroke="black" points="2131.42,-571.837 2141.85,-573.728 2134.88,-565.748 2131.42,-571.837"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/EBS.py@latest -->
-<g id="node55" class="node"><title>github.com/supermuesli/csdl@aws/EBS.py@latest</title>
+<g id="node58" class="node"><title>github.com/supermuesli/csdl@aws/EBS.py@latest</title>
 <ellipse fill="none" stroke="black" cx="716.49" cy="-126" rx="191.966" ry="18"/>
 <text text-anchor="middle" x="716.49" y="-122.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/EBS.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/EBS.py@latest&#45;&gt;StorageAsAService -->
-<g id="edge54" class="edge"><title>github.com/supermuesli/csdl@aws/EBS.py@latest&#45;&gt;StorageAsAService</title>
+<g id="edge57" class="edge"><title>github.com/supermuesli/csdl@aws/EBS.py@latest&#45;&gt;StorageAsAService</title>
 <path fill="none" stroke="black" d="M908.293,-126C1000.96,-126 1107.89,-126 1181.48,-126"/>
 <polygon fill="black" stroke="black" points="1181.63,-129.5 1191.63,-126 1181.63,-122.5 1181.63,-129.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@misc/StaticIp.py@latest -->
-<g id="node56" class="node"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
+<g id="node59" class="node"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1821.9" cy="-1179" rx="206.063" ry="18"/>
 <text text-anchor="middle" x="1821.9" y="-1175.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@misc/StaticIp.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@misc/StaticIp.py@latest&#45;&gt;NumericAttribute -->
-<g id="edge55" class="edge"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest&#45;&gt;NumericAttribute</title>
+<g id="edge58" class="edge"><title>github.com/supermuesli/csdl@misc/StaticIp.py@latest&#45;&gt;NumericAttribute</title>
 <path fill="none" stroke="black" d="M2023.66,-1175.34C2045.96,-1181.76 2067.08,-1191.55 2085.12,-1206 2178.13,-1280.48 2191.95,-1437.57 2193.59,-1501.76"/>
 <polygon fill="black" stroke="black" points="2190.09,-1502 2193.76,-1511.94 2197.09,-1501.88 2190.09,-1502"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest -->
-<g id="node57" class="node"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</title>
+<g id="node60" class="node"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</title>
 <ellipse fill="none" stroke="black" cx="1271.79" cy="-1179" rx="250.756" ry="18"/>
 <text text-anchor="middle" x="1271.79" y="-1175.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/StaticIp.py@latest -->
-<g id="edge56" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
+<g id="edge59" class="edge"><title>github.com/supermuesli/csdl@aws/ec2/ElasticIpAmount.py@latest&#45;&gt;github.com/supermuesli/csdl@misc/StaticIp.py@latest</title>
 <path fill="none" stroke="black" d="M1522.79,-1179C1550.33,-1179 1578.19,-1179 1605.26,-1179"/>
 <polygon fill="black" stroke="black" points="1605.59,-1182.5 1615.59,-1179 1605.59,-1175.5 1605.59,-1182.5"/>
 </g>
 <!-- github.com/supermuesli/csdl@aws/s3/S3.py@latest -->
-<g id="node58" class="node"><title>github.com/supermuesli/csdl@aws/s3/S3.py@latest</title>
+<g id="node61" class="node"><title>github.com/supermuesli/csdl@aws/s3/S3.py@latest</title>
 <ellipse fill="none" stroke="black" cx="716.49" cy="-72" rx="194.965" ry="18"/>
 <text text-anchor="middle" x="716.49" y="-68.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/S3.py@latest</text>
 </g>
 <!-- github.com/supermuesli/csdl@aws/s3/S3.py@latest&#45;&gt;StorageAsAService -->
-<g id="edge57" class="edge"><title>github.com/supermuesli/csdl@aws/s3/S3.py@latest&#45;&gt;StorageAsAService</title>
+<g id="edge60" class="edge"><title>github.com/supermuesli/csdl@aws/s3/S3.py@latest&#45;&gt;StorageAsAService</title>
 <path fill="none" stroke="black" d="M851.076,-85.0375C956.081,-95.2855 1099.02,-109.236 1188.06,-117.925"/>
 <polygon fill="black" stroke="black" points="1187.81,-121.418 1198.11,-118.906 1188.49,-114.451 1187.81,-121.418"/>
-</g>
-<!-- github.com/supermuesli/csdl@aws/s3/S3Type.py@latest -->
-<g id="node59" class="node"><title>github.com/supermuesli/csdl@aws/s3/S3Type.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1821.9" cy="-909" rx="213.362" ry="18"/>
-<text text-anchor="middle" x="1821.9" y="-905.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/S3Type.py@latest</text>
-</g>
-<!-- github.com/supermuesli/csdl@aws/s3/S3Type.py@latest&#45;&gt;ChoiceAttribute -->
-<g id="edge58" class="edge"><title>github.com/supermuesli/csdl@aws/s3/S3Type.py@latest&#45;&gt;ChoiceAttribute</title>
-<path fill="none" stroke="black" d="M2001.58,-918.694C2029.86,-922.711 2058.53,-928.287 2085.12,-936 2110.81,-943.451 2137.74,-956.827 2158.34,-968.401"/>
-<polygon fill="black" stroke="black" points="2156.63,-971.454 2167.04,-973.396 2160.11,-965.383 2156.63,-971.454"/>
-</g>
-<!-- github.com/supermuesli/csdl@aws/s3/Standard.py@latest -->
-<g id="node60" class="node"><title>github.com/supermuesli/csdl@aws/s3/Standard.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1821.9" cy="-315" rx="217.162" ry="18"/>
-<text text-anchor="middle" x="1821.9" y="-311.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/Standard.py@latest</text>
-</g>
-<!-- github.com/supermuesli/csdl@aws/s3/Standard.py@latest&#45;&gt;OptionAttribute -->
-<g id="edge59" class="edge"><title>github.com/supermuesli/csdl@aws/s3/Standard.py@latest&#45;&gt;OptionAttribute</title>
-<path fill="none" stroke="black" d="M1916.56,-298.778C1972.49,-294.731 2041.01,-300.561 2085.12,-342 2156.06,-408.633 2059.2,-482.914 2121.12,-558 2124.51,-562.102 2128.58,-565.58 2133.04,-568.531"/>
-<polygon fill="black" stroke="black" points="2131.6,-571.736 2142.03,-573.578 2135.03,-565.632 2131.6,-571.736"/>
-</g>
-<!-- github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest -->
-<g id="node61" class="node"><title>github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest</title>
-<ellipse fill="none" stroke="black" cx="1821.9" cy="-261" rx="263.453" ry="18"/>
-<text text-anchor="middle" x="1821.9" y="-257.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest</text>
-</g>
-<!-- github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest&#45;&gt;OptionAttribute -->
-<g id="edge60" class="edge"><title>github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest&#45;&gt;OptionAttribute</title>
-<path fill="none" stroke="black" d="M1917.67,-244.23C1973.67,-240.086 2041.85,-246.007 2085.12,-288 2172,-372.312 2045.63,-463.357 2121.12,-558 2124.44,-562.156 2128.46,-565.673 2132.9,-568.648"/>
-<polygon fill="black" stroke="black" points="2131.42,-571.837 2141.85,-573.728 2134.88,-565.748 2131.42,-571.837"/>
 </g>
 </g>
 </svg>
