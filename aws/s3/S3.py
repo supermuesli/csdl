@@ -54,6 +54,7 @@ class S3(CCS):
 
                             if s3typeMatch is not None:  # there was a match
                                 if s3typeMatch.value is not None:  # matching value is set
+                                    print("s3typeMatchval:",s3typeMatch)
                                     if s3typeMatch.value == "standardInfreqAccess":
                                         print("standardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccessstandardInfreqAccess")
 
