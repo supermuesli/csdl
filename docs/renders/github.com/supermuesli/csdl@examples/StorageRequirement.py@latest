@@ -7,4 +7,6 @@ digraph {
 	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> Storage [color=red]
 	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> StorageWriteSpeed [color=red]
 	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> StorageReadSpeed [color=red]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/dataTransfer/In.py@latest" [color=red]
+	"github.com/supermuesli/csdl@examples/StorageRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/dataTransfer/Out.py@latest" [color=red]
 }

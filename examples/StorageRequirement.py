@@ -18,4 +18,4 @@ class StorageRequirement(Attribute):
 
         self.transferOut = Attribute()
         self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
-        self.transferOut.value = 1000
+        self.transferOut.value = 10000000
