@@ -41,19 +41,16 @@ class S3(CCS):
             def run(self, req):
                 # discover a storage field in req
                 storageMatch = matchAttribute(req, "Storage")
-                print("storageMatchstorageMatchstorageMatchstorageMatchstorageMatchstorageMatch",storageMatch.value)
 
                 # discover an s3type field in req
                 s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
-                print("s3typeMatchs3typeMatchs3typeMatchs3typeMatchs3typeMatchs3typeMatch",s3typeMatch.value)
 
                 # discover a region field in req
                 regionMatch = matchAttribute(req, "Region")
-                print("regionMatchregionMatchregionMatchregionMatchregionMatchregionMatch",regionMatch.value)
 
                 if regionMatch is not None:   # there was a match
                     if regionMatch.value is not None:  # matching value is set
-                        if regionMatch.value == "northernVirgina":
+                        if regionMatch.value == "northernVirginia":
 
                             if s3typeMatch is not None:  # there was a match
                                 if s3typeMatch.value is not None:  # matching value is set
