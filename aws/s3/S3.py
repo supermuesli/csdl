@@ -13,7 +13,7 @@ class S3(CCS):
         self.searchKeyWords = ["aws", "s3", "storage as a service", "storage"]  # help users find this model
         self.readme = "enjoy"
 
-        self.storage.isMutable = True
+        self.storage.mutable = True
 
         self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
