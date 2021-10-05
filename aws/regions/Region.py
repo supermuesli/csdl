@@ -23,4 +23,4 @@ class Region(Attribute):
             "northernVirginia": northernVirginia,
             "newYork": newYork
         }
-        self.choice = None
+        self.value = None
