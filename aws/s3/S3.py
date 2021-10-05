@@ -30,4 +30,4 @@ class S3(CCS):
         self.price.priceFuncs = [defaultPrice()]
 
         self.price.model.value = "subscription"
-        self.price.model.options[self.price.value.value].billingPeriod = 1  # once per hour
+        self.price.model.options[self.price.model.value].billingPeriod = 1  # once per hour
