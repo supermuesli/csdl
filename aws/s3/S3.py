@@ -15,15 +15,13 @@ class S3(CCS):
 
         self.storage.mutable = True
 
-        awsRegions = Attribute()
-        awsRegions.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
-        self.region.options.update(awsRegions.options)
+        self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
         self.region.mutable = True
 
         # storage type
         self.s3Type = Attribute()
         self.s3Type.inject("https://github.com/supermuesli/csdl", "aws/s3/S3Type.py")
-        self.s3Type.value = self.s3Type.options["standard"]  # default to standard
+        self.s3Type.value = "standard"  # default to standard
         self.s3Type.mutable = True
 
         # price functions

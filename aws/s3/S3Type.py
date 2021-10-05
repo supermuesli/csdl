@@ -18,5 +18,3 @@ class S3Type(Attribute):
             "standardInfreqAccess": standardInfreqAccess
         }
         self.value = None
-
-        self.mutable = True
