@@ -43,10 +43,10 @@ class S3(CCS):
                 storageMatch = matchAttribute(req, "Storage")
 
                 # discover an s3type field in req
-                s3typeMatch = matchAttribute(req, "S3Type")
+                s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py")
+                regionMatch = matchAttribute(req, "Region")
 
                 if regionMatch is not None:   # there was a match
                     if regionMatch.value is not None:  # matching value is set
@@ -84,7 +84,7 @@ class S3(CCS):
                 s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py@latest")
+                regionMatch = matchAttribute(req, "Region")
 
                 # discover a PUTAmount field in req
                 putAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/PUTAmount.py@latest")
@@ -172,7 +172,7 @@ class S3(CCS):
                 res = 0
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py@latest")
+                regionMatch = matchAttribute(req, "Region")
 
                 # discover a region field in req
                 transferInMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/dataTransfer/In.py@latest")
