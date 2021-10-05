@@ -27,17 +27,7 @@ def estimate(req, currency="EUR", usageHours=1):
         if match:
             # get price using the given requirements as configurations
             priceConfig = estimatePrice(req, ccs, currency=currency, usageHours=usageHours)
-
-            curAttr = priceConfig["config"][[d for d in priceConfig["config"]][0]]
-            for depthId in curAttr:
-                for flatId in conf:
-                    if isAncestorOf(depthId, flatId):
-                        print(curAttr)
-                        print(conf[flatId])
-                        curAttr[depthId]["value"] = conf[flatId]
-                print(curAttr)
-                curAttr = priceConfig["config"][depthId]
-
+            priceConfig["config"] = conf
 
             # print results
             print("found match:", ccs.name)
