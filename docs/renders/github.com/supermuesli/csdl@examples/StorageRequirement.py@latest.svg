@@ -24,15 +24,15 @@
 <path fill="none" stroke="red" d="M295.123,-225.115C345.624,-259.684 462.519,-334.672 572.852,-369 641.196,-390.264 725.215,-395.143 772.998,-396.055"/>
 <polygon fill="red" stroke="red" points="773.147,-399.558 783.195,-396.199 773.246,-392.558 773.147,-399.558"/>
 </g>
-<!-- github.com/supermuesli/csdl@aws/regions/Region.py@latest -->
-<g id="node4" class="node"><title>github.com/supermuesli/csdl@aws/regions/Region.py@latest</title>
-<ellipse fill="none" stroke="black" cx="812.031" cy="-342" rx="229.359" ry="18"/>
-<text text-anchor="middle" x="812.031" y="-338.3" font-family="Times,serif" font-size="14.00">github.com/supermuesli/csdl@aws/regions/Region.py@latest</text>
+<!-- Region -->
+<g id="node4" class="node"><title>Region</title>
+<ellipse fill="none" stroke="black" cx="812.031" cy="-342" rx="36.2938" ry="18"/>
+<text text-anchor="middle" x="812.031" y="-338.3" font-family="Times,serif" font-size="14.00">Region</text>
 </g>
-<!-- github.com/supermuesli/csdl@examples/StorageRequirement.py@latest&#45;&gt;github.com/supermuesli/csdl@aws/regions/Region.py@latest -->
-<g id="edge3" class="edge"><title>github.com/supermuesli/csdl@examples/StorageRequirement.py@latest&#45;&gt;github.com/supermuesli/csdl@aws/regions/Region.py@latest</title>
-<path fill="none" stroke="red" d="M310.245,-224.925C367.68,-249.356 476.158,-292.623 572.852,-315 595.025,-320.131 618.593,-324.302 641.95,-327.689"/>
-<polygon fill="red" stroke="red" points="641.552,-331.167 651.942,-329.093 642.526,-324.236 641.552,-331.167"/>
+<!-- github.com/supermuesli/csdl@examples/StorageRequirement.py@latest&#45;&gt;Region -->
+<g id="edge3" class="edge"><title>github.com/supermuesli/csdl@examples/StorageRequirement.py@latest&#45;&gt;Region</title>
+<path fill="none" stroke="red" d="M310.245,-224.925C367.68,-249.356 476.158,-292.623 572.852,-315 638.765,-330.253 717.016,-337.022 765.353,-339.931"/>
+<polygon fill="red" stroke="red" points="765.31,-343.434 775.493,-340.511 765.709,-336.446 765.31,-343.434"/>
 </g>
 <!-- Storage -->
 <g id="node5" class="node"><title>Storage</title>

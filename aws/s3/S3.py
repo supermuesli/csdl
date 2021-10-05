@@ -15,7 +15,9 @@ class S3(CCS):
 
         self.storage.mutable = True
 
-        self.region.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
+        awsRegions = Attribute()
+        awsRegions.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
+        self.region.options.update(awsRegions.options)
         self.region.mutable = True
 
         # storage type
