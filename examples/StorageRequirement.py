@@ -20,7 +20,7 @@ class StorageRequirement(Attribute):
 
         self.transferOut = Attribute()
         self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
-        self.transferOut.value = 10000000
+        self.transferOut.value = 10000
 
         self.s3type = Attribute()
         self.s3type.inject("https://github.com/supermuesli/csdl", "aws/s3/S3Type.py")
