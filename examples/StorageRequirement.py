@@ -28,7 +28,7 @@ class StorageRequirement(Attribute):
 
         self.putAmount = Attribute()
         self.putAmount.inject("https://github.com/supermuesli/csdl", "misc/requests/PUTAmount.py")
-        self.putAmount.value = 600
+        self.putAmount.value = 90600
 
         self.copyAmount = Attribute()
         self.copyAmount.inject("https://github.com/supermuesli/csdl", "misc/requests/COPYAmount.py")
