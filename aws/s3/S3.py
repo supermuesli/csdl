@@ -206,7 +206,7 @@ class S3(CCS):
 
         # price
         self.price.currency = "USD"  # ISO 4217
-        self.price.priceFuncs = [defaultPrice(), storagePrice(), requestsPrice(), dataTransferPrice()]
+        self.price.priceFuncs = [defaultPrice(), storagePrice(), requestsPrice(), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/S3
 
         self.price.model.value = "subscription"
         self.price.model.options[self.price.model.value].billingPeriod = 24*28  # in hours
