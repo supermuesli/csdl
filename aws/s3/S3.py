@@ -80,28 +80,28 @@ class S3(CCS):
                 res = 0
 
                 # discover an S3Type field in req
-                s3typeMatch = matchAttribute(req, "S3Type")
+                s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py")
+                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py@latest")
 
                 # discover a PUTAmount field in req
-                putAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/PUTAmount.py")
+                putAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/PUTAmount.py@latest")
 
                 # discover a COPYAmount field in req
-                copyAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/COPYAmount.py")
+                copyAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/COPYAmount.py@latest")
 
                 # discover a LISTAmount field in req
-                listAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/LISTAmount.py")
+                listAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/LISTAmount.py@latest")
 
                 # discover a POSTAmount field in req
-                postAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/POSTAmount.py")
+                postAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/POSTAmount.py@latest")
 
                 # discover a GETAmount field in req
-                getAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/GETAmount.py")
+                getAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/GETAmount.py@latest")
 
                 # discover a SELECTAmount field in req
-                selectAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/SELECTAmount.py")
+                selectAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/SELECTAmount.py@latest")
 
                 if regionMatch is not None:
                     if regionMatch.value is not None:
@@ -171,13 +171,13 @@ class S3(CCS):
                 res = 0
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py")
+                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py@latest")
 
                 # discover a region field in req
-                transferInMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/dataTransfer/In.py")
+                transferInMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/dataTransfer/In.py@latest")
 
                 # discover a region field in req
-                transferOutMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/dataTransfer/Out.py")
+                transferOutMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/dataTransfer/Out.py@latest")
 
                 if regionMatch is not None:
                     if regionMatch.value is not None:
@@ -189,7 +189,6 @@ class S3(CCS):
 
                             if transferOutMatch is not None:
                                 if transferOutMatch.value is not None:
-                                    print("transferOutMatch.value", transferOutMatch.value)
                                     if transferOutMatch.value <= 1:
                                         res += 0.00 * transferOutMatch.value
                                     elif 1 < transferOutMatch.value <= 9.99*1000:
