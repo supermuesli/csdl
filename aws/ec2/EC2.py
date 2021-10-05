@@ -40,11 +40,11 @@ class EC2(CCS):
 
                 # if there was a match, then we can compute the price
                 if match is not None:
-                    if match.model is not None:  # a match does not automatically mean that the value is set
-                        if match.model == 1:
+                    if match.value is not None:  # a match does not automatically mean that the value is set
+                        if match.value == 1:
                             return 2
-                        if match.model > 1:
-                            return match.model * 2.5
+                        if match.value > 1:
+                            return match.value * 2.5
 
                 # otherwise we assume a default value and the corresponding price (0 IPs cost 0 EUR)
                 return 0
@@ -61,5 +61,5 @@ class EC2(CCS):
         self.price.currency = "USD"  # ISO 4217
         self.price.priceFuncs = [defaultPrice(), elasticIpPrice()]
 
-        self.price.model.model = "subscription"
-        self.price.model.options[self.price.model.model].billingPeriod = 1  # once per hour
+        self.price.model.value = "subscription"
+        self.price.model.options[self.price.value.value].billingPeriod = 1  # once per hour

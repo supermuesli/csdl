@@ -224,7 +224,7 @@ class Attribute:
         self.searchKeyWords = None
         self.description = None
         self.matched = False
-        self.model = None
+        self.value = None
 
     def setId(self, gitRepo, filePath, branch=None, commit=None):
         """ Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
@@ -577,7 +577,7 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
                       ccs.price.currency)
         print(e)
 
-    if ccs.price.model.model is None:
+    if ccs.price.value.value is None:
         logging.error(ccs.price.id, "does not provide a pricing model choice")
 
     totalPrice = {"price": 0, "config": extractConfigurationTree(ccs)}
@@ -586,8 +586,8 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
     for price in allSubCCSPrices:
         # get cheapest pricing method for this subCCS price and add it to the totalPrice
         cheapestPrice = inf
-        for choice in price.model.options:
-            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs,
+        for choice in price.value.options:
+            curPrice = price.value.options[choice].getPrice(req, price.priceFuncs,
                                                             currencyConversion=currencyConversion,
                                                             usageHours=usageHours)
             if curPrice < cheapestPrice:
@@ -879,66 +879,66 @@ def matchCCS(req, ccs):
 
     # pair-wise compare attributes and check if they match
     for ra in reqAttributes:
-        configuration[ra.id] = ra.model
+        configuration[ra.id] = ra.value
 
         for ca in ccsAttributes:
             if isAncestorOf(ra.id, ca.id):
                 if isAncestorOf("NumericAttribute", ra.id):
-                    if ra.model is not None:  # both requirement and CCS set this attribute
-                        if not ca.mutable and ca.model is None:
+                    if ra.value is not None:  # both requirement and CCS set this attribute
+                        if not ca.mutable and ca.value is None:
                             print(ra.id, "is set as a requirement, but", ccs.id, "can not set it")
                             return False, None
                         if ca.moreIsBetter:
                             if not ca.mutable:
-                                if ra.model > ca.model:  # value is too small and not mutable
-                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.model, "wanted", ra.model)
+                                if ra.value > ca.value:  # value is too small and not mutable
+                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.value, "wanted", ra.value)
                                     return False, None
                             if ca.maxVal is not None:
-                                if ca.maxVal < ra.model:  # value cannot be made large enough
-                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.model)
+                                if ca.maxVal < ra.value:  # value cannot be made large enough
+                                    print(ra.id, "is too small and cannot be made large enough:", "got", ca.maxVal, "wanted", ra.value)
                                     return False, None
                         else:
-                            if ra.model < ca.model:  # value is too large and not mutable
-                                print(ra.id, "is too large and cannot be made small enough:", "got", ca.model, "wanted", ra.model)
+                            if ra.value < ca.value:  # value is too large and not mutable
+                                print(ra.id, "is too large and cannot be made small enough:", "got", ca.value, "wanted", ra.value)
                                 return False
                             if ca.minVal is not None:
-                                if ca.minVal > ra.model:  # value cannot be made small enough
-                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.model)
+                                if ca.minVal > ra.value:  # value cannot be made small enough
+                                    print(ra.id, "is too large and cannot be made small enough:", "got", ca.minVal, "wanted", ra.value)
                                     return False, None
 
                     # get configuration
                     if not ca.mutable:
-                        configuration[ra.id] = ca.model
+                        configuration[ra.id] = ca.value
 
 
                     # ra is satisfied by ca
 
                 elif isAncestorOf("BoolAttribute", ra.id):
                     if not ca.mutable:
-                        if ra.model != ca.model:  # value does not match and is not mutable
-                            print(ra.id, "does not match and is not mutable:", "wanted", ra.model, "got", ca.model)
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(ra.id, "does not match and is not mutable:", "wanted", ra.value, "got", ca.value)
                             return False, None
 
                     # get configuration
                     if not ca.mutable:
-                        configuration[ra.id] = ca.model
+                        configuration[ra.id] = ca.value
 
                     # ra is satisfied by ca
 
                 elif isAncestorOf("ChoiceAttribute", ra.id):
-                    if ra.model is not None:
+                    if ra.value is not None:
                         if ca.mutable:
-                            if not any([isAncestorOf(ra.options[ra.model].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
-                                print(ra.id, "option not available:", ra.options[ra.model].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
+                            if not any([isAncestorOf(ra.options[ra.value].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                print(ra.id, "option not available:", ra.options[ra.value].id, "not related to any of", [ca.options[choice].id for choice in ca.options])
                                 return False, None
                         else:
-                            if not isAncestorOf(ra.options[ra.model].id, ca.options[ca.model].id):  # value does not match and is not mutable
-                                print(ra.id, "does not match:", ra.options[ra.model].id, "not related to", ca.options[ca.model].id)
+                            if not isAncestorOf(ra.options[ra.value].id, ca.options[ca.value].id):  # value does not match and is not mutable
+                                print(ra.id, "does not match:", ra.options[ra.value].id, "not related to", ca.options[ca.value].id)
                                 return False, None
 
                     # get configuration
                     if not ca.mutable:
-                        configuration[ra.id] = ca.model
+                        configuration[ra.id] = ca.value
 
                     # ra is satisfied by ca
 

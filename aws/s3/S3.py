@@ -29,5 +29,5 @@ class S3(CCS):
         self.price.currency = "USD"  # ISO 4217
         self.price.priceFuncs = [defaultPrice()]
 
-        self.price.model.model = "subscription"
-        self.price.model.options[self.price.model.model].billingPeriod = 1  # once per hour
+        self.price.model.value = "subscription"
+        self.price.model.options[self.price.value.value].billingPeriod = 1  # once per hour
