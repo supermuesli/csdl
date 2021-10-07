@@ -1,0 +1,11 @@
+// github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> Price [color=red]
+	Price -> PricingModel [color=red]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> Attribute [color=red]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> Attribute [color=red]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> Attribute [color=red]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> "github.com/supermuesli/csdl@aws/regions/Region.py@latest" [color=red]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> "github.com/supermuesli/csdl@aws/rdsPostgres/AvailabilityZone.py@latest" [color=red]
+}

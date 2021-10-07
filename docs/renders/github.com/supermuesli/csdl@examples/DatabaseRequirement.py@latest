@@ -1,0 +1,12 @@
+// github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> Price [color=red]
+	Price -> PricingModel [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> Region [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> Storage [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/storage/BackupRetentionPeriod.py@latest" [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/storage/BackupSnapshotAmount.py@latest" [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/dataTransfer/In.py@latest" [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/dataTransfer/Out.py@latest" [color=red]
+}
