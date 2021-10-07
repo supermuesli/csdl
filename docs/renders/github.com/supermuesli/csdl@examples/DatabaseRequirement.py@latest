@@ -9,4 +9,5 @@ digraph {
 	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/storage/BackupSnapshotAmount.py@latest" [color=red]
 	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/dataTransfer/In.py@latest" [color=red]
 	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@misc/dataTransfer/Out.py@latest" [color=red]
+	"github.com/supermuesli/csdl@examples/DatabaseRequirement.py@latest" -> "github.com/supermuesli/csdl@aws/rdsPostgres/AvailabilityZone.py@latest" [color=red]
 }

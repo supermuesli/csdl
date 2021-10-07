@@ -46,6 +46,9 @@ digraph {
 	"github.com/supermuesli/csdl@misc/storage/BackupSnapshotAmount.py@latest" -> NumericAttribute [color=black]
 	"github.com/supermuesli/csdl@misc/dataTransfer/In.py@latest" -> NumericAttribute [color=black]
 	"github.com/supermuesli/csdl@misc/dataTransfer/Out.py@latest" -> NumericAttribute [color=black]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/AvailabilityZone.py@latest" -> ChoiceAttribute [color=black]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/SingleAZ.py@latest" -> OptionAttribute [color=black]
+	"github.com/supermuesli/csdl@aws/rdsPostgres/MultiAZ.py@latest" -> OptionAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/ec2/EC2.py@latest" -> VMAsAService [color=black]
 	"github.com/supermuesli/csdl@aws/regions/Region.py@latest" -> Region [color=black]
 	"github.com/supermuesli/csdl@aws/regions/California.py@latest" -> "github.com/supermuesli/csdl@misc/countries/USA.py@latest" [color=black]
@@ -61,7 +64,4 @@ digraph {
 	"github.com/supermuesli/csdl@aws/s3/Standard.py@latest" -> OptionAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/s3/StandardInfreqAccess.py@latest" -> OptionAttribute [color=black]
 	"github.com/supermuesli/csdl@aws/rdsPostgres/Postgresql.py@latest" -> SQLDatabaseAsAService [color=black]
-	"github.com/supermuesli/csdl@aws/rdsPostgres/AvailabilityZone.py@latest" -> ChoiceAttribute [color=black]
-	"github.com/supermuesli/csdl@aws/rdsPostgres/SingleAZ.py@latest" -> OptionAttribute [color=black]
-	"github.com/supermuesli/csdl@aws/rdsPostgres/MultiAZ.py@latest" -> OptionAttribute [color=black]
 }
