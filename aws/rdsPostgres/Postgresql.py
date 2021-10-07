@@ -150,6 +150,33 @@ class Postgresql(CCS):
                                                                            # per month, so we converted that to
                                                                            # per hour, since that is the billing
                                                                            # period
+                                    else:
+                                        # region matches, just not with northernVirginia. fallback to a reasonable default
+                                        if ssdStorageMatch is not None:
+                                            if ssdStorageMatch.value is not None:
+                                                # general purpose ssd stoarge single availability zone
+                                                return 0.115 * ssdStorageMatch.value / (24*28)
+
+                                        if iopsSsdStorageMatch is not None:
+                                            if iopsSsdStorageMatch.value is not None:
+
+                                                # provisioned iops ssd storage single availability zone
+                                                storageRes = 0.125 * iopsSsdStorageMatch.value
+                                                iopsRes = 0.10 * iopsSsdStorageMatch.iops.value
+                                                return (storageRes + iopsRes) / (24*28) # price description on the website was
+                                                                           # per month, so we converted that to
+                                                                           # per hour, since that is the billing
+                                                                           # period
+
+                                        if iopsMagneticStorageMatch is not None:
+                                            if iopsMagneticStorageMatch.value is not None:
+                                                # magnetic storage single availability zone
+                                                storageRes = 0.10 * iopsMagneticStorageMatch.value
+                                                iopsRes = 0.10 * iopsMagneticStorageMatch.iops.value / 1000000
+                                                return (storageRes + iopsRes) / (24*28) # price description on the website was
+                                                                           # per month, so we converted that to
+                                                                           # per hour, since that is the billing
+                                                                           # period
 
                         if azMatch.value == "multi":
 
