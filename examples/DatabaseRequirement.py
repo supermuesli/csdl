@@ -9,6 +9,8 @@ class DatabaseRequirement(Attribute):
 
         usa = OptionAttribute()
         usa.inject("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
+        self.region = Region()
+        self.region.options.update(usa)
         self.region.value = "usa"
 
         self.storage = Storage()
