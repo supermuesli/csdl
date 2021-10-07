@@ -152,10 +152,6 @@ importedClasses = {
         "className": "PayAndGo",
         "extendsId": "OptionAttribute"
     },
-    "PayPerResource": {
-        "className": "PayPerResource",
-        "extendsId": "OptionAttribute"
-    },
     "Subscription": {
         "className": "Subscription",
         "extendsId": "OptionAttribute"
@@ -410,7 +406,6 @@ class PricingModel(ChoiceAttribute):
         self.extendsId = "ChoiceAttribute"
         self.options = {
             "payAndGo": PayAndGo(),
-            "payPerResource": PayPerResource(),
             "subscription": Subscription()
         }
         self.value = None
@@ -446,24 +441,13 @@ class Subscription(PricingModelInterface):
         self.extendsId = "OptionAttribute"
         self.description = "you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour"
 
+        self.upfrontCost = 0
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
 
     def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
         self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
-        return usageHours / self.billingPeriod * self.billingPeriodCost * currencyConversion
-
-
-class PayPerResource(PricingModelInterface):
-    def __init__(self):
-        super().__init__()
-        self.id = "PayPerResource"
-        self.extendsId = "OptionAttribute"
-        self.description = "you pay the price of each resource  per billingPeriod. the unit of billingPeriod is per hour"
-        self.name = "Pay per resource"
-
-    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
-        return sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
+        return ((usageHours / self.billingPeriod * self.billingPeriodCost) + self.upfrontCost) * currencyConversion
 
 
 class Price(Attribute):

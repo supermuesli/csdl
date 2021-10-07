@@ -10,9 +10,7 @@ def main():
 
     # user requirements
     req = CCS()
-    req.inject("https://github.com/supermuesli/csdl", "examples/StorageRequirement.py")
-
-    # TODO at least 2 more requirement examples with more complexity 2 for azure 2 for gcp
+    req.inject("https://github.com/supermuesli/csdl", "examples/DatabaseRequirement.py")
 
     # price estimate of cheapest ccs that fits requirements
     priceConfig = estimate(req, currency=currency, usageHours=usageHours)

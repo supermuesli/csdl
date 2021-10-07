@@ -7,14 +7,25 @@ class DatabaseRequirement(Attribute):
         self.setId("https://github.com/supermuesli/csdl", "examples/DatabaseRequirement.py")
         self.extendsId = "DatabaseAsAService"
 
-        self.ram.value = 4
-        self.cpuCores.value = 4
-        self.storage.value = 500
-
-        self.staticIpAddresses = NumericAttribute()
-        self.staticIpAddresses.inject("https://github.com/supermuesli/csdl", "misc/StaticIp.py")
-        self.staticIpAddresses.value = 2
-
         usa = OptionAttribute()
         usa.inject("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
         self.region.value = "usa"
+
+        self.storage = Storage()
+        self.storage.value = 900
+
+        self.backupRetention = Attribute()
+        self.backupRetention.inject("https://github.com/supermuesli/csdl@misc/storage/BackupRetentionPeriod.py@latest")
+        self.backupRetention.value = 1  # keep for 3 billing period
+
+        self.backupSnapshots = Attribute()
+        self.backupSnapshots.inject("https://github.com/supermuesli/csdl@misc/storage/BackupSnapshotAmount.py@latest")
+        self.backupSnapshots.value = 1  # 1 per billing period
+
+        self.transferIn = Attribute()
+        self.transferIn.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/In.py")
+        self.transferIn.value = 10005
+
+        self.transferOut = Attribute()
+        self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
+        self.transferOut.value = 1000

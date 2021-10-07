@@ -35,7 +35,6 @@ digraph {
 	NetworkDownloadSpeed -> NumericAttribute [color=black]
 	PricingModel -> ChoiceAttribute [color=black]
 	PayAndGo -> OptionAttribute [color=black]
-	PayPerResource -> OptionAttribute [color=black]
 	Subscription -> OptionAttribute [color=black]
 	Price -> Attribute [color=black]
 	DatabaseAsAService -> SaaS [color=black]
