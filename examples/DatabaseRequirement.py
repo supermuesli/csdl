@@ -33,3 +33,7 @@ class DatabaseRequirement(Attribute):
         self.transferOut = Attribute()
         self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
         self.transferOut.value = 1000
+
+        self.az = Attribute()
+        self.az.inject("https://github.com/supermuesli/csdl", "aws/rdsPostgres/AvailabilityZone.py")
+        self.az.value = "single"

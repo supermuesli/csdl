@@ -104,6 +104,13 @@ class Postgresql(CCS):
                 # discover an ssd storage field in req
                 iopsMagneticStorageMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/storage/IOPSMagneticStorage.py@latest")
 
+                # default to general purpose ssd storage
+                if ssdStorageMatch is None and iopsMagneticStorageMatch is None and iopsSsdStorageMatch is None:
+                    ssdStorageMatch = matchAttribute(req, "Storage")
+
+                    if ssdStorageMatch is None:
+                        return 0
+
                 # discover an availabilityZone field in req
                 azMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/rdsPostgres/AvailabilityZone.py@latest")
 
