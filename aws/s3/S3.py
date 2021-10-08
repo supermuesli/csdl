@@ -41,7 +41,7 @@ class S3(CCS):
                     s3typeMatch = self.defaultS3Type  # default to standard
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "Region")
+                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py@latest")
 
                 if regionMatch is not None:   # there was a match
                     if regionMatch.value is not None:  # matching value is set
@@ -83,7 +83,7 @@ class S3(CCS):
                     s3typeMatch = self.defaultS3Type  # default to standard
 
                 # discover a region field in req
-                regionMatch = matchAttribute(req, "Region")
+                regionMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/regions/Region.py@latest")
 
                 # discover a PUTAmount field in req
                 putAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/requests/PUTAmount.py@latest")
@@ -150,7 +150,6 @@ class S3(CCS):
                                                 res += 0.001 * getAmountMatch.value / 1000  # GETAmount per billing period (1 month)
                                             elif s3typeMatch.value == "standard":
                                                 res += 0.0004 * getAmountMatch.value / 1000
-                                            print(res)
 
                             if selectAmountMatch is not None:
                                 if selectAmountMatch.value is not None:
