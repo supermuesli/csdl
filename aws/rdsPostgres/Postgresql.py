@@ -241,7 +241,7 @@ class Postgresql(CCS):
                                                 # since the billing period is per hour, the user probably wants to keep the backups for at least a month, but is forced
                                                 # to provide a retentionperiod relative to the billing period. we scale the provided value down to a per month value here, as
                                                 # an estimate.
-                                                return 0.095 * storageMatch.value * (snapshotAmountMatch.value) * (retentionPeriodMatch.value) / (24*28)
+                                                return 0.095 * storageMatch.value * snapshotAmountMatch.value * retentionPeriodMatch.value / (24*28)
 
                 return 0
 

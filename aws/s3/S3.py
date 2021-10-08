@@ -25,14 +25,6 @@ class S3(CCS):
         self.s3Type.mutable = True
 
         # price functions
-        class defaultPrice(PriceFunc):
-            def __init__(self):
-                super().__init__()
-                self.description = "what you pay regardless of all configurations"
-
-            def run(self, req):
-                return 0
-
         class storagePrice(PriceFunc):
             def __init__(self):
                 super().__init__()
@@ -206,7 +198,7 @@ class S3(CCS):
 
         # price
         self.price.currency = "USD"  # ISO 4217
-        self.price.priceFuncs = [defaultPrice(), storagePrice(), requestsPrice(), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/S3
+        self.price.priceFuncs = [storagePrice(), requestsPrice(), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/S3
 
         self.price.model.value = "subscription"
         self.price.model.options[self.price.model.value].billingPeriod = 24*28  # in hours
