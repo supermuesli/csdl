@@ -81,7 +81,7 @@ class S3(CCS):
                 s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
                 if s3typeMatch is None:
                     s3typeMatch = self.defaultS3Type  # default to standard
-                print(s3typeMatch)
+                print(s3typeMatch.value)
 
                 # discover a region field in req
                 regionMatch = matchAttribute(req, "Region")
