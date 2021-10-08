@@ -45,7 +45,7 @@ class S3(CCS):
 
                 if regionMatch is not None:   # there was a match
                     if regionMatch.value is not None:  # matching value is set
-                        if regionMatch.value == "northernVirginia":
+                        if regionMatch.value == "northernVirginia" or regionMatch.value == "usa":
 
                             if s3typeMatch is not None:  # there was a match
                                 if s3typeMatch.value is not None:  # matching value is set
@@ -105,7 +105,7 @@ class S3(CCS):
 
                 if regionMatch is not None:
                     if regionMatch.value is not None:
-                        if regionMatch.value == "northernVirginia":
+                        if regionMatch.value == "northernVirginia" or regionMatch.value == "usa":
                             if putAmountMatch is not None:
                                 if putAmountMatch.value is not None:
                                     if s3typeMatch is not None:
@@ -181,7 +181,7 @@ class S3(CCS):
 
                 if regionMatch is not None:
                     if regionMatch.value is not None:
-                        if regionMatch.value == "northernVirginia":
+                        if regionMatch.value == "northernVirginia" or regionMatch.value == "usa":
 
                             if transferInMatch is not None:
                                 if transferInMatch.value is not None:
