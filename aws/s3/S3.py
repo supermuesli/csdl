@@ -69,15 +69,19 @@ class S3(CCS):
                 return 0
 
         class requestsPrice(PriceFunc):
-            def __init__(self):
+            def __init__(self, defaultS3Type):
                 super().__init__()
                 self.description = "what you pay per 1000 PUT, COPY, POST, GET, SELECT and LIST requests per billing period (1 month)"
+                self.defaultS3Type = defaultS3Type
 
             def run(self, req):
                 res = 0
 
                 # discover an S3Type field in req
                 s3typeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@aws/s3/S3Type.py@latest")
+                if s3typeMatch is None:
+                    s3typeMatch = self.defaultS3Type  # default to standard
+                print(s3typeMatch)
 
                 # discover a region field in req
                 regionMatch = matchAttribute(req, "Region")
@@ -201,7 +205,7 @@ class S3(CCS):
 
         # price
         self.price.currency = "USD"  # ISO 4217
-        self.price.priceFuncs = [storagePrice(self.s3Type), requestsPrice(), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/S3
+        self.price.priceFuncs = [storagePrice(self.s3Type), requestsPrice(self.s3Type), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/S3
 
         self.price.model.value = "subscription"
         self.price.model.options[self.price.model.value].billingPeriod = 24*28  # in hours
