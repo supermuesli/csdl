@@ -9,18 +9,16 @@ class StorageRequirement(Attribute):
 
         self.storage.value = 5000
 
-        awsRegions = Attribute()
-        awsRegions.inject("https://github.com/supermuesli/csdl", "aws/regions/Region.py")
-        self.region.options.update(awsRegions.options)
-        self.region.value = "northernVirginia"
+        usa = Attribute()
+        usa.inject("https://github.com/supermuesli/csdl", "misc/countries/USA.py")
+        self.region.options.update({
+            "usa": usa
+        })
+        self.region.value = "usa"
 
         self.transferOut = Attribute()
         self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
         self.transferOut.value = 10000
-
-        self.s3type = Attribute()
-        self.s3type.inject("https://github.com/supermuesli/csdl", "aws/s3/S3Type.py")
-        self.s3type.value = "standard"
 
         self.getAmount = Attribute()
         self.getAmount.inject("https://github.com/supermuesli/csdl", "misc/requests/GETAmount.py")
