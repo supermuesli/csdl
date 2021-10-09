@@ -20,7 +20,7 @@ class DatabaseRequirement(Attribute):
 
         self.backupRetention = Attribute()
         self.backupRetention.inject("https://github.com/supermuesli/csdl", "misc/storage/BackupRetentionPeriod.py")
-        self.backupRetention.value = 1  # keep for 3 billing period
+        self.backupRetention.value = 1  # keep for 1 billing period
 
         self.backupSnapshots = Attribute()
         self.backupSnapshots.inject("https://github.com/supermuesli/csdl", "misc/storage/BackupSnapshotAmount.py")
