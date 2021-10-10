@@ -37,7 +37,7 @@ def estimate(req, currency="EUR", usageHours=1):
 
             # print results
             print("found match:", ccs.name)
-            print("price: ", priceConfig["price"], "per", priceConfig["billingPeriod"], "hours", currency, "using pricing model:")
+            print("price: ", priceConfig["price"], currency, "per", priceConfig["billingPeriod"], "hours")
             print("configuration:")
             pprint.pprint(priceConfig["config"])
 
