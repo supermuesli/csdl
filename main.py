@@ -5,7 +5,6 @@ from csdl import *
 
 
 def main():
-    usageHours = 24*28
     currency = "USD"
 
     # user requirements
@@ -13,7 +12,7 @@ def main():
     req.inject("https://github.com/supermuesli/csdl", "examples/StorageRequirement.py")
 
     # price estimate of cheapest ccs that fits requirements
-    priceConfig = estimate(req, currency=currency, usageHours=usageHours)
+    priceConfig = estimate(req, currency=currency)
 
     # render acquired attribute hierarchy
     renderHierarchy()

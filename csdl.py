@@ -416,7 +416,7 @@ class PricingModelInterface(OptionAttribute, ABC):
         super().__init__()
 
     @abstractmethod
-    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
         pass
 
 
@@ -429,7 +429,7 @@ class PayAndGo(PricingModelInterface):
 
         self.upFrontCost = None
 
-    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
         self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
         return self.upFrontCost
 
@@ -445,9 +445,9 @@ class Subscription(PricingModelInterface):
         self.billingPeriodCost = None
         self.billingPeriod = None  # per hour
 
-    def getPrice(self, req, priceFuncs, currencyConversion=1, usageHours=1):
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
         self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
-        return ((usageHours / self.billingPeriod * self.billingPeriodCost) + self.upfrontCost) * currencyConversion
+        return ((self.billingPeriod * self.billingPeriodCost) + self.upfrontCost) * currencyConversion
 
 
 class Price(Attribute):
@@ -500,7 +500,7 @@ def extractConfigurationTree(ccs):
     return helper(ccs)
 
 
-def estimatePrice(req, ccs, currency="EUR", usageHours=0):
+def estimatePrice(req, ccs, currency="EUR"):
     """ returns a dict containing the total price and a dict of configurations that it resulted from """
 
     # get prices of all CCS and their subCCS
@@ -538,9 +538,7 @@ def estimatePrice(req, ccs, currency="EUR", usageHours=0):
         # get cheapest pricing method for this subCCS price and add it to the totalPrice
         cheapestPrice = inf
         for choice in price.model.options:
-            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs,
-                                                            currencyConversion=currencyConversion,
-                                                            usageHours=usageHours)
+            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs, currencyConversion=currencyConversion)
             if curPrice < cheapestPrice:
                 cheapestPrice = curPrice
 

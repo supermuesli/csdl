@@ -32,7 +32,7 @@ def estimate(req, currency="EUR", usageHours=1):
         match, conf = matchCCS(req, ccs)
         if match:
             # get price using the given requirements as configurations
-            priceConfig = estimatePrice(req, ccs, currency=currency, usageHours=usageHours)
+            priceConfig = estimatePrice(req, ccs, currency=currency)
             priceConfig["config"] = conf
 
             # print results
