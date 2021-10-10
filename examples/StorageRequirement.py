@@ -16,6 +16,10 @@ class StorageRequirement(Attribute):
         })
         self.region.value = "usa"
 
+        self.transferOut = Attribute()
+        self.transferOut.inject("https://github.com/supermuesli/csdl", "misc/dataTransfer/Out.py")
+        self.transferOut.value = 10000
+
         self.getAmount = Attribute()
         self.getAmount.inject("https://github.com/supermuesli/csdl", "misc/requests/GETAmount.py")
         self.getAmount.value = 13000
