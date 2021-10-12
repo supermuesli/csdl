@@ -1,6 +1,6 @@
 from csdl import *
 
-# ccs model
+
 class EBS(CCS):
     def __init__(self):
         super().__init__()

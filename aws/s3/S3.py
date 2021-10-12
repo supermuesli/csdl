@@ -191,9 +191,9 @@ class S3(CCS):
                                 if transferOutMatch.value is not None:
                                     if transferOutMatch.value <= 1:
                                         res += 0.00 * transferOutMatch.value
-                                    elif 1 < transferOutMatch.value <= 9.99*1000:
+                                    if 1 < transferOutMatch.value <= 9.999*1000:
                                         res += 0.09 * transferOutMatch.value
-                                    elif 9.99*1000 < transferOutMatch.value <= 40*1000:
+                                    elif 9.999*1000 < transferOutMatch.value <= 40*1000:
                                         res += 0.085 * transferOutMatch.value
                                     elif 40*1000 < transferOutMatch.value <= 150*1000:
                                         res += 0.07 * transferOutMatch.value
