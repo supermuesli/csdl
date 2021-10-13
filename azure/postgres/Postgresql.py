@@ -83,10 +83,10 @@ class Postgresql(CCS):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
-                                                            return 0.068
+                                                            return 0.176
 
-                # defaults to basic1 with single server in eastUs
-                return 0.034
+                # defaults to generalPurpose1 with single server in eastUs
+                return 0.176
 
         class storagePrice(PriceFunc):
             def __init__(self, defaultWorkloadType):
