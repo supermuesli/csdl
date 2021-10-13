@@ -20,7 +20,10 @@ def estimate(req, currency="EUR", usageHours=1):
     psql = DatabaseAsAService()
     psql.inject("https://github.com/supermuesli/csdl", "aws/rdsPostgres/Postgresql.py")
 
-    db = [vm1, ebs1, s3, psql]
+    azurePsql = DatabaseAsAService()
+    azurePsql.inject("https://github.com/supermuesli/csdl", "azure/postgres/Postgresql.py")
+
+    db = [vm1, ebs1, s3, psql, azurePsql]
 
     # scan through entire CCS database and find matches
     smallestPrice = inf

@@ -1,0 +1,6 @@
+// github.com/supermuesli/csdl@azure/postgres/GeneralPurpose1.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@azure/postgres/GeneralPurpose1.py@latest" -> CpuCores [color=red]
+	"github.com/supermuesli/csdl@azure/postgres/GeneralPurpose1.py@latest" -> Ram [color=red]
+}

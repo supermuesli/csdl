@@ -8,7 +8,7 @@ class Postgresql(CCS):
         self.extendsId = "SQLDatabaseAsAService"
 
         # inherited fields
-        self.name = "Managed PostgreSQL"
+        self.name = "Microsoft Azure - Managed PostgreSQL"
         self.provider = "Microsoft Azure"
         self.searchKeyWords = ["azure", "psql", "database as a service", "db", "postgres"]  # help users find this model
         self.readme = "enjoy"

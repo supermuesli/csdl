@@ -1,0 +1,10 @@
+// github.com/supermuesli/csdl@azure/postgres/Postgresql.py@latest fields
+digraph {
+	graph [rankdir=LR]
+	"github.com/supermuesli/csdl@azure/postgres/Postgresql.py@latest" -> Price [color=red]
+	Price -> PricingModel [color=red]
+	"github.com/supermuesli/csdl@azure/postgres/Postgresql.py@latest" -> Storage [color=red]
+	"github.com/supermuesli/csdl@azure/postgres/Postgresql.py@latest" -> Region [color=red]
+	"github.com/supermuesli/csdl@azure/postgres/Postgresql.py@latest" -> "github.com/supermuesli/csdl@azure/postgres/WorkloadType.py@latest" [color=red]
+	"github.com/supermuesli/csdl@azure/postgres/Postgresql.py@latest" -> "github.com/supermuesli/csdl@azure/postgres/MachineType.py@latest" [color=red]
+}

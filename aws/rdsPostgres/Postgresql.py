@@ -8,7 +8,7 @@ class Postgresql(CCS):
         self.extendsId = "SQLDatabaseAsAService"
 
         # inherited fields
-        self.name = "Managed PostgreSQL"
+        self.name = "Amazon Web Services - Managed PostgreSQL"
         self.provider = "Amazon Web Services"
         self.searchKeyWords = ["aws", "psql", "database as a service", "db", "postgres"]  # help users find this model
         self.readme = "enjoy"
