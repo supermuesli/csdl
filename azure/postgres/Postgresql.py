@@ -56,6 +56,15 @@ class Postgresql(CCS):
                 if workloadMatch is not None:
                     if workloadMatch.value is not None:
                         if workloadMatch.value == "singleServer":
+
+                            if machineTypeMatch is not None:
+                                if machineTypeMatch.value is not None:
+                                    if machineTypeMatch.value == "basic1":
+                                        return 0.034
+
+                                    if machineTypeMatch.value == "generalPurpose1":
+                                        return 0.176
+
                             if ramMatch is not None:
                                 if ramMatch.value is not None:
                                     if cpuMatch is not None:
@@ -66,6 +75,11 @@ class Postgresql(CCS):
                                                         if regionMatch.value == "eastUs":
                                                             return 0.034
                                             if (ramMatch.value <= 4) and (cpuMatch.value <= 2):
+                                                if regionMatch is not None:
+                                                    if regionMatch.value is not None:
+                                                        if regionMatch.value == "eastUs":
+                                                            return 0.068
+                                            if (ramMatch.value <= 10) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
