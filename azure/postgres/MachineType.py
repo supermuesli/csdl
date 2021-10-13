@@ -8,10 +8,10 @@ class MachineType(Attribute):
         self.extendsId = "ChoiceAttribute"
 
         basic1 = OptionAttribute()
-        basic1.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
+        basic1.inject("https://github.com/supermuesli/csdl", "azure/postgres/Basic1.py")
 
         generalPurpose1 = OptionAttribute()
-        generalPurpose1.inject("https://github.com/supermuesli/csdl", "aws/ec2/A1Large.py")
+        generalPurpose1.inject("https://github.com/supermuesli/csdl", "azure/postgres/GeneralPurpose1.py")
 
         self.options = {
             "basic1": basic1,

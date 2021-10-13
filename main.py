@@ -9,7 +9,7 @@ def main():
 
     # user requirements
     req = CCS()
-    req.inject("https://github.com/supermuesli/csdl", "examples/StorageRequirement.py")
+    req.inject("https://github.com/supermuesli/csdl", "examples/DatabaseRequirement.py")
 
     # price estimate of cheapest ccs that fits requirements
     priceConfig = estimate(req, currency=currency)
