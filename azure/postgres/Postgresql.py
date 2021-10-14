@@ -122,12 +122,12 @@ class Postgresql(CCS):
                                     if machineTypeMatch.value == "basic1":
                                         if storageMatch is not None:
                                             if storageMatch.value is not None:
-                                                res += 0.10 * storageMatch.value
+                                                res += 0.10 * storageMatch.value / (24*28)
 
                                     if machineTypeMatch.value == "generalPurpose1":
                                         if storageMatch is not None:
                                             if storageMatch.value is not None:
-                                                res += 0.115 * storageMatch.value
+                                                res += 0.115 * storageMatch.value / (24*28)
 
                             if ramMatch is not None:
                                 if ramMatch.value is not None:
@@ -139,14 +139,14 @@ class Postgresql(CCS):
                                                         if regionMatch.value == "eastUs":
                                                             if storageMatch is not None:
                                                                 if storageMatch.value is not None:
-                                                                    res += 0.10 * storageMatch.value
+                                                                    res += 0.10 * storageMatch.value / (24*28)
                                             elif (ramMatch.value <= 4) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
                                                             if storageMatch is not None:
                                                                 if storageMatch.value is not None:
-                                                                    res += 0.10 * storageMatch.value
+                                                                    res += 0.10 * storageMatch.value / (24*28)
 
                                             elif (ramMatch.value <= 10) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
@@ -154,7 +154,7 @@ class Postgresql(CCS):
                                                         if regionMatch.value == "eastUs":
                                                             if storageMatch is not None:
                                                                 if storageMatch.value is not None:
-                                                                    res += 0.115 * storageMatch.value
+                                                                    res += 0.115 * storageMatch.value / (24*28)
 
                 return res
 
