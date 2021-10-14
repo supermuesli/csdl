@@ -178,7 +178,7 @@ class Postgresql(CCS):
                                     if retentionPeriodMatch is not None:
                                         if retentionPeriodMatch.value is not None:
                                             if retentionPeriodMatch.value > 0:
-                                                return (0.10 / (24*28)) * storageMatch.value * (snapshotAmountMatch.value / (24*28)) * (retentionPeriodMatch.value / (24*28))
+                                                return 0.10 * storageMatch.value * snapshotAmountMatch.value * retentionPeriodMatch.value / (24*28)
 
                 return 0
 
