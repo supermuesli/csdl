@@ -136,7 +136,7 @@ class Postgresql(CCS):
                                                             if storageMatch is not None:
                                                                 if storageMatch.value is not None:
                                                                     res += 0.10 * storageMatch.value
-                                            if (ramMatch.value <= 4) and (cpuMatch.value <= 2):
+                                            elif (ramMatch.value <= 4) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
@@ -144,7 +144,7 @@ class Postgresql(CCS):
                                                                 if storageMatch.value is not None:
                                                                     res += 0.10 * storageMatch.value
 
-                                            if (ramMatch.value <= 10) and (cpuMatch.value <= 2):
+                                            elif (ramMatch.value <= 10) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
