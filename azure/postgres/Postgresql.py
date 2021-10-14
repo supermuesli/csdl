@@ -104,17 +104,57 @@ class Postgresql(CCS):
                 if workloadMatch is None:
                     workloadMatch = self.defaultWorkloadType
 
+                workloadMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@azure/postgres/Workload.py@latest")
+                if workloadMatch is None:
+                    workloadMatch = self.defaultWorkloadType
+
+                machineTypeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@azure/postgres/MachineType.py@latest")
+
+                regionMatch = matchAttribute(req, "Region")
+                ramMatch = matchAttribute(req, "Ram")
+                cpuMatch = matchAttribute(req, "CpuCores")
+
+                if machineTypeMatch is None and ramMatch is None and cpuMatch is None:
+                    machineTypeMatch = self.defaultMachineType
+
                 if workloadMatch is not None:
                     if workloadMatch.value is not None:
                         if workloadMatch.value == "singleServer":
 
-                            if regionMatch is not None:
-                                if regionMatch.value is not None:
-                                    if regionMatch.value == "northernVirginia":
+                            if machineTypeMatch is not None:
+                                if machineTypeMatch.value is not None:
+                                    if machineTypeMatch.value == "basic1":
+                                        return 0.034
 
-                                        if storageMatch is not None:
-                                            if storageMatch.value is not None:
-                                                res += 0.10
+                                    if machineTypeMatch.value == "generalPurpose1":
+                                        return 0.176
+
+                            if ramMatch is not None:
+                                if ramMatch.value is not None:
+                                    if cpuMatch is not None:
+                                        if cpuMatch.value is not None:
+                                            if (ramMatch.value <= 2) and (cpuMatch.value <= 1):
+                                                if regionMatch is not None:
+                                                    if regionMatch.value is not None:
+                                                        if regionMatch.value == "eastUs":
+                                                            if storageMatch is not None:
+                                                                if storageMatch.value is not None:
+                                                                    res += 0.10 * storageMatch.value
+                                            if (ramMatch.value <= 4) and (cpuMatch.value <= 2):
+                                                if regionMatch is not None:
+                                                    if regionMatch.value is not None:
+                                                        if regionMatch.value == "eastUs":
+                                                            if storageMatch is not None:
+                                                                if storageMatch.value is not None:
+                                                                    res += 0.10 * storageMatch.value
+
+                                            if (ramMatch.value <= 10) and (cpuMatch.value <= 2):
+                                                if regionMatch is not None:
+                                                    if regionMatch.value is not None:
+                                                        if regionMatch.value == "eastUs":
+                                                            if storageMatch is not None:
+                                                                if storageMatch.value is not None:
+                                                                    res += 0.115 * storageMatch.value
 
                 return res
 

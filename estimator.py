@@ -41,8 +41,8 @@ def estimate(req, currency="EUR", usageHours=1):
             # print results
             print("found match:", ccs.name)
             print("price: ", priceConfig["price"], currency, "per", priceConfig["billingPeriod"], "hours")
-            print("configuration:")
-            pprint.pprint(priceConfig["config"])
+            # print("configuration:")
+            # pprint.pprint(priceConfig["config"])
 
             # evaluate
             if priceConfig["price"] < smallestPrice:

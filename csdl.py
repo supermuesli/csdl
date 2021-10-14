@@ -656,6 +656,8 @@ def extractAttributes(attribute):
                 res += [fields[key]] + extractAttributes(fields[key])
                 if isAncestorOf("ChoiceAttribute", fields[key].id):
                     # also extract all choices of the choiceAttribute and their Attribute type subfields
+
+                    # TODO mark extracted optionattribute subfield as such. only the selected optionattributes of choiceattributes must be considered in matchCCS, otherwise unselected optionattributes will spoof the price estimate
                     res += [fields[key].options[choice] for choice in fields[key].options]
                     for attrs in [extractAttributes(fields[key].options[choice]) for choice in fields[key].options]:
                         res += attrs
