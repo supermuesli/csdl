@@ -89,16 +89,16 @@ class Postgresql(CCS):
                 return 0.176
 
         class storagePrice(PriceFunc):
-            def __init__(self, defaultWorkloadType):
+            def __init__(self, defaultWorkloadType, defaultMachineType):
                 super().__init__()
                 self.description = "price per database instance per hour"
                 self.defaultWorkloadType = defaultWorkloadType
+                self.defaultMachineType = defaultMachineType
 
             def run(self, req):
                 res = 0
 
                 storageMatch = matchAttribute(req, "Storage")
-                regionMatch = matchAttribute(req, "Region")
 
                 workloadMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@azure/postgres/Workload.py@latest")
                 if workloadMatch is None:
@@ -191,7 +191,7 @@ class Postgresql(CCS):
 
         # price
         self.price.currency = "USD"  # ISO 4217
-        self.price.priceFuncs = [dbInstancePrice(self.workloadType, self.machineType), storagePrice(self.workloadType), backupPrice()]
+        self.price.priceFuncs = [dbInstancePrice(self.workloadType, self.machineType), storagePrice(self.workloadType, self.machineType), backupPrice()]
 
         self.price.model.value = "subscription"
         self.price.model.options[self.price.model.value].upfrontCost = 0
