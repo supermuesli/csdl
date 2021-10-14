@@ -164,13 +164,8 @@ class Postgresql(CCS):
                 self.description = "backup price per hour"
 
             def run(self, req):
-                # how long to keep a backup per billing period (1 hour)
                 retentionPeriodMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/storage/BackupRetentionPeriod.py@latest")
-
-                # how many backup snapshots to make per billing period (1 hour)
                 snapshotAmountMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@misc/storage/BackupSnapshotAmount.py@latest")
-
-                # how much storage is provisioned per billing period (1 hour)
                 storageMatch = matchAttribute(req, "Storage")
 
                 if storageMatch is not None:
@@ -178,14 +173,12 @@ class Postgresql(CCS):
 
                         if snapshotAmountMatch is not None:
                             if snapshotAmountMatch.value is not None:
-
-                                # 100% worth of storage backup is free per month
                                 if snapshotAmountMatch.value > 0:
 
                                     if retentionPeriodMatch is not None:
                                         if retentionPeriodMatch.value is not None:
                                             if retentionPeriodMatch.value > 0:
-                                                return 0.10 * storageMatch.value * snapshotAmountMatch.value * retentionPeriodMatch.value / (24*28)
+                                                return (0.10 / (24*28)) * storageMatch.value * (snapshotAmountMatch.value / (24*28)) * (retentionPeriodMatch.value / (24*28))
 
                 return 0
 

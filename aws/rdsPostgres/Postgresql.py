@@ -222,8 +222,6 @@ class Postgresql(CCS):
 
                         if snapshotAmountMatch is not None:
                             if snapshotAmountMatch.value is not None:
-
-                                # 100% worth of storage backup is free per month
                                 if snapshotAmountMatch.value > 0:
 
                                     if retentionPeriodMatch is not None:
