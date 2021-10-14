@@ -74,12 +74,12 @@ class Postgresql(CCS):
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
                                                             return 0.034
-                                            if (ramMatch.value <= 4) and (cpuMatch.value <= 2):
+                                            elif (ramMatch.value <= 4) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
                                                             return 0.068
-                                            if (ramMatch.value <= 10) and (cpuMatch.value <= 2):
+                                            elif (ramMatch.value <= 10) and (cpuMatch.value <= 2):
                                                 if regionMatch is not None:
                                                     if regionMatch.value is not None:
                                                         if regionMatch.value == "eastUs":
