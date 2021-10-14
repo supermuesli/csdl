@@ -30,7 +30,7 @@ class Postgresql(CCS):
 
         self.machineType = Attribute()
         self.machineType.inject("https://github.com/supermuesli/csdl", "azure/postgres/MachineType.py")
-        self.machineType.value = "basic1"  # default to basic1
+        self.machineType.value = "generalPurpose1"  # default to basic1
 
         class dbInstancePrice(PriceFunc):
             def __init__(self, defaultWorkloadType, defaultMachineType):
