@@ -91,7 +91,7 @@ class Postgresql(CCS):
         class storagePrice(PriceFunc):
             def __init__(self, defaultWorkloadType, defaultMachineType):
                 super().__init__()
-                self.description = "price per database instance per hour"
+                self.description = "storage price per hour"
                 self.defaultWorkloadType = defaultWorkloadType
                 self.defaultMachineType = defaultMachineType
 
@@ -157,7 +157,7 @@ class Postgresql(CCS):
         class backupPrice(PriceFunc):
             def __init__(self):
                 super().__init__()
-                self.description = "price per database instance per hour"
+                self.description = "backup price per hour"
 
             def run(self, req):
                 # how long to keep a backup per billing period (1 hour)

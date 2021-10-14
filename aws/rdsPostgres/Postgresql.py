@@ -36,15 +36,6 @@ class Postgresql(CCS):
         self.azDeployment.inject("https://github.com/supermuesli/csdl", "aws/rdsPostgres/AvailabilityZone.py")
         self.azDeployment.mutable = True
 
-        # price functions
-        class defaultPrice(PriceFunc):
-            def __init__(self):
-                super().__init__()
-                self.description = "what you pay regardless of all configurations"
-
-            def run(self, req):
-                return 0
-
         class dbInstancePrice(PriceFunc):
             def __init__(self):
                 super().__init__()
@@ -92,7 +83,7 @@ class Postgresql(CCS):
         class storagePrice(PriceFunc):
             def __init__(self):
                 super().__init__()
-                self.description = "price per database instance per hour"
+                self.description = "storage price per hour"
 
             def run(self, req):
                 # discover an ssd storage field in req
@@ -214,7 +205,7 @@ class Postgresql(CCS):
         class backupPrice(PriceFunc):
             def __init__(self):
                 super().__init__()
-                self.description = "price per database instance per hour"
+                self.description = "backup price per hour"
 
             def run(self, req):
                 # how long to keep a backup per billing period (1 hour)
@@ -288,7 +279,7 @@ class Postgresql(CCS):
 
         # price
         self.price.currency = "USD"  # ISO 4217
-        self.price.priceFuncs = [defaultPrice(), dbInstancePrice(), storagePrice(), backupPrice(), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/RDSPostgreSQL
+        self.price.priceFuncs = [dbInstancePrice(), storagePrice(), backupPrice(), dataTransferPrice()]  # https://calculator.aws/#/createCalculator/RDSPostgreSQL
 
         self.price.model.value = "subscription"
         self.price.model.options[self.price.model.value].upfrontCost = 0
