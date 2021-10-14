@@ -417,6 +417,8 @@ class PricingModelInterface(OptionAttribute, ABC):
 
     @abstractmethod
     def getPrice(self, req, priceFuncs, currencyConversion=1):
+        for p in priceFuncs:
+            print(p.description, ":", p.run(req) * currencyConversion)
         pass
 
 
@@ -430,6 +432,9 @@ class PayAndGo(PricingModelInterface):
         self.upFrontCost = None
 
     def getPrice(self, req, priceFuncs, currencyConversion=1):
+        for p in priceFuncs:
+            print(p.description, ":", p.run(req) * currencyConversion)
+
         self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
         return self.upFrontCost
 

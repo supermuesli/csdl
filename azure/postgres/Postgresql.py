@@ -104,10 +104,6 @@ class Postgresql(CCS):
                 if workloadMatch is None:
                     workloadMatch = self.defaultWorkloadType
 
-                workloadMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@azure/postgres/Workload.py@latest")
-                if workloadMatch is None:
-                    workloadMatch = self.defaultWorkloadType
-
                 machineTypeMatch = matchAttribute(req, "https://github.com/supermuesli/csdl@azure/postgres/MachineType.py@latest")
 
                 regionMatch = matchAttribute(req, "Region")
