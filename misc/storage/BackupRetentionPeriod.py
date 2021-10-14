@@ -6,6 +6,7 @@ class BackupRetentionPeriod(Attribute):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "misc/storage/BackupRetentionPeriod.py")
         self.extendsId = "NumericAttribute"
+        self.description = "Backup Retention Period in Months"
 
         self.value = None
         self.makeInt = True

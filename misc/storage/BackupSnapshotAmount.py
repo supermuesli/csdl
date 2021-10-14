@@ -6,6 +6,7 @@ class BackupSnapshotAmount(Attribute):
         super().__init__()
         self.setId("https://github.com/supermuesli/csdl", "misc/storage/BackupSnapshotAmount.py")
         self.extendsId = "NumericAttribute"
+        self.description = "Backup Snapshot amount per month"
 
         self.value = None
         self.makeInt = True
