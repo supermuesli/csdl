@@ -120,10 +120,14 @@ class Postgresql(CCS):
                             if machineTypeMatch is not None:
                                 if machineTypeMatch.value is not None:
                                     if machineTypeMatch.value == "basic1":
-                                        return 0.034
+                                        if storageMatch is not None:
+                                            if storageMatch.value is not None:
+                                                res += 0.10 * storageMatch.value
 
                                     if machineTypeMatch.value == "generalPurpose1":
-                                        return 0.176
+                                        if storageMatch is not None:
+                                            if storageMatch.value is not None:
+                                                res += 0.115 * storageMatch.value
 
                             if ramMatch is not None:
                                 if ramMatch.value is not None:
