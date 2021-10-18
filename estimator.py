@@ -5,9 +5,7 @@ from math import inf
 
 
 def estimate(req, currency="EUR", usageHours=1):
-    """ given some requirements"""
-
-    # mock up database of all known CCS (in reality this should be fetched from csdlhub.com or something like that)
+    # mock up database of all known CCS
     vm1 = VMAsAService()
     vm1.inject("https://github.com/supermuesli/csdl", "aws/ec2/EC2.py")
 
@@ -41,8 +39,6 @@ def estimate(req, currency="EUR", usageHours=1):
             # print results
             print("found match:", ccs.name)
             print("price: ", priceConfig["price"], currency, "per", priceConfig["billingPeriod"], "hours")
-            # print("configuration:")
-            # pprint.pprint(priceConfig["config"])
 
             # evaluate
             if priceConfig["price"] < smallestPrice:

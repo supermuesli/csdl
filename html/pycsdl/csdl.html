@@ -1,0 +1,4200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pycsdl.csdl API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pycsdl.csdl</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import ast
+import json
+import logging
+import math
+import tempfile
+import random
+import string
+from abc import ABC, abstractmethod
+from math import inf
+
+import graphviz
+import requests
+from dulwich import porcelain
+
+ccsGitCache = {}
+&#34;&#34;&#34; Caches all cloned git repositories &#34;&#34;&#34;
+
+importedClasses = {
+    &#34;VMAsAService&#34;: {
+        &#34;className&#34;: &#34;VMAsAService&#34;,
+        &#34;extendsId&#34;: &#34;ServerAsAService&#34;
+    },
+    &#34;ServerAsAService&#34;: {
+        &#34;className&#34;: &#34;ServerAsAService&#34;,
+        &#34;extendsId&#34;: &#34;IaaS&#34;
+    },
+    &#34;SaaS&#34;: {
+        &#34;className&#34;: &#34;SaaS&#34;,
+        &#34;extendsId&#34;: &#34;CCS&#34;
+    },
+    &#34;IaaS&#34;: {
+        &#34;className&#34;: &#34;IaaS&#34;,
+        &#34;extendsId&#34;: &#34;CCS&#34;
+    },
+    &#34;StorageAsAService&#34;: {
+        &#34;className&#34;: &#34;StorageAsAService&#34;,
+        &#34;extendsId&#34;: &#34;IaaS&#34;
+    },
+    &#34;NumericAttribute&#34;: {
+        &#34;className&#34;: &#34;NumericAttribute&#34;,
+        &#34;extendsId&#34;: &#34;Attribute&#34;
+    },
+    &#34;ChoiceAttribute&#34;: {
+        &#34;className&#34;: &#34;ChoiceAttribute&#34;,
+        &#34;extendsId&#34;: &#34;Attribute&#34;
+    },
+    &#34;BoolAttribute&#34;: {
+        &#34;className&#34;: &#34;BoolAttribute&#34;,
+        &#34;extendsId&#34;: &#34;Attribute&#34;
+    },
+    &#34;OptionAttribute&#34;: {
+        &#34;className&#34;: &#34;OptionAttribute&#34;,
+        &#34;extendsId&#34;: &#34;Attribute&#34;
+    },
+    &#34;CCS&#34;: {
+        &#34;className&#34;: &#34;CCS&#34;,
+        &#34;extendsId&#34;: &#34;Attribute&#34;
+    },
+    &#34;Attribute&#34;: {
+        &#34;className&#34;: &#34;Attribute&#34;,
+        &#34;extendsId&#34;: &#34;object&#34;
+    },
+    &#34;Region&#34;: {
+        &#34;className&#34;: &#34;Region&#34;,
+        &#34;extendsId&#34;: &#34;ChoiceAttribute&#34;
+    },
+    &#34;NorthAmerica&#34;: {
+        &#34;className&#34;: &#34;NorthAmerica&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Australia&#34;: {
+        &#34;className&#34;: &#34;Australia&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Africa&#34;: {
+        &#34;className&#34;: &#34;Africa&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;EastAsia&#34;: {
+        &#34;className&#34;: &#34;EastAsia&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;SouthAmerica&#34;: {
+        &#34;className&#34;: &#34;SouthAmerica&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Europe&#34;: {
+        &#34;className&#34;: &#34;Europe&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Antarctica&#34;: {
+        &#34;className&#34;: &#34;Antarctica&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Storage&#34;: {
+        &#34;className&#34;: &#34;Storage&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;StorageWriteSpeed&#34;: {
+        &#34;className&#34;: &#34;StorageWriteSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;StorageReadSpeed&#34;: {
+        &#34;className&#34;: &#34;StorageReadSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;OperatingSystem&#34;: {
+        &#34;className&#34;: &#34;OperatingSystem&#34;,
+        &#34;extendsId&#34;: &#34;ChoiceAttribute&#34;
+    },
+    &#34;CpuCores&#34;: {
+        &#34;className&#34;: &#34;CpuCores&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;CpuClockSpeed&#34;: {
+        &#34;className&#34;: &#34;CpuClockSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;Ram&#34;: {
+        &#34;className&#34;: &#34;Ram&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;RamClockSpeed&#34;: {
+        &#34;className&#34;: &#34;RamClockSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;RamWriteSpeed&#34;: {
+        &#34;className&#34;: &#34;RamWriteSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;RamReadSpeed&#34;: {
+        &#34;className&#34;: &#34;RamReadSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;NetworkCapacity&#34;: {
+        &#34;className&#34;: &#34;NetworkCapacity&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;NetworkUploadSpeed&#34;: {
+        &#34;className&#34;: &#34;NetworkUploadSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;NetworkDownloadSpeed&#34;: {
+        &#34;className&#34;: &#34;NetworkDownloadSpeed&#34;,
+        &#34;extendsId&#34;: &#34;NumericAttribute&#34;
+    },
+    &#34;PricingModel&#34;: {
+        &#34;className&#34;: &#34;PricingModel&#34;,
+        &#34;extendsId&#34;: &#34;ChoiceAttribute&#34;
+    },
+    &#34;PayAndGo&#34;: {
+        &#34;className&#34;: &#34;PayAndGo&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Subscription&#34;: {
+        &#34;className&#34;: &#34;Subscription&#34;,
+        &#34;extendsId&#34;: &#34;OptionAttribute&#34;
+    },
+    &#34;Price&#34;: {
+        &#34;className&#34;: &#34;Price&#34;,
+        &#34;extendsId&#34;: &#34;Attribute&#34;
+    },
+    &#34;DatabaseAsAService&#34;: {
+        &#34;className&#34;: &#34;DatabaseAsAService&#34;,
+        &#34;extendsId&#34;: &#34;SaaS&#34;
+    },
+    &#34;SQLDatabaseAsAService&#34;: {
+        &#34;className&#34;: &#34;SQLDatabaseAsAService&#34;,
+        &#34;extendsId&#34;: &#34;DatabaseAsAService&#34;
+    },
+    &#34;NoSQLDatabaseAsAService&#34;: {
+        &#34;className&#34;: &#34;NoSQLDatabaseAsAService&#34;,
+        &#34;extendsId&#34;: &#34;DatabaseAsAService&#34;
+    }
+}
+&#34;&#34;&#34; AttributeIds that have already been imported mapped to their class names and extendsIds. Whenever a new Attribute
+    is added (not imported) to the framework, it needs to be included in here. &#34;&#34;&#34;
+
+
+def cleanGitCache():
+    &#34;&#34;&#34; Delete all temporary directories that were created to clone git repositories into &#34;&#34;&#34;
+    gitRepos = []
+    for gitRepo in ccsGitCache:
+        ccsGitCache[gitRepo].cleanup()
+        gitRepos += [gitRepo]
+    for gitRepo in gitRepos:
+        del ccsGitCache[gitRepo]
+
+
+def randName():
+    &#34;&#34;&#34; Returns a cryptographically secure 16 digit random string starting with the letter C&#34;&#34;&#34;
+    return &#34;C&#34; + &#34;&#34;.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(15))
+
+
+class Attribute:
+    &#34;&#34;&#34; Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+        extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+        requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+        arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        super().__init__()
+        self.name = None
+        self.gitRepo = None
+        self.commit = None
+        self.branch = None
+        self.filePath = None
+        self.id = &#34;Attribute&#34;
+        self.extendsId = &#34;object&#34;
+        self.mutable = False
+        self.searchKeyWords = None
+        self.description = None
+        self.matched = False
+        self.value = None
+
+    def setId(self, gitRepo, filePath, branch=None, commit=None):
+        &#34;&#34;&#34; Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
+            be loaded.
+
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to &#34;local&#34;, indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+        &#34;&#34;&#34;
+
+        self.gitRepo = gitRepo
+        self.commit = commit
+        self.filePath = filePath
+        self.id = gitRepo + &#34;@&#34; + filePath
+        if self.commit is not None:
+            self.id += &#34;@&#34; + self.commit
+            self.commit = &#34;refs/heads/master/&#34; + self.commit
+        else:
+            self.id += &#34;@latest&#34;
+
+    def inject(self, gitRepo, filePath, branch=None, commit=None, onlyFetchDependency=False):
+        &#34;&#34;&#34; Updates self with the fields of the Attribute that are attained from the given filePath.
+
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to &#34;local&#34;, indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+                onlyFetchDependency (bool): Does not inject any fields to self if set to True, defaults to False.
+        &#34;&#34;&#34;
+
+        self.setId(gitRepo, filePath, branch=branch, commit=commit)
+
+        # git clone metamodel repository
+        if gitRepo not in ccsGitCache:
+            tempDir = tempfile.TemporaryDirectory()
+            porcelain.clone(self.gitRepo, tempDir.name)
+            ccsGitCache[gitRepo] = tempDir
+
+        if self.commit is not None:
+            print(&#34;checkout commit &#34; + self.commit)
+            porcelain.update_head(ccsGitCache[gitRepo].name, self.commit)
+        # TODO else checkout latest commit and branch...
+
+        # inject metamodel into this Attribute
+        moduleId = gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + &#34;latest&#34;  # TODO make this work with given commit id and branch too
+        modulePath = ccsGitCache[gitRepo].name + &#34;/&#34; + filePath
+        moduleName = filePath.split(&#34;/&#34;)[-1].split(&#34;.py&#34;)[0]
+        # moduleDir = &#39;&#39;.join(modulePath.split(moduleName + &#34;.py&#34;))
+        # print(&#34;modulePath: &#34;, modulePath)
+        # print(&#34;moduleName: &#34;, moduleName)
+        # print(&#34;moduleDir: &#34;, moduleDir)
+
+        # parse module for extendsId field
+        source = open(modulePath, &#34;r&#34;).read()
+        root = ast.parse(source)
+
+        closestClass = None
+        try:
+            classes = [node for node in ast.walk(root) if isinstance(node, ast.ClassDef) and node.name == moduleName]
+            closestClass = classes[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does not define a class with the same name as its filename&#34; % modulePath)
+
+        closestFunction = None
+        try:
+            functions = [node for node in ast.walk(closestClass) if isinstance(node, ast.FunctionDef) and node.name == &#34;__init__&#34;]
+            closestFunction = functions[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does not define a __init__ function in its main class&#34; % modulePath)
+
+        closestAssign = None
+        try:
+            assigns = [node for node in ast.walk(closestFunction) if isinstance(node, ast.Assign)]
+            assigns = [node for node in assigns if isinstance(node.targets[0], ast.Attribute)]
+            assigns = [node for node in assigns if node.targets[0].attr == &#34;extendsId&#34;]
+            closestAssign = assigns[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does set the field extendsId&#34; % modulePath)
+
+        extendsId = closestAssign.value.value
+        # print(modulePath, &#34;extendsId: &#34;, extendsId)
+
+        # import extendsId module if it was not imported yet
+        if extendsId not in importedClasses:
+            #print(&#34;fetch dependency first:&#34;, extendsId)
+            dummy = CCS()
+            try:
+                dummyGitRepo = extendsId.split(&#34;@&#34;)[0]
+                dummyFilePath = extendsId.split(&#34;@&#34;)[1]
+            except Exception as e:
+                print(e)
+                logging.error(&#34;%s sets an extendsId field that is not formatted correctly. non-common attributes/CCS have \
+to be of the form link/to/repo@file/path.py@(commitID|latest), however this was the given extendsId: &#39;%s&#39;&#34; % (
+                    modulePath, extendsId))
+                return
+            dummy.inject(dummyGitRepo, dummyFilePath, onlyFetchDependency=True)
+
+        # extract class name from extendsId
+        extendsClassName = importedClasses[extendsId][&#34;className&#34;]
+
+        # refactor source main class name to a non-colliding class name
+        # , as well as the extension class to the class name derived from its extendsId field
+        if moduleId not in importedClasses:
+            nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of
+            # injected custom attributes happen to be identical
+            try:
+                extensionDigitStart = source.find(&#34;class &#34; + moduleName + &#34;(&#34;) + len(&#34;class &#34;)  # NOTE this means that moduleName and the model main class name HAVE to be identical
+                extensionDigitEnd = source.find(&#34;)&#34;, extensionDigitStart)
+                source = source[:extensionDigitStart] + nonCollidingClassName + &#34;(&#34; + extendsClassName + source[extensionDigitEnd:]
+            except Exception as e:
+                print(e)
+                logging.error(&#34;the injected module has to define a main class with the same name as its file name. the \
+injected ccs/attribute models moduleName was %s, however no main class name that was identical to it was found in %s&#34; % (moduleName, modulePath))
+                return
+
+            # debugging
+            # print(source)
+
+            # import module directly from refactored source
+            exec(source, globals())
+            importedClasses[moduleId] = {}
+            importedClasses[moduleId][&#34;className&#34;] = nonCollidingClassName
+            importedClasses[moduleId][&#34;extendsId&#34;] = extendsId
+            print(&#34;imported&#34;, moduleName, &#34;with id&#34;, moduleId, &#34;as&#34;, nonCollidingClassName)
+
+        if not onlyFetchDependency:
+            # inject custom class fields (overwrites/overrides existing fields and functions)
+            exec(&#34;self.__dict__.update(&#34; + importedClasses[moduleId][&#34;className&#34;] + &#34;().__dict__)&#34;)  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            # print(&#34;injected&#34;, moduleName, &#34;into&#34;, self.extendsId)
+
+        # some asserts for early failure
+        if commit is not None:
+            assert self.id == gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + commit, &#34;failed to inject CCS model properly. got %s but wanted %s&#34; % (self.id, gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + commit)
+        else:
+            assert self.id == gitRepo + &#34;@&#34; + filePath + &#34;@latest&#34;, &#34;failed to inject CCS model properly. got %s but wanted %s&#34; % (self.id, gitRepo + &#34;@&#34; + filePath + &#34;@latest&#34;)
+
+
+class BoolAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;BoolAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.value = None
+
+
+class ChoiceAttribute(Attribute):
+    &#34;&#34;&#34; ChoiceAttribute
+
+        Attributes:
+            options (list): A dictionary of OptionAttributes
+            value (Attribute): The dictionary key of the chosen OptionAttribute from self.options
+    &#34;&#34;&#34;
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;ChoiceAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.options = None  # dictionary of Attribute instances
+        self.value = None  # dictionary key of chosen Attribute instance
+
+
+class OptionAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;OptionAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+
+
+class NumericAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NumericAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.value = None
+        self.minVal = -inf
+        self.maxVal = inf
+        self.stepSize = None
+        self.makeInt = False
+        self.moreIsBetter = True
+
+
+class PricingModel(ChoiceAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;PricingModel&#34;
+        self.extendsId = &#34;ChoiceAttribute&#34;
+        self.options = {
+            &#34;payAndGo&#34;: PayAndGo(),
+            &#34;subscription&#34;: Subscription()
+        }
+        self.value = None
+
+
+class PricingModelInterface(OptionAttribute, ABC):
+    def __init__(self):
+        super().__init__()
+
+    @abstractmethod
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
+        for p in priceFuncs:
+            print(p.description, &#34;:&#34;, p.run(req) * currencyConversion)
+        pass
+
+
+class PayAndGo(PricingModelInterface):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;PayAndGo&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.description = &#34;you (pay) an upFrontCost once (and go) on to use the service&#34;
+
+        self.upFrontCost = None
+
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
+        for p in priceFuncs:
+            print(p.description, &#34;:&#34;, p.run(req) * currencyConversion)
+
+        self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
+        return self.upFrontCost
+
+
+class Subscription(PricingModelInterface):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Subscription&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.description = &#34;you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour&#34;
+
+        self.upfrontCost = 0
+        self.billingPeriodCost = None
+        self.billingPeriod = None  # per hour
+
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
+        self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
+        return ((self.billingPeriod * self.billingPeriodCost) + self.upfrontCost) * currencyConversion
+
+
+class Price(Attribute):
+    &#34;&#34;&#34; everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS &#34;&#34;&#34;
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Price&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.currency = None  # expecting ISO 4217 currency code as string
+        self.priceFuncs = []
+        self.model = PricingModel()
+
+
+# an interface as per https://stackoverflow.com/questions/2124190/how-do-i-implement-interfaces-in-python
+class PriceFunc(ABC):
+    def __init__(self):
+        super().__init__()
+        self.description = None
+
+    @abstractmethod
+    def run(self, req):
+        &#34;&#34;&#34; returns the value of this price function &#34;&#34;&#34;
+        pass
+
+
+def extractConfigurationTree(ccs):
+    &#34;&#34;&#34; extract the configuration of all CCS and their sub CCS &#34;&#34;&#34;
+
+    def helper(attr):
+        res = {attr.id: {}}
+        fields = vars(attr)  # https://stackoverflow.com/a/55320647
+        hasAttributes = False
+        for key in fields:
+            # scan all fields and filter out the attributes
+            try:
+                if isAncestorOf(&#34;Attribute&#34;, fields[key].id):
+                    # if fields[key] is an attribute ...
+                    hasAttributes = True
+                    res[attr.id].update(helper(fields[key]))
+            except Exception as e:
+                #print(e)
+                pass
+
+        if not hasAttributes:
+            res[attr.id][&#34;value&#34;] = fields[&#34;value&#34;]
+            res[attr.id][&#34;description&#34;] = fields[&#34;description&#34;]
+
+        return res
+
+    return helper(ccs)
+
+
+def estimatePrice(req, ccs, currency=&#34;EUR&#34;):
+    &#34;&#34;&#34; returns a dict containing the total price and a dict of configurations that it resulted from &#34;&#34;&#34;
+
+    # get prices of all CCS and their subCCS
+    allSubCCSPrices = extractPrices(ccs)
+
+    # convert prices to the same currency
+    # TODO inject API key using command line flag or environment variable or config file
+    apiKey = &#34;080197719e5c4ef0b73f339e208f1f67&#34;
+    # TODO cache this table for at least one day
+    ratesRelativeToUSD = json.loads(
+        requests.get(&#34;https://openexchangerates.org/api/latest.json?app_id=&#34; + apiKey + &#34;&amp;base=USD&#34;).content)[
+        &#34;rates&#34;]
+    currencyConversion = 1
+    try:
+        currencyConversion = ratesRelativeToUSD[currency]  # how many of requirements currency is 1 USD
+    except Exception as e:
+        logging.error(&#34;your requirement uses a currency with a currency code that does not comply with ISO_4217:&#34;,
+                      currency)
+        print(e)
+
+    try:
+        currencyConversion /= ratesRelativeToUSD[ccs.price.currency]  # how many of CCSs currency is 1 USD
+    except Exception as e:
+        logging.error(ccs.price.id, &#34;uses a currency with a currency code that does not comply with ISO_4217:&#34;,
+                      ccs.price.currency)
+        print(e)
+
+    if ccs.price.model.value is None:
+        logging.error(ccs.price.id, &#34;does not provide a pricing model choice&#34;)
+
+    totalPrice = {&#34;price&#34;: 0, &#34;billingPeriod&#34;: &#34;None&#34;, &#34;config&#34;: extractConfigurationTree(ccs)}
+
+    # get cheapest price of all of the subCCS
+    for price in allSubCCSPrices:
+        # get cheapest pricing method for this subCCS price and add it to the totalPrice
+        cheapestPrice = inf
+        for choice in price.model.options:
+            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs, currencyConversion=currencyConversion)
+            if curPrice &lt; cheapestPrice:
+                cheapestPrice = curPrice
+
+            if choice == &#34;subscription&#34;:
+                totalPrice[&#34;billingPeriod&#34;] = price.model.options[choice].billingPeriod
+
+        totalPrice[&#34;price&#34;] += cheapestPrice
+    return totalPrice
+
+
+class CCS(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;CCS&#34;
+        self.extendsId = &#34;Attribute&#34;
+
+        self.pageUrl = None
+        self.price = Price()
+
+
+class IaaS(CCS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;IaaS&#34;
+        self.extendsId = &#34;CCS&#34;
+
+        self.region = Region()
+
+
+class StorageAsAService(IaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;StorageAsAService&#34;
+        self.extendsId = &#34;IaaS&#34;
+
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()
+
+
+class ServerAsAService(IaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;ServerAsAService&#34;
+        self.extendsId = &#34;IaaS&#34;
+
+        self.operatingSystem = OperatingSystem()
+        self.cpuCores = CpuCores()
+        self.cpuClockSpeed = CpuClockSpeed()
+        self.ram = Ram()
+        self.ramClockSpeed = RamClockSpeed()
+        self.ramWriteSpeed = RamWriteSpeed()
+        self.ramReadSpeed = RamReadSpeed()
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()
+        self.networkCapacity = NetworkCapacity()
+        self.networkUploadSpeed = NetworkUploadSpeed()
+        self.networkDownloadSpeed = NetworkDownloadSpeed()
+
+
+class VMAsAService(ServerAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;VMAsAService&#34;
+        self.extendsId = &#34;ServerAsAService&#34;
+
+
+class SaaS(CCS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;SaaS&#34;
+        self.extendsId = &#34;CCS&#34;
+
+
+class DatabaseAsAService(SaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;DatabaseAsAService&#34;
+        self.extendsId = &#34;SaaS&#34;
+
+
+class SQLDatabaseAsAService(DatabaseAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;SQLDatabaseAsAService&#34;
+        self.extendsId = &#34;DatabaseAsAService&#34;
+
+
+class NoSQLDatabaseAsAService(DatabaseAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NoSQLDatabaseAsAService&#34;
+        self.extendsId = &#34;DatabaseAsAService&#34;
+
+
+def extractAttributes(attribute):
+    &#34;&#34;&#34; Recursively get all fields and subfields of an `Attribute` instance that are also of type `Attribute`. Also
+        scans the options field of ChoiceAttributes
+
+        Args:
+            attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
+
+        Returns:
+            list(Attribute): A list of Attribute instances
+
+        Note:
+            CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    res = []
+    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+    for key in fields:
+        try:
+            if isAncestorOf(&#34;Attribute&#34;, fields[key].id):
+                res += [fields[key]] + extractAttributes(fields[key])
+                if isAncestorOf(&#34;ChoiceAttribute&#34;, fields[key].id):
+                    # also extract all choices of the choiceAttribute and their Attribute type subfields
+
+                    # TODO mark extracted optionattribute subfield as such. only the selected optionattributes of choiceattributes must be considered in matchCCS, otherwise unselected optionattributes will spoof the price estimate
+                    res += [fields[key].options[choice] for choice in fields[key].options]
+                    for attrs in [extractAttributes(fields[key].options[choice]) for choice in fields[key].options]:
+                        res += attrs
+        except Exception as e:
+            pass
+    return res
+
+
+def extractPrices(attribute):
+    &#34;&#34;&#34; Recursively get all fields and subfields of an `Attribute` instance that are of type `Price`. Also
+        scans the options field of ChoiceAttributes
+
+        Args:
+            attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
+
+        Returns:
+            list(Attribute): A list of Attribute instances
+
+        Note:
+            CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    priceFuncs = []
+    attrs = extractAttributes(attribute)
+    for attr in attrs:
+        if isAncestorOf(&#34;Price&#34;, attr.id):
+            priceFuncs += [attr]
+
+    return priceFuncs
+
+
+def matchAttribute(ccs, *attributeIds):
+    &#34;&#34;&#34; Recursively get the first field of type `Attribute` of - either the given `CCS` or one if its subfields of type
+       `Attribute` - that are related to the given `attributeIds` in the given order. Options of Attributes of type
+       ChoiceAttribute will also be scanned for matches
+
+        Args:
+            ccs (CCS): The CCS whose fields will be searched
+            attributeIds (tuple(str)): The id that a field of type Attribute should match with
+
+        Returns:
+            Attribute: The field that matched with attributeId
+
+        Note:
+            CCS also inherits from Attribute
+
+        Example:
+            &gt;&gt;&gt; # returns the `storage` field of the VMAsAService instance
+            &gt;&gt;&gt; matchAttribute(VMAsAService, &#34;Storage&#34;)
+
+            &gt;&gt;&gt; # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
+            &gt;&gt;&gt; matchAttribute(VMAsAService(), &#34;StorageAsAService&#34;, &#34;Storage&#34;)
+
+            &gt;&gt;&gt; # returns the VMAsAService instance
+            &gt;&gt;&gt; matchAttribute(VMAsAService(), &#34;VMAsAService&#34;)
+    &#34;&#34;&#34;
+
+    def matchAttributeHelper(_ccs, *_attributeIds):
+        if len(_attributeIds) &lt; 1:
+            # done
+            return None
+
+        # its the extendsId that has to match because requirements (of type CCS) never have ids that relate to anything
+        if isAncestorOf(_ccs.extendsId, _attributeIds[0]):
+            if len(_attributeIds) == 1:
+                # done
+                return _ccs
+            # continue search for next attributeId
+            return matchAttributeHelper(_ccs, *_attributeIds[1:])
+
+        attributes = extractAttributes(_ccs)
+
+        for attr in attributes:
+            if isAncestorOf(attr.id, _attributeIds[0]):
+                if len(_attributeIds) == 1:
+                    # done
+                    return attr
+                # continue search for next attributeId
+                return matchAttributeHelper(attr, *_attributeIds[1:])
+
+        # no match found
+        return None
+
+    match = matchAttributeHelper(ccs, *attributeIds)
+    if match is None:
+        print(&#34;WARNING: your requirements did not match&#34;, attributeIds,
+              &#34;in that order. for better price estimation, you should set those attributes in that order in your &#34;
+              &#34;requirements!&#34;)
+    return match
+
+
+def getExtendsId(attributeId):
+    &#34;&#34;&#34; get the `extendsId` field of a class instance that matches with the given `attributeId`
+
+        Args:
+            attributeId (str): id of the Attribute whose extendsId field is sought
+
+        Returns:
+            str: extendsId field of the Attribute that matches with the given attributeId
+
+        Note:
+            - This function can only be called on Attributes that have already been imported.
+            - CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    if attributeId in importedClasses:
+        return importedClasses[attributeId][&#34;extendsId&#34;]
+    return None
+
+
+def isAncestorOf(rid, cid):
+    &#34;&#34;&#34; checks if an Attribute is related to another Attribute
+
+        Args:
+             rid (str): id of the first Attribute
+             cid (str): id for the second Attribute
+
+        Returns:
+            bool: True if the Attributes are related, else False
+
+        Note:
+            - two Attributes are related if either their ids match or an extendsId of the second attribute in any depth matches with the first attribute
+            - CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    if rid is None or cid is None:
+        return False
+
+    if rid == cid:
+        return True
+
+    extendsId = getExtendsId(cid)
+    while extendsId is not None:
+        if rid == extendsId:
+            return True
+        extendsId = getExtendsId(extendsId)
+
+    return False
+
+
+def matchCCS(req, ccs):
+    &#34;&#34;&#34; check if a requirement matches with a CCS and return a satisfying configuration.
+
+        Args:
+            req (CCS): The requirements
+            ccs (CCS): The CCS to check for a match
+
+        Returns:
+            bool: True if they match, else False
+            dict: configuration, None if unsatisfied
+
+        Note:
+            - A requirement matches with a CCS if and only if every single Attribute field of the requirement is satisfied through a related Attribute field in the CCS
+            - Attribute fields must be unique. Each instance of CCS may not have multiple Attribute fields with the same id
+            - If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.
+    &#34;&#34;&#34;
+
+    print(&#34;checking&#34;, ccs.name, &#34;for potential match&#34;)
+
+    # requirement is a custom attribute ... because &#34;@&#34; in req.id
+    if &#34;@&#34; in req.id:
+        # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
+        if not isAncestorOf(req.extendsId, ccs.id):
+            print(&#34;requirement is not in any way related to&#34;, ccs.id)
+            return False, None
+    else:
+        # requirement is a framework attribute
+        if not isAncestorOf(req.id, ccs.id):
+            print(&#34;requirement is not in any way related to&#34;, ccs.id)
+            return False, None
+
+    reqAttributes = extractAttributes(req)
+    ccsAttributes = extractAttributes(ccs)
+
+    configuration = {}
+
+    # pair-wise compare attributes and check if they match
+    for ra in reqAttributes:
+        configuration[ra.id] = ra.value
+
+        for ca in ccsAttributes:
+            if isAncestorOf(ra.id, ca.id):
+                if isAncestorOf(&#34;NumericAttribute&#34;, ra.id):
+                    if ra.value is not None:  # both requirement and CCS set this attribute
+                        if not ca.mutable and ca.value is None:
+                            print(ra.id, &#34;is set as a requirement, but&#34;, ccs.id, &#34;can not set it&#34;)
+                            return False, None
+                        if ca.moreIsBetter:
+                            if not ca.mutable:
+                                if ra.value &gt; ca.value:  # value is too small and not mutable
+                                    print(ra.id, &#34;is too small and cannot be made large enough:&#34;, &#34;got&#34;, ca.value, &#34;wanted&#34;, ra.value)
+                                    return False, None
+                            if ca.maxVal is not None:
+                                if ca.maxVal &lt; ra.value:  # value cannot be made large enough
+                                    print(ra.id, &#34;is too small and cannot be made large enough:&#34;, &#34;got&#34;, ca.maxVal, &#34;wanted&#34;, ra.value)
+                                    return False, None
+                        else:
+                            if ra.value &lt; ca.value:  # value is too large and not mutable
+                                print(ra.id, &#34;is too large and cannot be made small enough:&#34;, &#34;got&#34;, ca.value, &#34;wanted&#34;, ra.value)
+                                return False
+                            if ca.minVal is not None:
+                                if ca.minVal &gt; ra.value:  # value cannot be made small enough
+                                    print(ra.id, &#34;is too large and cannot be made small enough:&#34;, &#34;got&#34;, ca.minVal, &#34;wanted&#34;, ra.value)
+                                    return False, None
+
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+
+
+                    # ra is satisfied by ca
+
+                elif isAncestorOf(&#34;BoolAttribute&#34;, ra.id):
+                    if not ca.mutable:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(ra.id, &#34;does not match and is not mutable:&#34;, &#34;wanted&#34;, ra.value, &#34;got&#34;, ca.value)
+                            return False, None
+
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+
+                    # ra is satisfied by ca
+
+                elif isAncestorOf(&#34;ChoiceAttribute&#34;, ra.id):
+                    if ra.value is not None:
+                        if ca.mutable:
+                            if not any([isAncestorOf(ra.options[ra.value].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                print(ra.id, &#34;option not available:&#34;, ra.options[ra.value].id, &#34;not related to any of&#34;, [ca.options[choice].id for choice in ca.options])
+                                return False, None
+                        else:
+                            if not isAncestorOf(ra.options[ra.value].id, ca.options[ca.value].id):  # value does not match and is not mutable
+                                print(ra.id, &#34;does not match:&#34;, ra.options[ra.value].id, &#34;not related to&#34;, ca.options[ca.value].id)
+                                return False, None
+
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+
+                    # ra is satisfied by ca
+
+    # req is satisfied by ccs
+    return True, configuration
+
+
+def renderHierarchy():
+    &#34;&#34;&#34; render the class hierarchy of all imported attributes &#34;&#34;&#34;
+
+    dot = graphviz.Digraph(comment=&#34;Attribute hierarchy&#34;, format=&#34;svg&#34;)
+    dot.graph_attr.update({
+        &#34;rankdir&#34;: &#34;LR&#34;
+    })
+
+    def renderFields(d2, attrId):
+        glob = globals()
+        global importedClasses
+        for className in glob:
+            # get globally imported classes
+            if className == importedClasses[attrId][&#34;className&#34;]:
+                vs = vars(glob[className]())
+                # get fields of new class instance
+                for field in vs:
+                    # check if field is an Attribute
+                    try:
+                        if isAncestorOf(&#34;Attribute&#34;, vs[field].id):
+                            # field edge
+                            d2.edge(attrId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), vs[field].id.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), color=&#34;red&#34;)
+                            renderFields(d2, vs[field].id)
+                    except Exception as a:
+                        pass
+
+    for attributeId in importedClasses:
+        dot2 = graphviz.Digraph(comment=attributeId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;) + &#34; fields&#34;, format=&#34;svg&#34;)
+        dot2.graph_attr.update({
+            &#34;rankdir&#34;: &#34;LR&#34;
+        })
+
+        # recursively create field edges
+        renderFields(dot2, attributeId)
+
+        # render individual attributes/ccs and their class fields and their fields&#39; fields
+        dot2.render(&#34;docs/renders/&#34; + attributeId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), view=False)
+
+        # hierarchy edge
+        dot.edge(attributeId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), importedClasses[attributeId][&#34;extendsId&#34;].replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), color=&#34;black&#34;)
+
+    # render the entire attribute/ccs class hierarchy
+    dot.render(&#34;docs/renders/hierarchy&#34;, view=False)
+
+
+class Region(ChoiceAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Region&#34;
+        self.extendsId = &#34;ChoiceAttribute&#34;
+        self.description = &#34;The continent in which the CCS resides&#34;
+
+        self.options = {
+            &#34;europe&#34;: Europe(),
+            &#34;northAmerica&#34;: NorthAmerica(),
+            &#34;southAmerica&#34;: SouthAmerica(),
+            &#34;eastAsia&#34;: EastAsia(),
+            &#34;antarctica&#34;: Antarctica(),
+            &#34;africa&#34;: Africa(),
+            &#34;australia&#34;: Australia()
+        }
+        self.value = None
+
+
+class Europe(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Europe&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Europe&#34;
+
+
+class NorthAmerica(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NorthAmerica&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;North America&#34;
+
+
+class SouthAmerica(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;SouthAmerica&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;South America&#34;
+
+
+class EastAsia(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;EastAsia&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;East Asia&#34;
+
+
+class Antarctica(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Antarctica&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Antarctica&#34;
+
+
+class Africa(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Africa&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Africa&#34;
+
+
+class Australia(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Australia&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Australia&#34;
+
+
+class Storage(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Storage&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Storage amount in GB&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class StorageWriteSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;StorageWriteSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Storage write speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class StorageReadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;StorageReadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Storage read speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class OperatingSystem(ChoiceAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;OperatingSystem&#34;
+        self.extendsId = &#34;ChoiceAttribute&#34;
+        self.description = &#34;The operating system a CCS runs on&#34;
+
+        self.options = {
+            &#34;linux&#34;: Linux(),
+            &#34;windows&#34;: Windows(),
+            &#34;mac&#34;: Mac()
+        }
+
+        self.value = None
+
+
+class Linux(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Linux&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.value = &#34;Linux (Unix)&#34;
+
+
+class Windows(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Windows&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.value = &#34;Windows&#34;
+
+
+class Mac(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Mac&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.value = &#34;Mac (Unix)&#34;
+
+
+class CpuCores(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;CpuCores&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;The amount of CPU cores&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class CpuClockSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;CpuClockSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;CPU clock speed in GHz&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class Ram(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Ram&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;The amount of Ram in GB&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class RamClockSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;RamClockSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;RAM clock speed in GHz&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class RamWriteSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;RamWriteSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;RAM write speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class RamReadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;RamReadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;RAM read speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class NetworkCapacity(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NetworkCapacity&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Network capacity in GB&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class NetworkUploadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NetworkUploadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Network upload speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True
+
+
+class NetworkDownloadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NetworkDownloadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Network download speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="pycsdl.csdl.ccsGitCache"><code class="name">var <span class="ident">ccsGitCache</span></code></dt>
+<dd>
+<div class="desc"><p>Caches all cloned git repositories</p></div>
+</dd>
+<dt id="pycsdl.csdl.importedClasses"><code class="name">var <span class="ident">importedClasses</span></code></dt>
+<dd>
+<div class="desc"><p>AttributeIds that have already been imported mapped to their class names and extendsIds. Whenever a new Attribute
+is added (not imported) to the framework, it needs to be included in here.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pycsdl.csdl.cleanGitCache"><code class="name flex">
+<span>def <span class="ident">cleanGitCache</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Delete all temporary directories that were created to clone git repositories into</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cleanGitCache():
+    &#34;&#34;&#34; Delete all temporary directories that were created to clone git repositories into &#34;&#34;&#34;
+    gitRepos = []
+    for gitRepo in ccsGitCache:
+        ccsGitCache[gitRepo].cleanup()
+        gitRepos += [gitRepo]
+    for gitRepo in gitRepos:
+        del ccsGitCache[gitRepo]</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.estimatePrice"><code class="name flex">
+<span>def <span class="ident">estimatePrice</span></span>(<span>req, ccs, currency='EUR')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns a dict containing the total price and a dict of configurations that it resulted from</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def estimatePrice(req, ccs, currency=&#34;EUR&#34;):
+    &#34;&#34;&#34; returns a dict containing the total price and a dict of configurations that it resulted from &#34;&#34;&#34;
+
+    # get prices of all CCS and their subCCS
+    allSubCCSPrices = extractPrices(ccs)
+
+    # convert prices to the same currency
+    # TODO inject API key using command line flag or environment variable or config file
+    apiKey = &#34;080197719e5c4ef0b73f339e208f1f67&#34;
+    # TODO cache this table for at least one day
+    ratesRelativeToUSD = json.loads(
+        requests.get(&#34;https://openexchangerates.org/api/latest.json?app_id=&#34; + apiKey + &#34;&amp;base=USD&#34;).content)[
+        &#34;rates&#34;]
+    currencyConversion = 1
+    try:
+        currencyConversion = ratesRelativeToUSD[currency]  # how many of requirements currency is 1 USD
+    except Exception as e:
+        logging.error(&#34;your requirement uses a currency with a currency code that does not comply with ISO_4217:&#34;,
+                      currency)
+        print(e)
+
+    try:
+        currencyConversion /= ratesRelativeToUSD[ccs.price.currency]  # how many of CCSs currency is 1 USD
+    except Exception as e:
+        logging.error(ccs.price.id, &#34;uses a currency with a currency code that does not comply with ISO_4217:&#34;,
+                      ccs.price.currency)
+        print(e)
+
+    if ccs.price.model.value is None:
+        logging.error(ccs.price.id, &#34;does not provide a pricing model choice&#34;)
+
+    totalPrice = {&#34;price&#34;: 0, &#34;billingPeriod&#34;: &#34;None&#34;, &#34;config&#34;: extractConfigurationTree(ccs)}
+
+    # get cheapest price of all of the subCCS
+    for price in allSubCCSPrices:
+        # get cheapest pricing method for this subCCS price and add it to the totalPrice
+        cheapestPrice = inf
+        for choice in price.model.options:
+            curPrice = price.model.options[choice].getPrice(req, price.priceFuncs, currencyConversion=currencyConversion)
+            if curPrice &lt; cheapestPrice:
+                cheapestPrice = curPrice
+
+            if choice == &#34;subscription&#34;:
+                totalPrice[&#34;billingPeriod&#34;] = price.model.options[choice].billingPeriod
+
+        totalPrice[&#34;price&#34;] += cheapestPrice
+    return totalPrice</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.extractAttributes"><code class="name flex">
+<span>def <span class="ident">extractAttributes</span></span>(<span>attribute)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Recursively get all fields and subfields of an <code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code> instance that are also of type <code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code>. Also
+scans the options field of ChoiceAttributes</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>attribute</code></strong> :&ensp;<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></dt>
+<dd>The CCS of which all fields of type Attribute are to be extracted</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>list(Attribute): A list of Attribute instances</p>
+<h2 id="note">Note</h2>
+<p>CCS also inherits from Attribute</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extractAttributes(attribute):
+    &#34;&#34;&#34; Recursively get all fields and subfields of an `Attribute` instance that are also of type `Attribute`. Also
+        scans the options field of ChoiceAttributes
+
+        Args:
+            attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
+
+        Returns:
+            list(Attribute): A list of Attribute instances
+
+        Note:
+            CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    res = []
+    fields = vars(attribute)  # https://stackoverflow.com/a/55320647
+    for key in fields:
+        try:
+            if isAncestorOf(&#34;Attribute&#34;, fields[key].id):
+                res += [fields[key]] + extractAttributes(fields[key])
+                if isAncestorOf(&#34;ChoiceAttribute&#34;, fields[key].id):
+                    # also extract all choices of the choiceAttribute and their Attribute type subfields
+
+                    # TODO mark extracted optionattribute subfield as such. only the selected optionattributes of choiceattributes must be considered in matchCCS, otherwise unselected optionattributes will spoof the price estimate
+                    res += [fields[key].options[choice] for choice in fields[key].options]
+                    for attrs in [extractAttributes(fields[key].options[choice]) for choice in fields[key].options]:
+                        res += attrs
+        except Exception as e:
+            pass
+    return res</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.extractConfigurationTree"><code class="name flex">
+<span>def <span class="ident">extractConfigurationTree</span></span>(<span>ccs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>extract the configuration of all CCS and their sub CCS</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extractConfigurationTree(ccs):
+    &#34;&#34;&#34; extract the configuration of all CCS and their sub CCS &#34;&#34;&#34;
+
+    def helper(attr):
+        res = {attr.id: {}}
+        fields = vars(attr)  # https://stackoverflow.com/a/55320647
+        hasAttributes = False
+        for key in fields:
+            # scan all fields and filter out the attributes
+            try:
+                if isAncestorOf(&#34;Attribute&#34;, fields[key].id):
+                    # if fields[key] is an attribute ...
+                    hasAttributes = True
+                    res[attr.id].update(helper(fields[key]))
+            except Exception as e:
+                #print(e)
+                pass
+
+        if not hasAttributes:
+            res[attr.id][&#34;value&#34;] = fields[&#34;value&#34;]
+            res[attr.id][&#34;description&#34;] = fields[&#34;description&#34;]
+
+        return res
+
+    return helper(ccs)</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.extractPrices"><code class="name flex">
+<span>def <span class="ident">extractPrices</span></span>(<span>attribute)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Recursively get all fields and subfields of an <code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code> instance that are of type <code><a title="pycsdl.csdl.Price" href="#pycsdl.csdl.Price">Price</a></code>. Also
+scans the options field of ChoiceAttributes</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>attribute</code></strong> :&ensp;<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></dt>
+<dd>The CCS of which all fields of type Attribute are to be extracted</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>list(Attribute): A list of Attribute instances</p>
+<h2 id="note">Note</h2>
+<p>CCS also inherits from Attribute</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extractPrices(attribute):
+    &#34;&#34;&#34; Recursively get all fields and subfields of an `Attribute` instance that are of type `Price`. Also
+        scans the options field of ChoiceAttributes
+
+        Args:
+            attribute (Attribute): The CCS of which all fields of type Attribute are to be extracted
+
+        Returns:
+            list(Attribute): A list of Attribute instances
+
+        Note:
+            CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    priceFuncs = []
+    attrs = extractAttributes(attribute)
+    for attr in attrs:
+        if isAncestorOf(&#34;Price&#34;, attr.id):
+            priceFuncs += [attr]
+
+    return priceFuncs</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.getExtendsId"><code class="name flex">
+<span>def <span class="ident">getExtendsId</span></span>(<span>attributeId)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>get the <code>extendsId</code> field of a class instance that matches with the given <code>attributeId</code></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>attributeId</code></strong> :&ensp;<code>str</code></dt>
+<dd>id of the Attribute whose extendsId field is sought</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>extendsId field of the Attribute that matches with the given attributeId</dd>
+</dl>
+<h2 id="note">Note</h2>
+<ul>
+<li>This function can only be called on Attributes that have already been imported.</li>
+<li>CCS also inherits from Attribute</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getExtendsId(attributeId):
+    &#34;&#34;&#34; get the `extendsId` field of a class instance that matches with the given `attributeId`
+
+        Args:
+            attributeId (str): id of the Attribute whose extendsId field is sought
+
+        Returns:
+            str: extendsId field of the Attribute that matches with the given attributeId
+
+        Note:
+            - This function can only be called on Attributes that have already been imported.
+            - CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    if attributeId in importedClasses:
+        return importedClasses[attributeId][&#34;extendsId&#34;]
+    return None</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.isAncestorOf"><code class="name flex">
+<span>def <span class="ident">isAncestorOf</span></span>(<span>rid, cid)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>checks if an Attribute is related to another Attribute</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>rid</code></strong> :&ensp;<code>str</code></dt>
+<dd>id of the first Attribute</dd>
+<dt><strong><code>cid</code></strong> :&ensp;<code>str</code></dt>
+<dd>id for the second Attribute</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if the Attributes are related, else False</dd>
+</dl>
+<h2 id="note">Note</h2>
+<ul>
+<li>two Attributes are related if either their ids match or an extendsId of the second attribute in any depth matches with the first attribute</li>
+<li>CCS also inherits from Attribute</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isAncestorOf(rid, cid):
+    &#34;&#34;&#34; checks if an Attribute is related to another Attribute
+
+        Args:
+             rid (str): id of the first Attribute
+             cid (str): id for the second Attribute
+
+        Returns:
+            bool: True if the Attributes are related, else False
+
+        Note:
+            - two Attributes are related if either their ids match or an extendsId of the second attribute in any depth matches with the first attribute
+            - CCS also inherits from Attribute
+    &#34;&#34;&#34;
+    if rid is None or cid is None:
+        return False
+
+    if rid == cid:
+        return True
+
+    extendsId = getExtendsId(cid)
+    while extendsId is not None:
+        if rid == extendsId:
+            return True
+        extendsId = getExtendsId(extendsId)
+
+    return False</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.matchAttribute"><code class="name flex">
+<span>def <span class="ident">matchAttribute</span></span>(<span>ccs, *attributeIds)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Recursively get the first field of type <code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code> of - either the given <code><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></code> or one if its subfields of type
+<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code> - that are related to the given <code>attributeIds</code> in the given order. Options of Attributes of type
+ChoiceAttribute will also be scanned for matches</p>
+<p>Args:
+ccs (CCS): The CCS whose fields will be searched
+attributeIds (tuple(str)): The id that a field of type Attribute should match with</p>
+<p>Returns:
+Attribute: The field that matched with attributeId</p>
+<p>Note:
+CCS also inherits from Attribute</p>
+<p>Example:
+&gt;&gt;&gt; # returns the <code>storage</code> field of the VMAsAService instance
+&gt;&gt;&gt; matchAttribute(VMAsAService, "Storage")</p>
+<pre><code> &gt;&gt;&gt; # returns the &lt;code&gt;storage&lt;/code&gt; field of the StorageAsAService instance inside the VMAsAService instance
+ &gt;&gt;&gt; matchAttribute(VMAsAService(), "StorageAsAService", "Storage")
+
+ &gt;&gt;&gt; # returns the VMAsAService instance
+ &gt;&gt;&gt; matchAttribute(VMAsAService(), "VMAsAService")
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def matchAttribute(ccs, *attributeIds):
+    &#34;&#34;&#34; Recursively get the first field of type `Attribute` of - either the given `CCS` or one if its subfields of type
+       `Attribute` - that are related to the given `attributeIds` in the given order. Options of Attributes of type
+       ChoiceAttribute will also be scanned for matches
+
+        Args:
+            ccs (CCS): The CCS whose fields will be searched
+            attributeIds (tuple(str)): The id that a field of type Attribute should match with
+
+        Returns:
+            Attribute: The field that matched with attributeId
+
+        Note:
+            CCS also inherits from Attribute
+
+        Example:
+            &gt;&gt;&gt; # returns the `storage` field of the VMAsAService instance
+            &gt;&gt;&gt; matchAttribute(VMAsAService, &#34;Storage&#34;)
+
+            &gt;&gt;&gt; # returns the `storage` field of the StorageAsAService instance inside the VMAsAService instance
+            &gt;&gt;&gt; matchAttribute(VMAsAService(), &#34;StorageAsAService&#34;, &#34;Storage&#34;)
+
+            &gt;&gt;&gt; # returns the VMAsAService instance
+            &gt;&gt;&gt; matchAttribute(VMAsAService(), &#34;VMAsAService&#34;)
+    &#34;&#34;&#34;
+
+    def matchAttributeHelper(_ccs, *_attributeIds):
+        if len(_attributeIds) &lt; 1:
+            # done
+            return None
+
+        # its the extendsId that has to match because requirements (of type CCS) never have ids that relate to anything
+        if isAncestorOf(_ccs.extendsId, _attributeIds[0]):
+            if len(_attributeIds) == 1:
+                # done
+                return _ccs
+            # continue search for next attributeId
+            return matchAttributeHelper(_ccs, *_attributeIds[1:])
+
+        attributes = extractAttributes(_ccs)
+
+        for attr in attributes:
+            if isAncestorOf(attr.id, _attributeIds[0]):
+                if len(_attributeIds) == 1:
+                    # done
+                    return attr
+                # continue search for next attributeId
+                return matchAttributeHelper(attr, *_attributeIds[1:])
+
+        # no match found
+        return None
+
+    match = matchAttributeHelper(ccs, *attributeIds)
+    if match is None:
+        print(&#34;WARNING: your requirements did not match&#34;, attributeIds,
+              &#34;in that order. for better price estimation, you should set those attributes in that order in your &#34;
+              &#34;requirements!&#34;)
+    return match</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.matchCCS"><code class="name flex">
+<span>def <span class="ident">matchCCS</span></span>(<span>req, ccs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>check if a requirement matches with a CCS and return a satisfying configuration.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>req</code></strong> :&ensp;<code><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></code></dt>
+<dd>The requirements</dd>
+<dt><strong><code>ccs</code></strong> :&ensp;<code><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></code></dt>
+<dd>The CCS to check for a match</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if they match, else False</dd>
+<dt><code>dict</code></dt>
+<dd>configuration, None if unsatisfied</dd>
+</dl>
+<h2 id="note">Note</h2>
+<ul>
+<li>A requirement matches with a CCS if and only if every single Attribute field of the requirement is satisfied through a related Attribute field in the CCS</li>
+<li>Attribute fields must be unique. Each instance of CCS may not have multiple Attribute fields with the same id</li>
+<li>If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def matchCCS(req, ccs):
+    &#34;&#34;&#34; check if a requirement matches with a CCS and return a satisfying configuration.
+
+        Args:
+            req (CCS): The requirements
+            ccs (CCS): The CCS to check for a match
+
+        Returns:
+            bool: True if they match, else False
+            dict: configuration, None if unsatisfied
+
+        Note:
+            - A requirement matches with a CCS if and only if every single Attribute field of the requirement is satisfied through a related Attribute field in the CCS
+            - Attribute fields must be unique. Each instance of CCS may not have multiple Attribute fields with the same id
+            - If a requirement or a CCS has an Attribute field whose subfields have an Attribute with a duplicate id, then only the first matching Attribute with that id will be considered.
+    &#34;&#34;&#34;
+
+    print(&#34;checking&#34;, ccs.name, &#34;for potential match&#34;)
+
+    # requirement is a custom attribute ... because &#34;@&#34; in req.id
+    if &#34;@&#34; in req.id:
+        # if the parent of req is not related to ccs, then it does not matter whether their attributes match or not
+        if not isAncestorOf(req.extendsId, ccs.id):
+            print(&#34;requirement is not in any way related to&#34;, ccs.id)
+            return False, None
+    else:
+        # requirement is a framework attribute
+        if not isAncestorOf(req.id, ccs.id):
+            print(&#34;requirement is not in any way related to&#34;, ccs.id)
+            return False, None
+
+    reqAttributes = extractAttributes(req)
+    ccsAttributes = extractAttributes(ccs)
+
+    configuration = {}
+
+    # pair-wise compare attributes and check if they match
+    for ra in reqAttributes:
+        configuration[ra.id] = ra.value
+
+        for ca in ccsAttributes:
+            if isAncestorOf(ra.id, ca.id):
+                if isAncestorOf(&#34;NumericAttribute&#34;, ra.id):
+                    if ra.value is not None:  # both requirement and CCS set this attribute
+                        if not ca.mutable and ca.value is None:
+                            print(ra.id, &#34;is set as a requirement, but&#34;, ccs.id, &#34;can not set it&#34;)
+                            return False, None
+                        if ca.moreIsBetter:
+                            if not ca.mutable:
+                                if ra.value &gt; ca.value:  # value is too small and not mutable
+                                    print(ra.id, &#34;is too small and cannot be made large enough:&#34;, &#34;got&#34;, ca.value, &#34;wanted&#34;, ra.value)
+                                    return False, None
+                            if ca.maxVal is not None:
+                                if ca.maxVal &lt; ra.value:  # value cannot be made large enough
+                                    print(ra.id, &#34;is too small and cannot be made large enough:&#34;, &#34;got&#34;, ca.maxVal, &#34;wanted&#34;, ra.value)
+                                    return False, None
+                        else:
+                            if ra.value &lt; ca.value:  # value is too large and not mutable
+                                print(ra.id, &#34;is too large and cannot be made small enough:&#34;, &#34;got&#34;, ca.value, &#34;wanted&#34;, ra.value)
+                                return False
+                            if ca.minVal is not None:
+                                if ca.minVal &gt; ra.value:  # value cannot be made small enough
+                                    print(ra.id, &#34;is too large and cannot be made small enough:&#34;, &#34;got&#34;, ca.minVal, &#34;wanted&#34;, ra.value)
+                                    return False, None
+
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+
+
+                    # ra is satisfied by ca
+
+                elif isAncestorOf(&#34;BoolAttribute&#34;, ra.id):
+                    if not ca.mutable:
+                        if ra.value != ca.value:  # value does not match and is not mutable
+                            print(ra.id, &#34;does not match and is not mutable:&#34;, &#34;wanted&#34;, ra.value, &#34;got&#34;, ca.value)
+                            return False, None
+
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+
+                    # ra is satisfied by ca
+
+                elif isAncestorOf(&#34;ChoiceAttribute&#34;, ra.id):
+                    if ra.value is not None:
+                        if ca.mutable:
+                            if not any([isAncestorOf(ra.options[ra.value].id, ca.options[choice].id) for choice in ca.options]):  # value mutable but not available
+                                print(ra.id, &#34;option not available:&#34;, ra.options[ra.value].id, &#34;not related to any of&#34;, [ca.options[choice].id for choice in ca.options])
+                                return False, None
+                        else:
+                            if not isAncestorOf(ra.options[ra.value].id, ca.options[ca.value].id):  # value does not match and is not mutable
+                                print(ra.id, &#34;does not match:&#34;, ra.options[ra.value].id, &#34;not related to&#34;, ca.options[ca.value].id)
+                                return False, None
+
+                    # get configuration
+                    if not ca.mutable:
+                        configuration[ra.id] = ca.value
+
+                    # ra is satisfied by ca
+
+    # req is satisfied by ccs
+    return True, configuration</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.randName"><code class="name flex">
+<span>def <span class="ident">randName</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a cryptographically secure 16 digit random string starting with the letter C</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def randName():
+    &#34;&#34;&#34; Returns a cryptographically secure 16 digit random string starting with the letter C&#34;&#34;&#34;
+    return &#34;C&#34; + &#34;&#34;.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(15))</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.renderHierarchy"><code class="name flex">
+<span>def <span class="ident">renderHierarchy</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>render the class hierarchy of all imported attributes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def renderHierarchy():
+    &#34;&#34;&#34; render the class hierarchy of all imported attributes &#34;&#34;&#34;
+
+    dot = graphviz.Digraph(comment=&#34;Attribute hierarchy&#34;, format=&#34;svg&#34;)
+    dot.graph_attr.update({
+        &#34;rankdir&#34;: &#34;LR&#34;
+    })
+
+    def renderFields(d2, attrId):
+        glob = globals()
+        global importedClasses
+        for className in glob:
+            # get globally imported classes
+            if className == importedClasses[attrId][&#34;className&#34;]:
+                vs = vars(glob[className]())
+                # get fields of new class instance
+                for field in vs:
+                    # check if field is an Attribute
+                    try:
+                        if isAncestorOf(&#34;Attribute&#34;, vs[field].id):
+                            # field edge
+                            d2.edge(attrId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), vs[field].id.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), color=&#34;red&#34;)
+                            renderFields(d2, vs[field].id)
+                    except Exception as a:
+                        pass
+
+    for attributeId in importedClasses:
+        dot2 = graphviz.Digraph(comment=attributeId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;) + &#34; fields&#34;, format=&#34;svg&#34;)
+        dot2.graph_attr.update({
+            &#34;rankdir&#34;: &#34;LR&#34;
+        })
+
+        # recursively create field edges
+        renderFields(dot2, attributeId)
+
+        # render individual attributes/ccs and their class fields and their fields&#39; fields
+        dot2.render(&#34;docs/renders/&#34; + attributeId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), view=False)
+
+        # hierarchy edge
+        dot.edge(attributeId.replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), importedClasses[attributeId][&#34;extendsId&#34;].replace(&#34;https://&#34;, &#34;&#34;).replace(&#34;http://&#34;, &#34;&#34;), color=&#34;black&#34;)
+
+    # render the entire attribute/ccs class hierarchy
+    dot.render(&#34;docs/renders/hierarchy&#34;, view=False)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pycsdl.csdl.Africa"><code class="flex name class">
+<span>class <span class="ident">Africa</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Africa(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Africa&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Africa&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Antarctica"><code class="flex name class">
+<span>class <span class="ident">Antarctica</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Antarctica(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Antarctica&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Antarctica&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Attribute"><code class="flex name class">
+<span>class <span class="ident">Attribute</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Attribute:
+    &#34;&#34;&#34; Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+        extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+        requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+        arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        super().__init__()
+        self.name = None
+        self.gitRepo = None
+        self.commit = None
+        self.branch = None
+        self.filePath = None
+        self.id = &#34;Attribute&#34;
+        self.extendsId = &#34;object&#34;
+        self.mutable = False
+        self.searchKeyWords = None
+        self.description = None
+        self.matched = False
+        self.value = None
+
+    def setId(self, gitRepo, filePath, branch=None, commit=None):
+        &#34;&#34;&#34; Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
+            be loaded.
+
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to &#34;local&#34;, indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+        &#34;&#34;&#34;
+
+        self.gitRepo = gitRepo
+        self.commit = commit
+        self.filePath = filePath
+        self.id = gitRepo + &#34;@&#34; + filePath
+        if self.commit is not None:
+            self.id += &#34;@&#34; + self.commit
+            self.commit = &#34;refs/heads/master/&#34; + self.commit
+        else:
+            self.id += &#34;@latest&#34;
+
+    def inject(self, gitRepo, filePath, branch=None, commit=None, onlyFetchDependency=False):
+        &#34;&#34;&#34; Updates self with the fields of the Attribute that are attained from the given filePath.
+
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to &#34;local&#34;, indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+                onlyFetchDependency (bool): Does not inject any fields to self if set to True, defaults to False.
+        &#34;&#34;&#34;
+
+        self.setId(gitRepo, filePath, branch=branch, commit=commit)
+
+        # git clone metamodel repository
+        if gitRepo not in ccsGitCache:
+            tempDir = tempfile.TemporaryDirectory()
+            porcelain.clone(self.gitRepo, tempDir.name)
+            ccsGitCache[gitRepo] = tempDir
+
+        if self.commit is not None:
+            print(&#34;checkout commit &#34; + self.commit)
+            porcelain.update_head(ccsGitCache[gitRepo].name, self.commit)
+        # TODO else checkout latest commit and branch...
+
+        # inject metamodel into this Attribute
+        moduleId = gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + &#34;latest&#34;  # TODO make this work with given commit id and branch too
+        modulePath = ccsGitCache[gitRepo].name + &#34;/&#34; + filePath
+        moduleName = filePath.split(&#34;/&#34;)[-1].split(&#34;.py&#34;)[0]
+        # moduleDir = &#39;&#39;.join(modulePath.split(moduleName + &#34;.py&#34;))
+        # print(&#34;modulePath: &#34;, modulePath)
+        # print(&#34;moduleName: &#34;, moduleName)
+        # print(&#34;moduleDir: &#34;, moduleDir)
+
+        # parse module for extendsId field
+        source = open(modulePath, &#34;r&#34;).read()
+        root = ast.parse(source)
+
+        closestClass = None
+        try:
+            classes = [node for node in ast.walk(root) if isinstance(node, ast.ClassDef) and node.name == moduleName]
+            closestClass = classes[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does not define a class with the same name as its filename&#34; % modulePath)
+
+        closestFunction = None
+        try:
+            functions = [node for node in ast.walk(closestClass) if isinstance(node, ast.FunctionDef) and node.name == &#34;__init__&#34;]
+            closestFunction = functions[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does not define a __init__ function in its main class&#34; % modulePath)
+
+        closestAssign = None
+        try:
+            assigns = [node for node in ast.walk(closestFunction) if isinstance(node, ast.Assign)]
+            assigns = [node for node in assigns if isinstance(node.targets[0], ast.Attribute)]
+            assigns = [node for node in assigns if node.targets[0].attr == &#34;extendsId&#34;]
+            closestAssign = assigns[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does set the field extendsId&#34; % modulePath)
+
+        extendsId = closestAssign.value.value
+        # print(modulePath, &#34;extendsId: &#34;, extendsId)
+
+        # import extendsId module if it was not imported yet
+        if extendsId not in importedClasses:
+            #print(&#34;fetch dependency first:&#34;, extendsId)
+            dummy = CCS()
+            try:
+                dummyGitRepo = extendsId.split(&#34;@&#34;)[0]
+                dummyFilePath = extendsId.split(&#34;@&#34;)[1]
+            except Exception as e:
+                print(e)
+                logging.error(&#34;%s sets an extendsId field that is not formatted correctly. non-common attributes/CCS have \
+to be of the form link/to/repo@file/path.py@(commitID|latest), however this was the given extendsId: &#39;%s&#39;&#34; % (
+                    modulePath, extendsId))
+                return
+            dummy.inject(dummyGitRepo, dummyFilePath, onlyFetchDependency=True)
+
+        # extract class name from extendsId
+        extendsClassName = importedClasses[extendsId][&#34;className&#34;]
+
+        # refactor source main class name to a non-colliding class name
+        # , as well as the extension class to the class name derived from its extendsId field
+        if moduleId not in importedClasses:
+            nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of
+            # injected custom attributes happen to be identical
+            try:
+                extensionDigitStart = source.find(&#34;class &#34; + moduleName + &#34;(&#34;) + len(&#34;class &#34;)  # NOTE this means that moduleName and the model main class name HAVE to be identical
+                extensionDigitEnd = source.find(&#34;)&#34;, extensionDigitStart)
+                source = source[:extensionDigitStart] + nonCollidingClassName + &#34;(&#34; + extendsClassName + source[extensionDigitEnd:]
+            except Exception as e:
+                print(e)
+                logging.error(&#34;the injected module has to define a main class with the same name as its file name. the \
+injected ccs/attribute models moduleName was %s, however no main class name that was identical to it was found in %s&#34; % (moduleName, modulePath))
+                return
+
+            # debugging
+            # print(source)
+
+            # import module directly from refactored source
+            exec(source, globals())
+            importedClasses[moduleId] = {}
+            importedClasses[moduleId][&#34;className&#34;] = nonCollidingClassName
+            importedClasses[moduleId][&#34;extendsId&#34;] = extendsId
+            print(&#34;imported&#34;, moduleName, &#34;with id&#34;, moduleId, &#34;as&#34;, nonCollidingClassName)
+
+        if not onlyFetchDependency:
+            # inject custom class fields (overwrites/overrides existing fields and functions)
+            exec(&#34;self.__dict__.update(&#34; + importedClasses[moduleId][&#34;className&#34;] + &#34;().__dict__)&#34;)  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            # print(&#34;injected&#34;, moduleName, &#34;into&#34;, self.extendsId)
+
+        # some asserts for early failure
+        if commit is not None:
+            assert self.id == gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + commit, &#34;failed to inject CCS model properly. got %s but wanted %s&#34; % (self.id, gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + commit)
+        else:
+            assert self.id == gitRepo + &#34;@&#34; + filePath + &#34;@latest&#34;, &#34;failed to inject CCS model properly. got %s but wanted %s&#34; % (self.id, gitRepo + &#34;@&#34; + filePath + &#34;@latest&#34;)</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.BoolAttribute" href="#pycsdl.csdl.BoolAttribute">BoolAttribute</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></li>
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Price" href="#pycsdl.csdl.Price">Price</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pycsdl.csdl.Attribute.inject"><code class="name flex">
+<span>def <span class="ident">inject</span></span>(<span>self, gitRepo, filePath, branch=None, commit=None, onlyFetchDependency=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Updates self with the fields of the Attribute that are attained from the given filePath.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>gitRepo</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URI to a git repository where the file is stored. Defaults to "local", indicating that it is stored on the local machine.</dd>
+<dt><strong><code>filePath</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the file inside the git repository.</dd>
+<dt><strong><code>branch</code></strong> :&ensp;<code>str</code></dt>
+<dd>The git branch name, defaults to None (indicates that master should be fetched).</dd>
+<dt><strong><code>commit</code></strong> :&ensp;<code>str</code></dt>
+<dd>The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)</dd>
+<dt><strong><code>onlyFetchDependency</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Does not inject any fields to self if set to True, defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">    def inject(self, gitRepo, filePath, branch=None, commit=None, onlyFetchDependency=False):
+        &#34;&#34;&#34; Updates self with the fields of the Attribute that are attained from the given filePath.
+
+            Args:
+                gitRepo (str): The URI to a git repository where the file is stored. Defaults to &#34;local&#34;, indicating that it is stored on the local machine.
+                filePath (str): The path to the file inside the git repository.
+                branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+                commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+                onlyFetchDependency (bool): Does not inject any fields to self if set to True, defaults to False.
+        &#34;&#34;&#34;
+
+        self.setId(gitRepo, filePath, branch=branch, commit=commit)
+
+        # git clone metamodel repository
+        if gitRepo not in ccsGitCache:
+            tempDir = tempfile.TemporaryDirectory()
+            porcelain.clone(self.gitRepo, tempDir.name)
+            ccsGitCache[gitRepo] = tempDir
+
+        if self.commit is not None:
+            print(&#34;checkout commit &#34; + self.commit)
+            porcelain.update_head(ccsGitCache[gitRepo].name, self.commit)
+        # TODO else checkout latest commit and branch...
+
+        # inject metamodel into this Attribute
+        moduleId = gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + &#34;latest&#34;  # TODO make this work with given commit id and branch too
+        modulePath = ccsGitCache[gitRepo].name + &#34;/&#34; + filePath
+        moduleName = filePath.split(&#34;/&#34;)[-1].split(&#34;.py&#34;)[0]
+        # moduleDir = &#39;&#39;.join(modulePath.split(moduleName + &#34;.py&#34;))
+        # print(&#34;modulePath: &#34;, modulePath)
+        # print(&#34;moduleName: &#34;, moduleName)
+        # print(&#34;moduleDir: &#34;, moduleDir)
+
+        # parse module for extendsId field
+        source = open(modulePath, &#34;r&#34;).read()
+        root = ast.parse(source)
+
+        closestClass = None
+        try:
+            classes = [node for node in ast.walk(root) if isinstance(node, ast.ClassDef) and node.name == moduleName]
+            closestClass = classes[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does not define a class with the same name as its filename&#34; % modulePath)
+
+        closestFunction = None
+        try:
+            functions = [node for node in ast.walk(closestClass) if isinstance(node, ast.FunctionDef) and node.name == &#34;__init__&#34;]
+            closestFunction = functions[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does not define a __init__ function in its main class&#34; % modulePath)
+
+        closestAssign = None
+        try:
+            assigns = [node for node in ast.walk(closestFunction) if isinstance(node, ast.Assign)]
+            assigns = [node for node in assigns if isinstance(node.targets[0], ast.Attribute)]
+            assigns = [node for node in assigns if node.targets[0].attr == &#34;extendsId&#34;]
+            closestAssign = assigns[0]
+        except Exception as e:
+            print(e)
+            logging.error(&#34;can not inject %s because it does set the field extendsId&#34; % modulePath)
+
+        extendsId = closestAssign.value.value
+        # print(modulePath, &#34;extendsId: &#34;, extendsId)
+
+        # import extendsId module if it was not imported yet
+        if extendsId not in importedClasses:
+            #print(&#34;fetch dependency first:&#34;, extendsId)
+            dummy = CCS()
+            try:
+                dummyGitRepo = extendsId.split(&#34;@&#34;)[0]
+                dummyFilePath = extendsId.split(&#34;@&#34;)[1]
+            except Exception as e:
+                print(e)
+                logging.error(&#34;%s sets an extendsId field that is not formatted correctly. non-common attributes/CCS have \
+to be of the form link/to/repo@file/path.py@(commitID|latest), however this was the given extendsId: &#39;%s&#39;&#34; % (
+                    modulePath, extendsId))
+                return
+            dummy.inject(dummyGitRepo, dummyFilePath, onlyFetchDependency=True)
+
+        # extract class name from extendsId
+        extendsClassName = importedClasses[extendsId][&#34;className&#34;]
+
+        # refactor source main class name to a non-colliding class name
+        # , as well as the extension class to the class name derived from its extendsId field
+        if moduleId not in importedClasses:
+            nonCollidingClassName = randName()  # this prevents accidental class overwriting when class names of
+            # injected custom attributes happen to be identical
+            try:
+                extensionDigitStart = source.find(&#34;class &#34; + moduleName + &#34;(&#34;) + len(&#34;class &#34;)  # NOTE this means that moduleName and the model main class name HAVE to be identical
+                extensionDigitEnd = source.find(&#34;)&#34;, extensionDigitStart)
+                source = source[:extensionDigitStart] + nonCollidingClassName + &#34;(&#34; + extendsClassName + source[extensionDigitEnd:]
+            except Exception as e:
+                print(e)
+                logging.error(&#34;the injected module has to define a main class with the same name as its file name. the \
+injected ccs/attribute models moduleName was %s, however no main class name that was identical to it was found in %s&#34; % (moduleName, modulePath))
+                return
+
+            # debugging
+            # print(source)
+
+            # import module directly from refactored source
+            exec(source, globals())
+            importedClasses[moduleId] = {}
+            importedClasses[moduleId][&#34;className&#34;] = nonCollidingClassName
+            importedClasses[moduleId][&#34;extendsId&#34;] = extendsId
+            print(&#34;imported&#34;, moduleName, &#34;with id&#34;, moduleId, &#34;as&#34;, nonCollidingClassName)
+
+        if not onlyFetchDependency:
+            # inject custom class fields (overwrites/overrides existing fields and functions)
+            exec(&#34;self.__dict__.update(&#34; + importedClasses[moduleId][&#34;className&#34;] + &#34;().__dict__)&#34;)  # read https://stackoverflow.com/questions/1216356/is-it-safe-to-replace-a-self-object-by-another-object-of-the-same-type-in-a-meth/37658673#37658673
+            # print(&#34;injected&#34;, moduleName, &#34;into&#34;, self.extendsId)
+
+        # some asserts for early failure
+        if commit is not None:
+            assert self.id == gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + commit, &#34;failed to inject CCS model properly. got %s but wanted %s&#34; % (self.id, gitRepo + &#34;@&#34; + filePath + &#34;@&#34; + commit)
+        else:
+            assert self.id == gitRepo + &#34;@&#34; + filePath + &#34;@latest&#34;, &#34;failed to inject CCS model properly. got %s but wanted %s&#34; % (self.id, gitRepo + &#34;@&#34; + filePath + &#34;@latest&#34;)</code></pre>
+</details>
+</dd>
+<dt id="pycsdl.csdl.Attribute.setId"><code class="name flex">
+<span>def <span class="ident">setId</span></span>(<span>self, gitRepo, filePath, branch=None, commit=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
+be loaded.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>gitRepo</code></strong> :&ensp;<code>str</code></dt>
+<dd>The URI to a git repository where the file is stored. Defaults to "local", indicating that it is stored on the local machine.</dd>
+<dt><strong><code>filePath</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the file inside the git repository.</dd>
+<dt><strong><code>branch</code></strong> :&ensp;<code>str</code></dt>
+<dd>The git branch name, defaults to None (indicates that master should be fetched).</dd>
+<dt><strong><code>commit</code></strong> :&ensp;<code>str</code></dt>
+<dd>The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setId(self, gitRepo, filePath, branch=None, commit=None):
+    &#34;&#34;&#34; Set the id of an Attribute type instance. This id has to be unique and specify from where the Attribute can
+        be loaded.
+
+        Args:
+            gitRepo (str): The URI to a git repository where the file is stored. Defaults to &#34;local&#34;, indicating that it is stored on the local machine.
+            filePath (str): The path to the file inside the git repository.
+            branch (str): The git branch name, defaults to None (indicates that master should be fetched).
+            commit (str): The commit id of the git branch, defaults to None (indicates that the latest commit should be fetched)
+    &#34;&#34;&#34;
+
+    self.gitRepo = gitRepo
+    self.commit = commit
+    self.filePath = filePath
+    self.id = gitRepo + &#34;@&#34; + filePath
+    if self.commit is not None:
+        self.id += &#34;@&#34; + self.commit
+        self.commit = &#34;refs/heads/master/&#34; + self.commit
+    else:
+        self.id += &#34;@latest&#34;</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="pycsdl.csdl.Australia"><code class="flex name class">
+<span>class <span class="ident">Australia</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Australia(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Australia&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Australia&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.BoolAttribute"><code class="flex name class">
+<span>class <span class="ident">BoolAttribute</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BoolAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;BoolAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.value = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.CCS"><code class="flex name class">
+<span>class <span class="ident">CCS</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CCS(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;CCS&#34;
+        self.extendsId = &#34;Attribute&#34;
+
+        self.pageUrl = None
+        self.price = Price()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></li>
+<li><a title="pycsdl.csdl.SaaS" href="#pycsdl.csdl.SaaS">SaaS</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.ChoiceAttribute"><code class="flex name class">
+<span>class <span class="ident">ChoiceAttribute</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>ChoiceAttribute</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>options</code></strong> :&ensp;<code>list</code></dt>
+<dd>A dictionary of OptionAttributes</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></dt>
+<dd>The dictionary key of the chosen OptionAttribute from self.options</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ChoiceAttribute(Attribute):
+    &#34;&#34;&#34; ChoiceAttribute
+
+        Attributes:
+            options (list): A dictionary of OptionAttributes
+            value (Attribute): The dictionary key of the chosen OptionAttribute from self.options
+    &#34;&#34;&#34;
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;ChoiceAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.options = None  # dictionary of Attribute instances
+        self.value = None  # dictionary key of chosen Attribute instance</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OperatingSystem" href="#pycsdl.csdl.OperatingSystem">OperatingSystem</a></li>
+<li><a title="pycsdl.csdl.PricingModel" href="#pycsdl.csdl.PricingModel">PricingModel</a></li>
+<li><a title="pycsdl.csdl.Region" href="#pycsdl.csdl.Region">Region</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.CpuClockSpeed"><code class="flex name class">
+<span>class <span class="ident">CpuClockSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CpuClockSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;CpuClockSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;CPU clock speed in GHz&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.CpuCores"><code class="flex name class">
+<span>class <span class="ident">CpuCores</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CpuCores(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;CpuCores&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;The amount of CPU cores&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.DatabaseAsAService"><code class="flex name class">
+<span>class <span class="ident">DatabaseAsAService</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DatabaseAsAService(SaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;DatabaseAsAService&#34;
+        self.extendsId = &#34;SaaS&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.SaaS" href="#pycsdl.csdl.SaaS">SaaS</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NoSQLDatabaseAsAService" href="#pycsdl.csdl.NoSQLDatabaseAsAService">NoSQLDatabaseAsAService</a></li>
+<li><a title="pycsdl.csdl.SQLDatabaseAsAService" href="#pycsdl.csdl.SQLDatabaseAsAService">SQLDatabaseAsAService</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.SaaS" href="#pycsdl.csdl.SaaS">SaaS</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.SaaS.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.SaaS.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.EastAsia"><code class="flex name class">
+<span>class <span class="ident">EastAsia</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EastAsia(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;EastAsia&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;East Asia&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Europe"><code class="flex name class">
+<span>class <span class="ident">Europe</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Europe(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Europe&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;Europe&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.IaaS"><code class="flex name class">
+<span>class <span class="ident">IaaS</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IaaS(CCS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;IaaS&#34;
+        self.extendsId = &#34;CCS&#34;
+
+        self.region = Region()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.ServerAsAService" href="#pycsdl.csdl.ServerAsAService">ServerAsAService</a></li>
+<li><a title="pycsdl.csdl.StorageAsAService" href="#pycsdl.csdl.StorageAsAService">StorageAsAService</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.CCS.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.CCS.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Linux"><code class="flex name class">
+<span>class <span class="ident">Linux</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Linux(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Linux&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.value = &#34;Linux (Unix)&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Mac"><code class="flex name class">
+<span>class <span class="ident">Mac</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Mac(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Mac&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.value = &#34;Mac (Unix)&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.NetworkCapacity"><code class="flex name class">
+<span>class <span class="ident">NetworkCapacity</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NetworkCapacity(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NetworkCapacity&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Network capacity in GB&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.NetworkDownloadSpeed"><code class="flex name class">
+<span>class <span class="ident">NetworkDownloadSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NetworkDownloadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NetworkDownloadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Network download speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.NetworkUploadSpeed"><code class="flex name class">
+<span>class <span class="ident">NetworkUploadSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NetworkUploadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NetworkUploadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Network upload speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.NoSQLDatabaseAsAService"><code class="flex name class">
+<span>class <span class="ident">NoSQLDatabaseAsAService</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NoSQLDatabaseAsAService(DatabaseAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NoSQLDatabaseAsAService&#34;
+        self.extendsId = &#34;DatabaseAsAService&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.DatabaseAsAService" href="#pycsdl.csdl.DatabaseAsAService">DatabaseAsAService</a></li>
+<li><a title="pycsdl.csdl.SaaS" href="#pycsdl.csdl.SaaS">SaaS</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.DatabaseAsAService" href="#pycsdl.csdl.DatabaseAsAService">DatabaseAsAService</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.DatabaseAsAService.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.DatabaseAsAService.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.NorthAmerica"><code class="flex name class">
+<span>class <span class="ident">NorthAmerica</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NorthAmerica(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NorthAmerica&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;North America&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.NumericAttribute"><code class="flex name class">
+<span>class <span class="ident">NumericAttribute</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NumericAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;NumericAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.value = None
+        self.minVal = -inf
+        self.maxVal = inf
+        self.stepSize = None
+        self.makeInt = False
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.CpuClockSpeed" href="#pycsdl.csdl.CpuClockSpeed">CpuClockSpeed</a></li>
+<li><a title="pycsdl.csdl.CpuCores" href="#pycsdl.csdl.CpuCores">CpuCores</a></li>
+<li><a title="pycsdl.csdl.NetworkCapacity" href="#pycsdl.csdl.NetworkCapacity">NetworkCapacity</a></li>
+<li><a title="pycsdl.csdl.NetworkDownloadSpeed" href="#pycsdl.csdl.NetworkDownloadSpeed">NetworkDownloadSpeed</a></li>
+<li><a title="pycsdl.csdl.NetworkUploadSpeed" href="#pycsdl.csdl.NetworkUploadSpeed">NetworkUploadSpeed</a></li>
+<li><a title="pycsdl.csdl.Ram" href="#pycsdl.csdl.Ram">Ram</a></li>
+<li><a title="pycsdl.csdl.RamClockSpeed" href="#pycsdl.csdl.RamClockSpeed">RamClockSpeed</a></li>
+<li><a title="pycsdl.csdl.RamReadSpeed" href="#pycsdl.csdl.RamReadSpeed">RamReadSpeed</a></li>
+<li><a title="pycsdl.csdl.RamWriteSpeed" href="#pycsdl.csdl.RamWriteSpeed">RamWriteSpeed</a></li>
+<li><a title="pycsdl.csdl.Storage" href="#pycsdl.csdl.Storage">Storage</a></li>
+<li><a title="pycsdl.csdl.StorageReadSpeed" href="#pycsdl.csdl.StorageReadSpeed">StorageReadSpeed</a></li>
+<li><a title="pycsdl.csdl.StorageWriteSpeed" href="#pycsdl.csdl.StorageWriteSpeed">StorageWriteSpeed</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.OperatingSystem"><code class="flex name class">
+<span>class <span class="ident">OperatingSystem</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>ChoiceAttribute</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>options</code></strong> :&ensp;<code>list</code></dt>
+<dd>A dictionary of OptionAttributes</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></dt>
+<dd>The dictionary key of the chosen OptionAttribute from self.options</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OperatingSystem(ChoiceAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;OperatingSystem&#34;
+        self.extendsId = &#34;ChoiceAttribute&#34;
+        self.description = &#34;The operating system a CCS runs on&#34;
+
+        self.options = {
+            &#34;linux&#34;: Linux(),
+            &#34;windows&#34;: Windows(),
+            &#34;mac&#34;: Mac()
+        }
+
+        self.value = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.ChoiceAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.ChoiceAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.OptionAttribute"><code class="flex name class">
+<span>class <span class="ident">OptionAttribute</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OptionAttribute(Attribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;OptionAttribute&#34;
+        self.extendsId = &#34;Attribute&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Africa" href="#pycsdl.csdl.Africa">Africa</a></li>
+<li><a title="pycsdl.csdl.Antarctica" href="#pycsdl.csdl.Antarctica">Antarctica</a></li>
+<li><a title="pycsdl.csdl.Australia" href="#pycsdl.csdl.Australia">Australia</a></li>
+<li><a title="pycsdl.csdl.EastAsia" href="#pycsdl.csdl.EastAsia">EastAsia</a></li>
+<li><a title="pycsdl.csdl.Europe" href="#pycsdl.csdl.Europe">Europe</a></li>
+<li><a title="pycsdl.csdl.Linux" href="#pycsdl.csdl.Linux">Linux</a></li>
+<li><a title="pycsdl.csdl.Mac" href="#pycsdl.csdl.Mac">Mac</a></li>
+<li><a title="pycsdl.csdl.NorthAmerica" href="#pycsdl.csdl.NorthAmerica">NorthAmerica</a></li>
+<li><a title="pycsdl.csdl.PricingModelInterface" href="#pycsdl.csdl.PricingModelInterface">PricingModelInterface</a></li>
+<li><a title="pycsdl.csdl.SouthAmerica" href="#pycsdl.csdl.SouthAmerica">SouthAmerica</a></li>
+<li><a title="pycsdl.csdl.Windows" href="#pycsdl.csdl.Windows">Windows</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.PayAndGo"><code class="flex name class">
+<span>class <span class="ident">PayAndGo</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PayAndGo(PricingModelInterface):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;PayAndGo&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.description = &#34;you (pay) an upFrontCost once (and go) on to use the service&#34;
+
+        self.upFrontCost = None
+
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
+        for p in priceFuncs:
+            print(p.description, &#34;:&#34;, p.run(req) * currencyConversion)
+
+        self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
+        return self.upFrontCost</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.PricingModelInterface" href="#pycsdl.csdl.PricingModelInterface">PricingModelInterface</a></li>
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pycsdl.csdl.PayAndGo.getPrice"><code class="name flex">
+<span>def <span class="ident">getPrice</span></span>(<span>self, req, priceFuncs, currencyConversion=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getPrice(self, req, priceFuncs, currencyConversion=1):
+    for p in priceFuncs:
+        print(p.description, &#34;:&#34;, p.run(req) * currencyConversion)
+
+    self.upFrontCost = sum([pf.run(req) for pf in priceFuncs]) * currencyConversion
+    return self.upFrontCost</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.PricingModelInterface" href="#pycsdl.csdl.PricingModelInterface">PricingModelInterface</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.PricingModelInterface.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.PricingModelInterface.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Price"><code class="flex name class">
+<span>class <span class="ident">Price</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Price(Attribute):
+    &#34;&#34;&#34; everything to evaluate the final price based on CCS configuration and the pricing model enforced by the CCS &#34;&#34;&#34;
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Price&#34;
+        self.extendsId = &#34;Attribute&#34;
+        self.currency = None  # expecting ISO 4217 currency code as string
+        self.priceFuncs = []
+        self.model = PricingModel()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.PriceFunc"><code class="flex name class">
+<span>class <span class="ident">PriceFunc</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PriceFunc(ABC):
+    def __init__(self):
+        super().__init__()
+        self.description = None
+
+    @abstractmethod
+    def run(self, req):
+        &#34;&#34;&#34; returns the value of this price function &#34;&#34;&#34;
+        pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>abc.ABC</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pycsdl.csdl.PriceFunc.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self, req)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns the value of this price function</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def run(self, req):
+    &#34;&#34;&#34; returns the value of this price function &#34;&#34;&#34;
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="pycsdl.csdl.PricingModel"><code class="flex name class">
+<span>class <span class="ident">PricingModel</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>ChoiceAttribute</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>options</code></strong> :&ensp;<code>list</code></dt>
+<dd>A dictionary of OptionAttributes</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></dt>
+<dd>The dictionary key of the chosen OptionAttribute from self.options</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PricingModel(ChoiceAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;PricingModel&#34;
+        self.extendsId = &#34;ChoiceAttribute&#34;
+        self.options = {
+            &#34;payAndGo&#34;: PayAndGo(),
+            &#34;subscription&#34;: Subscription()
+        }
+        self.value = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.ChoiceAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.ChoiceAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.PricingModelInterface"><code class="flex name class">
+<span>class <span class="ident">PricingModelInterface</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PricingModelInterface(OptionAttribute, ABC):
+    def __init__(self):
+        super().__init__()
+
+    @abstractmethod
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
+        for p in priceFuncs:
+            print(p.description, &#34;:&#34;, p.run(req) * currencyConversion)
+        pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.PayAndGo" href="#pycsdl.csdl.PayAndGo">PayAndGo</a></li>
+<li><a title="pycsdl.csdl.Subscription" href="#pycsdl.csdl.Subscription">Subscription</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pycsdl.csdl.PricingModelInterface.getPrice"><code class="name flex">
+<span>def <span class="ident">getPrice</span></span>(<span>self, req, priceFuncs, currencyConversion=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def getPrice(self, req, priceFuncs, currencyConversion=1):
+    for p in priceFuncs:
+        print(p.description, &#34;:&#34;, p.run(req) * currencyConversion)
+    pass</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Ram"><code class="flex name class">
+<span>class <span class="ident">Ram</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Ram(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Ram&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;The amount of Ram in GB&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.RamClockSpeed"><code class="flex name class">
+<span>class <span class="ident">RamClockSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RamClockSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;RamClockSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;RAM clock speed in GHz&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.RamReadSpeed"><code class="flex name class">
+<span>class <span class="ident">RamReadSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RamReadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;RamReadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;RAM read speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.RamWriteSpeed"><code class="flex name class">
+<span>class <span class="ident">RamWriteSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RamWriteSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;RamWriteSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;RAM write speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Region"><code class="flex name class">
+<span>class <span class="ident">Region</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>ChoiceAttribute</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>options</code></strong> :&ensp;<code>list</code></dt>
+<dd>A dictionary of OptionAttributes</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></dt>
+<dd>The dictionary key of the chosen OptionAttribute from self.options</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Region(ChoiceAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Region&#34;
+        self.extendsId = &#34;ChoiceAttribute&#34;
+        self.description = &#34;The continent in which the CCS resides&#34;
+
+        self.options = {
+            &#34;europe&#34;: Europe(),
+            &#34;northAmerica&#34;: NorthAmerica(),
+            &#34;southAmerica&#34;: SouthAmerica(),
+            &#34;eastAsia&#34;: EastAsia(),
+            &#34;antarctica&#34;: Antarctica(),
+            &#34;africa&#34;: Africa(),
+            &#34;australia&#34;: Australia()
+        }
+        self.value = None</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.ChoiceAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.ChoiceAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.SQLDatabaseAsAService"><code class="flex name class">
+<span>class <span class="ident">SQLDatabaseAsAService</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SQLDatabaseAsAService(DatabaseAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;SQLDatabaseAsAService&#34;
+        self.extendsId = &#34;DatabaseAsAService&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.DatabaseAsAService" href="#pycsdl.csdl.DatabaseAsAService">DatabaseAsAService</a></li>
+<li><a title="pycsdl.csdl.SaaS" href="#pycsdl.csdl.SaaS">SaaS</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.DatabaseAsAService" href="#pycsdl.csdl.DatabaseAsAService">DatabaseAsAService</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.DatabaseAsAService.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.DatabaseAsAService.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.SaaS"><code class="flex name class">
+<span>class <span class="ident">SaaS</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SaaS(CCS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;SaaS&#34;
+        self.extendsId = &#34;CCS&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.DatabaseAsAService" href="#pycsdl.csdl.DatabaseAsAService">DatabaseAsAService</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.CCS.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.CCS.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.ServerAsAService"><code class="flex name class">
+<span>class <span class="ident">ServerAsAService</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ServerAsAService(IaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;ServerAsAService&#34;
+        self.extendsId = &#34;IaaS&#34;
+
+        self.operatingSystem = OperatingSystem()
+        self.cpuCores = CpuCores()
+        self.cpuClockSpeed = CpuClockSpeed()
+        self.ram = Ram()
+        self.ramClockSpeed = RamClockSpeed()
+        self.ramWriteSpeed = RamWriteSpeed()
+        self.ramReadSpeed = RamReadSpeed()
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()
+        self.networkCapacity = NetworkCapacity()
+        self.networkUploadSpeed = NetworkUploadSpeed()
+        self.networkDownloadSpeed = NetworkDownloadSpeed()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.VMAsAService" href="#pycsdl.csdl.VMAsAService">VMAsAService</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.IaaS.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.IaaS.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.SouthAmerica"><code class="flex name class">
+<span>class <span class="ident">SouthAmerica</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SouthAmerica(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;SouthAmerica&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.name = &#34;South America&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Storage"><code class="flex name class">
+<span>class <span class="ident">Storage</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Storage(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Storage&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Storage amount in GB&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.StorageAsAService"><code class="flex name class">
+<span>class <span class="ident">StorageAsAService</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StorageAsAService(IaaS):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;StorageAsAService&#34;
+        self.extendsId = &#34;IaaS&#34;
+
+        self.storage = Storage()
+        self.storageWriteSpeed = StorageWriteSpeed()
+        self.storageReadSpeed = StorageReadSpeed()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.IaaS.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.IaaS.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.StorageReadSpeed"><code class="flex name class">
+<span>class <span class="ident">StorageReadSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StorageReadSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;StorageReadSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Storage read speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.StorageWriteSpeed"><code class="flex name class">
+<span>class <span class="ident">StorageWriteSpeed</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StorageWriteSpeed(NumericAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;StorageWriteSpeed&#34;
+        self.extendsId = &#34;NumericAttribute&#34;
+        self.description = &#34;Storage write speed in GB/s&#34;
+
+        self.value = None
+        self.makeInt = True
+        self.minVal = 0
+        self.maxVal = inf
+        self.moreIsBetter = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.NumericAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.NumericAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Subscription"><code class="flex name class">
+<span>class <span class="ident">Subscription</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Subscription(PricingModelInterface):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Subscription&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.description = &#34;you pay a billingPeriodCost per billingPeriod. the unit of billingPeriod is per hour&#34;
+
+        self.upfrontCost = 0
+        self.billingPeriodCost = None
+        self.billingPeriod = None  # per hour
+
+    def getPrice(self, req, priceFuncs, currencyConversion=1):
+        self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
+        return ((self.billingPeriod * self.billingPeriodCost) + self.upfrontCost) * currencyConversion</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.PricingModelInterface" href="#pycsdl.csdl.PricingModelInterface">PricingModelInterface</a></li>
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+<li>abc.ABC</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pycsdl.csdl.Subscription.getPrice"><code class="name flex">
+<span>def <span class="ident">getPrice</span></span>(<span>self, req, priceFuncs, currencyConversion=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getPrice(self, req, priceFuncs, currencyConversion=1):
+    self.billingPeriodCost = sum([pf.run(req) for pf in priceFuncs])
+    return ((self.billingPeriod * self.billingPeriodCost) + self.upfrontCost) * currencyConversion</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.PricingModelInterface" href="#pycsdl.csdl.PricingModelInterface">PricingModelInterface</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.PricingModelInterface.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.PricingModelInterface.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.VMAsAService"><code class="flex name class">
+<span>class <span class="ident">VMAsAService</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VMAsAService(ServerAsAService):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;VMAsAService&#34;
+        self.extendsId = &#34;ServerAsAService&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.ServerAsAService" href="#pycsdl.csdl.ServerAsAService">ServerAsAService</a></li>
+<li><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></li>
+<li><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.ServerAsAService" href="#pycsdl.csdl.ServerAsAService">ServerAsAService</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.ServerAsAService.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.ServerAsAService.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pycsdl.csdl.Windows"><code class="flex name class">
+<span>class <span class="ident">Windows</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Instances of the Attribute class have a unique id that encodes from where they can be loaded. Classes that
+extend the Attribute class can be matched with other Attributes if they are related, which helps with user
+requirement matching and price calculation. Also, classes that have an Attribute type ancestor can be extended
+arbitrarily by other Attribute type instances (however, note that existing duplicate fields will be overwritten.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Windows(OptionAttribute):
+    def __init__(self):
+        super().__init__()
+        self.id = &#34;Windows&#34;
+        self.extendsId = &#34;OptionAttribute&#34;
+        self.value = &#34;Windows&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></li>
+<li><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pycsdl.csdl.OptionAttribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.OptionAttribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pycsdl" href="index.html">pycsdl</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="pycsdl.csdl.ccsGitCache" href="#pycsdl.csdl.ccsGitCache">ccsGitCache</a></code></li>
+<li><code><a title="pycsdl.csdl.importedClasses" href="#pycsdl.csdl.importedClasses">importedClasses</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pycsdl.csdl.cleanGitCache" href="#pycsdl.csdl.cleanGitCache">cleanGitCache</a></code></li>
+<li><code><a title="pycsdl.csdl.estimatePrice" href="#pycsdl.csdl.estimatePrice">estimatePrice</a></code></li>
+<li><code><a title="pycsdl.csdl.extractAttributes" href="#pycsdl.csdl.extractAttributes">extractAttributes</a></code></li>
+<li><code><a title="pycsdl.csdl.extractConfigurationTree" href="#pycsdl.csdl.extractConfigurationTree">extractConfigurationTree</a></code></li>
+<li><code><a title="pycsdl.csdl.extractPrices" href="#pycsdl.csdl.extractPrices">extractPrices</a></code></li>
+<li><code><a title="pycsdl.csdl.getExtendsId" href="#pycsdl.csdl.getExtendsId">getExtendsId</a></code></li>
+<li><code><a title="pycsdl.csdl.isAncestorOf" href="#pycsdl.csdl.isAncestorOf">isAncestorOf</a></code></li>
+<li><code><a title="pycsdl.csdl.matchAttribute" href="#pycsdl.csdl.matchAttribute">matchAttribute</a></code></li>
+<li><code><a title="pycsdl.csdl.matchCCS" href="#pycsdl.csdl.matchCCS">matchCCS</a></code></li>
+<li><code><a title="pycsdl.csdl.randName" href="#pycsdl.csdl.randName">randName</a></code></li>
+<li><code><a title="pycsdl.csdl.renderHierarchy" href="#pycsdl.csdl.renderHierarchy">renderHierarchy</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pycsdl.csdl.Africa" href="#pycsdl.csdl.Africa">Africa</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Antarctica" href="#pycsdl.csdl.Antarctica">Antarctica</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Attribute" href="#pycsdl.csdl.Attribute">Attribute</a></code></h4>
+<ul class="">
+<li><code><a title="pycsdl.csdl.Attribute.inject" href="#pycsdl.csdl.Attribute.inject">inject</a></code></li>
+<li><code><a title="pycsdl.csdl.Attribute.setId" href="#pycsdl.csdl.Attribute.setId">setId</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Australia" href="#pycsdl.csdl.Australia">Australia</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.BoolAttribute" href="#pycsdl.csdl.BoolAttribute">BoolAttribute</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.CCS" href="#pycsdl.csdl.CCS">CCS</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.ChoiceAttribute" href="#pycsdl.csdl.ChoiceAttribute">ChoiceAttribute</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.CpuClockSpeed" href="#pycsdl.csdl.CpuClockSpeed">CpuClockSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.CpuCores" href="#pycsdl.csdl.CpuCores">CpuCores</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.DatabaseAsAService" href="#pycsdl.csdl.DatabaseAsAService">DatabaseAsAService</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.EastAsia" href="#pycsdl.csdl.EastAsia">EastAsia</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Europe" href="#pycsdl.csdl.Europe">Europe</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.IaaS" href="#pycsdl.csdl.IaaS">IaaS</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Linux" href="#pycsdl.csdl.Linux">Linux</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Mac" href="#pycsdl.csdl.Mac">Mac</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.NetworkCapacity" href="#pycsdl.csdl.NetworkCapacity">NetworkCapacity</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.NetworkDownloadSpeed" href="#pycsdl.csdl.NetworkDownloadSpeed">NetworkDownloadSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.NetworkUploadSpeed" href="#pycsdl.csdl.NetworkUploadSpeed">NetworkUploadSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.NoSQLDatabaseAsAService" href="#pycsdl.csdl.NoSQLDatabaseAsAService">NoSQLDatabaseAsAService</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.NorthAmerica" href="#pycsdl.csdl.NorthAmerica">NorthAmerica</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.NumericAttribute" href="#pycsdl.csdl.NumericAttribute">NumericAttribute</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.OperatingSystem" href="#pycsdl.csdl.OperatingSystem">OperatingSystem</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.OptionAttribute" href="#pycsdl.csdl.OptionAttribute">OptionAttribute</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.PayAndGo" href="#pycsdl.csdl.PayAndGo">PayAndGo</a></code></h4>
+<ul class="">
+<li><code><a title="pycsdl.csdl.PayAndGo.getPrice" href="#pycsdl.csdl.PayAndGo.getPrice">getPrice</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Price" href="#pycsdl.csdl.Price">Price</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.PriceFunc" href="#pycsdl.csdl.PriceFunc">PriceFunc</a></code></h4>
+<ul class="">
+<li><code><a title="pycsdl.csdl.PriceFunc.run" href="#pycsdl.csdl.PriceFunc.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.PricingModel" href="#pycsdl.csdl.PricingModel">PricingModel</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.PricingModelInterface" href="#pycsdl.csdl.PricingModelInterface">PricingModelInterface</a></code></h4>
+<ul class="">
+<li><code><a title="pycsdl.csdl.PricingModelInterface.getPrice" href="#pycsdl.csdl.PricingModelInterface.getPrice">getPrice</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Ram" href="#pycsdl.csdl.Ram">Ram</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.RamClockSpeed" href="#pycsdl.csdl.RamClockSpeed">RamClockSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.RamReadSpeed" href="#pycsdl.csdl.RamReadSpeed">RamReadSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.RamWriteSpeed" href="#pycsdl.csdl.RamWriteSpeed">RamWriteSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Region" href="#pycsdl.csdl.Region">Region</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.SQLDatabaseAsAService" href="#pycsdl.csdl.SQLDatabaseAsAService">SQLDatabaseAsAService</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.SaaS" href="#pycsdl.csdl.SaaS">SaaS</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.ServerAsAService" href="#pycsdl.csdl.ServerAsAService">ServerAsAService</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.SouthAmerica" href="#pycsdl.csdl.SouthAmerica">SouthAmerica</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Storage" href="#pycsdl.csdl.Storage">Storage</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.StorageAsAService" href="#pycsdl.csdl.StorageAsAService">StorageAsAService</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.StorageReadSpeed" href="#pycsdl.csdl.StorageReadSpeed">StorageReadSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.StorageWriteSpeed" href="#pycsdl.csdl.StorageWriteSpeed">StorageWriteSpeed</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Subscription" href="#pycsdl.csdl.Subscription">Subscription</a></code></h4>
+<ul class="">
+<li><code><a title="pycsdl.csdl.Subscription.getPrice" href="#pycsdl.csdl.Subscription.getPrice">getPrice</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.VMAsAService" href="#pycsdl.csdl.VMAsAService">VMAsAService</a></code></h4>
+</li>
+<li>
+<h4><code><a title="pycsdl.csdl.Windows" href="#pycsdl.csdl.Windows">Windows</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
